@@ -118,6 +118,55 @@ class DemoContentSeeder extends Seeder
             ['key' => 'features_blog_enabled', 'value' => '1', 'type' => 'boolean', 'group' => 'features'],
             ['key' => 'features_distributor_form_enabled', 'value' => '1', 'type' => 'boolean', 'group' => 'features'],
             ['key' => 'features_contact_form_enabled', 'value' => '1', 'type' => 'boolean', 'group' => 'features'],
+
+            // About Page Settings
+            ['key' => 'about_page_title', 'value' => 'About Sofoodtchad', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_page_subtitle', 'value' => 'Who We Are', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_page_description', 'value' => 'Learn about our journey, mission, and commitment to bringing you the finest food products from Chad.', 'type' => 'textarea', 'group' => 'about'],
+
+            // About - Our Story Section
+            ['key' => 'about_story_title', 'value' => 'Our Story', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_story_subtitle', 'value' => 'How It All Began', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_story_description', 'value' => 'Sofoodtchad was founded in 2015 with a simple vision: to share the authentic flavors of Chad with the world. What started as a small family operation processing peanuts using traditional methods has grown into one of Chad\'s most respected food companies. Our founder, inspired by generations of family recipes and a passion for quality, set out to create products that honor our culinary heritage while meeting modern food safety standards. Today, we continue that legacy, working directly with local farmers and communities to bring you the finest products.', 'type' => 'textarea', 'group' => 'about'],
+            ['key' => 'about_story_image', 'value' => 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&h=600&fit=crop', 'type' => 'text', 'group' => 'about'],
+
+            // About - What We Do Section
+            ['key' => 'about_whatwedo_title', 'value' => 'What We Do', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_whatwedo_subtitle', 'value' => 'Our Business', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_whatwedo_description', 'value' => 'We specialize in producing premium quality peanut-based products, natural oils, and traditional Chadian foods. From our state-of-the-art processing facility in N\'Djamena, we transform locally sourced ingredients into products that grace tables across Chad and beyond. Our product range includes creamy and crunchy peanut butters, cold-pressed peanut oil, roasted peanuts, and a variety of traditional snacks and condiments.', 'type' => 'textarea', 'group' => 'about'],
+            ['key' => 'about_whatwedo_image', 'value' => 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800&h=600&fit=crop', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_whatwedo_features', 'value' => json_encode(['Premium Peanut Butter', 'Cold-Pressed Oils', 'Traditional Snacks', 'Wholesale Distribution']), 'type' => 'json', 'group' => 'about'],
+
+            // About - Why Choose Us Section
+            ['key' => 'about_whyus_title', 'value' => 'Why Choose Sofoodtchad', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_whyus_subtitle', 'value' => 'Our Difference', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_whyus_description', 'value' => 'What sets us apart is our unwavering commitment to quality at every step. We source directly from local farmers, ensuring fair prices and sustainable practices. Our production processes combine time-honored traditions with modern food safety standards. Every product is tested and certified before it reaches you. When you choose Sofoodtchad, you\'re not just buying food – you\'re supporting local communities and preserving culinary traditions.', 'type' => 'textarea', 'group' => 'about'],
+            ['key' => 'about_whyus_image', 'value' => 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_whyus_features', 'value' => json_encode(['100% Natural Ingredients', 'Direct Farmer Partnerships', 'Quality Certified', 'Sustainable Practices']), 'type' => 'json', 'group' => 'about'],
+            ['key' => 'about_whyus_cta_text', 'value' => 'View Our Products', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_whyus_cta_url', 'value' => '/products', 'type' => 'text', 'group' => 'about'],
+
+            // About - Mission & Vision
+            ['key' => 'about_mission_title', 'value' => 'Our Mission', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_mission_description', 'value' => 'To produce and deliver the highest quality food products that celebrate Chad\'s rich culinary heritage, while supporting local farmers, creating employment opportunities, and promoting sustainable agricultural practices.', 'type' => 'textarea', 'group' => 'about'],
+            ['key' => 'about_vision_title', 'value' => 'Our Vision', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_vision_description', 'value' => 'To become Africa\'s leading producer of premium peanut products and traditional foods, recognized globally for our quality, authenticity, and positive impact on local communities.', 'type' => 'textarea', 'group' => 'about'],
+
+            // About - Values
+            ['key' => 'about_values', 'value' => json_encode([
+                ['title' => 'Quality', 'icon' => null],
+                ['title' => 'Integrity', 'icon' => null],
+                ['title' => 'Community', 'icon' => null],
+                ['title' => 'Innovation', 'icon' => null],
+            ]), 'type' => 'json', 'group' => 'about'],
+
+            // About - CTA
+            ['key' => 'about_cta_title', 'value' => 'Ready to Experience Our Products?', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_cta_description', 'value' => 'Discover the authentic taste of Chad with our premium range of peanut products and traditional foods.', 'type' => 'textarea', 'group' => 'about'],
+            ['key' => 'about_cta_primary_text', 'value' => 'Shop Now', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_cta_primary_url', 'value' => '/products', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_cta_secondary_text', 'value' => 'Contact Us', 'type' => 'text', 'group' => 'about'],
+            ['key' => 'about_cta_secondary_url', 'value' => '/contact', 'type' => 'text', 'group' => 'about'],
         ];
 
         foreach ($settings as $setting) {

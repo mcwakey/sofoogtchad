@@ -1,88 +1,199 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ isset($category) ? $category->name . ' - ' : '' }}Products - {{ config('app.name') }}</title>
-</head>
-<body>
-    <div id="products-page">
-        <header class="page-header">
-            <h1>{{ isset($category) ? $category->name : 'Our Products' }}</h1>
-            @if(isset($category) && $category->description)
-                <p>{{ $category->description }}</p>
-            @endif
-        </header>
+@extends('layouts.app')
 
-        <div class="products-layout">
-            {{-- Sidebar Filters --}}
-            <aside class="products-sidebar">
-                <h3>Categories</h3>
-                <ul class="category-list">
-                    <li>
-                        <a href="{{ route('products.index') }}" class="{{ !isset($category) && !request('category') ? 'active' : '' }}">
-                            All Products
-                        </a>
-                    </li>
-                    @foreach($categories as $cat)
-                        <li>
-                            <a href="{{ route('products.category', $cat->slug) }}"
-                               class="{{ (isset($category) && $category->id === $cat->id) || request('category') === $cat->slug ? 'active' : '' }}">
-                                {{ $cat->name }} ({{ $cat->products_count }})
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+@section('title', isset($category) ? $category->name . ' - Products' : setting('site_name', 'Sofoodtchad') . ' - Our Products')
 
-                <h3>Type</h3>
-                <ul class="type-list">
-                    <li>
-                        <a href="{{ request()->fullUrlWithQuery(['type' => null]) }}" class="{{ !request('type') ? 'active' : '' }}">
-                            All Types
-                        </a>
-                    </li>
-                    @foreach($types as $value => $label)
-                        <li>
-                            <a href="{{ request()->fullUrlWithQuery(['type' => $value]) }}"
-                               class="{{ request('type') === $value ? 'active' : '' }}">
-                                {{ $label }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </aside>
+@section('meta_description', isset($category) ? $category->description : 'Explore our range of premium quality food products from Sofoodtchad.')
 
-            {{-- Products Grid --}}
-            <main class="products-grid">
-                @forelse($products as $product)
-                    <article class="product-card">
-                        <a href="{{ route('products.show', $product->slug) }}">
-                            @if($product->image_url)
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image">
-                            @else
-                                <div class="product-image-placeholder">No Image</div>
+@section('content')
+    {{-- ==================== PAGE HEADER ==================== --}}
+    <section class="relative bg-gradient-to-br from-green-600 to-green-800 py-16 md:py-20">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="inline-block text-green-200 font-semibold text-sm uppercase tracking-wider mb-4">
+                    {{ isset($category) ? 'Category' : 'Discover' }}
+                </span>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                    {{ isset($category) ? $category->name : 'Our Products' }}
+                </h1>
+                <p class="text-lg text-green-100">
+                    {{ isset($category) ? $category->description : setting('homepage_products_subtitle', 'Discover our range of premium quality food products') }}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    {{-- ==================== FILTERS & PRODUCTS ==================== --}}
+    <section class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            {{-- Category & Type Filters --}}
+            @if((isset($categories) && $categories->count() > 0) || (isset($types) && count($types) > 0))
+                <div class="mb-10">
+                    {{-- Mobile Filter Toggle --}}
+                    <button
+                        type="button"
+                        class="md:hidden w-full flex items-center justify-between px-4 py-3 bg-white rounded-lg shadow mb-4"
+                        onclick="document.getElementById('filter-panel').classList.toggle('hidden')"
+                    >
+                        <span class="font-medium text-gray-900">Filters</span>
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                        </svg>
+                    </button>
+
+                    {{-- Filter Panel --}}
+                    <div id="filter-panel" class="hidden md:block bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                            {{-- Categories --}}
+                            @if(isset($categories) && $categories->count() > 0)
+                                <div class="flex-1">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-3">Categories</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a
+                                            href="{{ route('products.index') }}"
+                                            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !isset($category) && !request('category') ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                        >
+                                            All Products
+                                        </a>
+                                        @foreach($categories as $cat)
+                                            <a
+                                                href="{{ route('products.category', $cat->slug) }}"
+                                                class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ (isset($category) && $category->id === $cat->id) || request('category') === $cat->slug ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                            >
+                                                {{ $cat->name }}
+                                                @if($cat->products_count)
+                                                    <span class="ml-1 text-xs opacity-75">({{ $cat->products_count }})</span>
+                                                @endif
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endif
-                        </a>
-                        <div class="product-info">
-                            @if($product->category)
-                                <span class="product-category">{{ $product->category->name }}</span>
-                            @endif
-                            <h2 class="product-name">
-                                <a href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
-                            </h2>
-                            <span class="product-type">{{ $product->type_label }}</span>
-                            @if($product->short_description)
-                                <p class="product-description">{{ Str::limit($product->short_description, 100) }}</p>
+
+                            {{-- Product Types --}}
+                            @if(isset($types) && count($types) > 0)
+                                <div class="md:border-l md:pl-6 md:ml-6">
+                                    <h3 class="text-sm font-semibold text-gray-700 mb-3">Type</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <a
+                                            href="{{ request()->fullUrlWithQuery(['type' => null]) }}"
+                                            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !request('type') ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                        >
+                                            All Types
+                                        </a>
+                                        @foreach($types as $typeKey => $typeLabel)
+                                            <a
+                                                href="{{ request()->fullUrlWithQuery(['type' => $typeKey]) }}"
+                                                class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ request('type') === $typeKey ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                            >
+                                                {{ $typeLabel }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endif
                         </div>
-                    </article>
-                @empty
-                    <p class="no-products">No products found.</p>
-                @endforelse
+                    </div>
+                </div>
+            @endif
 
-                {{ $products->withQueryString()->links() }}
-            </main>
+            {{-- Active Filters Display --}}
+            @if(request('type') || isset($category))
+                <div class="flex flex-wrap items-center gap-2 mb-6">
+                    <span class="text-sm text-gray-500">Active filters:</span>
+                    @if(isset($category))
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                            {{ $category->name }}
+                            <a href="{{ route('products.index', request()->except('category')) }}" class="ml-1 hover:text-green-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </a>
+                        </span>
+                    @endif
+                    @if(request('type'))
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                            {{ $types[request('type')] ?? request('type') }}
+                            <a href="{{ request()->fullUrlWithQuery(['type' => null]) }}" class="ml-1 hover:text-green-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </a>
+                        </span>
+                    @endif
+                    <a href="{{ route('products.index') }}" class="text-sm text-red-600 hover:text-red-700 ml-2">
+                        Clear all
+                    </a>
+                </div>
+            @endif
+
+            {{-- Products Grid --}}
+            <x-product-grid
+                :products="$products"
+                :columns="4"
+                emptyMessage="No products found matching your criteria."
+            />
+
+            {{-- Pagination --}}
+            @if($products instanceof \Illuminate\Pagination\LengthAwarePaginator && $products->hasPages())
+                <div class="mt-10">
+                    {{ $products->withQueryString()->links() }}
+                </div>
+            @endif
         </div>
-    </div>
-</body>
-</html>
+    </section>
+
+    {{-- ==================== CATEGORY INFO (if viewing a category) ==================== --}}
+    @if(isset($category) && $category->description)
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">About {{ $category->name }}</h2>
+                    <p class="text-gray-600 leading-relaxed">
+                        {{ $category->description }}
+                    </p>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ==================== CTA SECTION ==================== --}}
+    <section class="py-16 bg-gradient-to-r from-green-600 to-green-700">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="text-center md:text-left">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                        {{ setting('products_cta_title', 'Need Help Choosing?') }}
+                    </h2>
+                    <p class="text-green-100">
+                        {{ setting('products_cta_description', 'Our team is here to help you find the perfect products for your needs.') }}
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <a href="{{ route('distributor.request') }}" class="px-6 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+                        Become a Distributor
+                    </a>
+                    <a href="/contact" class="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-green-600 transition-colors">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+@endsection
+
+@push('scripts')
+<script>
+    // Mobile filter panel persistence
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterPanel = document.getElementById('filter-panel');
+        if (window.innerWidth >= 768) {
+            filterPanel.classList.remove('hidden');
+        }
+    });
+</script>
+@endpush

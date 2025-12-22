@@ -1,74 +1,238 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Process - Sofoodtchad</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+@extends('layouts.app')
 
-        .hero { background: linear-gradient(135deg, #2d5016 0%, #4a7c23 100%); color: white; padding: 80px 0; text-align: center; }
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; opacity: 0.9; }
+@section('title', setting('site_name', 'Sofoodtchad') . ' - Our Quality Process')
 
-        .process-section { padding: 80px 0; background: #f9f9f9; }
-        .process-section h2 { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: #2d5016; }
+@section('meta_description', setting('process_meta_description', 'Discover how Sofoodtchad ensures the highest quality in every product through our rigorous quality process.'))
 
-        .steps-container { display: flex; flex-direction: column; gap: 40px; }
-
-        .step { display: flex; align-items: flex-start; gap: 30px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: relative; }
-        .step:nth-child(even) { flex-direction: row-reverse; }
-
-        .step-number { flex-shrink: 0; width: 80px; height: 80px; background: linear-gradient(135deg, #4a7c23 0%, #2d5016 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; }
-
-        .step-content { flex: 1; }
-        .step-icon { font-size: 2.5rem; margin-bottom: 15px; }
-        .step-title { font-size: 1.5rem; color: #2d5016; margin-bottom: 10px; }
-        .step-description { color: #666; font-size: 1.1rem; }
-
-        .empty-state { text-align: center; padding: 60px 20px; color: #666; }
-
-        @media (max-width: 768px) {
-            .step, .step:nth-child(even) { flex-direction: column; text-align: center; align-items: center; }
-            .hero h1 { font-size: 2rem; }
-        }
-    </style>
-</head>
-<body>
-    <section class="hero">
-        <div class="container">
-            <h1>Quality & Process</h1>
-            <p>From farm to table - discover how we bring you the finest products</p>
+@section('content')
+    {{-- ==================== PAGE HEADER ==================== --}}
+    <section class="relative bg-gradient-to-br from-green-600 to-green-800 py-16 md:py-24">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="inline-block text-green-200 font-semibold text-sm uppercase tracking-wider mb-4">
+                    {{ setting('process_page_subtitle', 'Quality & Excellence') }}
+                </span>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                    {{ setting('process_page_title', 'Our Quality Process') }}
+                </h1>
+                <p class="text-lg text-green-100">
+                    {{ setting('process_page_description', 'From farm to table, we ensure the highest quality standards at every step of production.') }}
+                </p>
+            </div>
         </div>
     </section>
 
-    <section class="process-section">
-        <div class="container">
-            <h2>Our Process</h2>
-
-            @if($steps->isEmpty())
-                <div class="empty-state">
-                    <p>Process information coming soon.</p>
+    {{-- ==================== PROCESS STEPS ==================== --}}
+    @if(isset($steps) && $steps->count() > 0)
+        <section class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                {{-- Section Header --}}
+                <div class="text-center mb-16">
+                    <span class="inline-block text-green-600 font-semibold text-sm uppercase tracking-wider mb-2">
+                        {{ setting('process_steps_subtitle', 'Step by Step') }}
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+                        {{ setting('process_steps_title', 'How We Ensure Quality') }}
+                    </h2>
                 </div>
-            @else
-                <div class="steps-container">
+
+                {{-- Desktop: Horizontal Timeline --}}
+                <div class="hidden lg:block">
+                    <div class="relative">
+                        {{-- Connection Line --}}
+                        <div class="absolute top-16 left-0 right-0 h-1 bg-gradient-to-r from-green-200 via-green-400 to-green-600"></div>
+
+                        {{-- Steps --}}
+                        <div class="grid grid-cols-{{ min($steps->count(), 6) }} gap-4 relative">
+                            @foreach($steps as $index => $step)
+                                <div class="flex flex-col items-center text-center">
+                                    {{-- Step Number Circle --}}
+                                    <div class="relative z-10 w-32 h-32 bg-white rounded-full shadow-xl flex items-center justify-center mb-6 border-4 border-green-500">
+                                        <div class="text-center">
+                                            <span class="block text-4xl font-bold text-green-600">{{ str_pad($step->sort_order ?? $index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                        </div>
+                                    </div>
+
+                                    {{-- Content --}}
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3">{{ $step->title }}</h3>
+                                    <p class="text-gray-600 text-sm leading-relaxed">{{ $step->description }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Tablet: 2-Column Grid --}}
+                <div class="hidden md:grid lg:hidden grid-cols-2 gap-8">
                     @foreach($steps as $index => $step)
-                        <div class="step">
-                            <div class="step-number">{{ $index + 1 }}</div>
-                            <div class="step-content">
-                                @if($step->icon)
-                                    <div class="step-icon">{{ $step->icon }}</div>
-                                @endif
-                                <h3 class="step-title">{{ $step->title }}</h3>
-                                <p class="step-description">{{ $step->description }}</p>
+                        <div class="bg-gray-50 rounded-2xl p-8">
+                            <div class="flex items-start gap-6">
+                                {{-- Step Number --}}
+                                <div class="flex-shrink-0 w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                                    {{ str_pad($step->sort_order ?? $index + 1, 2, '0', STR_PAD_LEFT) }}
+                                </div>
+
+                                {{-- Content --}}
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $step->title }}</h3>
+                                    <p class="text-gray-600 leading-relaxed">{{ $step->description }}</p>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-            @endif
+
+                {{-- Mobile: Vertical Timeline --}}
+                <div class="md:hidden">
+                    <div class="relative">
+                        {{-- Vertical Line --}}
+                        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-green-200"></div>
+
+                        {{-- Steps --}}
+                        <div class="space-y-8">
+                            @foreach($steps as $index => $step)
+                                <div class="relative flex items-start gap-6 pl-4">
+                                    {{-- Step Number --}}
+                                    <div class="relative z-10 flex-shrink-0 w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-lg ring-4 ring-white">
+                                        {{ $step->sort_order ?? $index + 1 }}
+                                    </div>
+
+                                    {{-- Content Card --}}
+                                    <div class="flex-1 bg-white rounded-xl shadow-md p-5">
+                                        <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $step->title }}</h3>
+                                        <p class="text-gray-600 text-sm leading-relaxed">{{ $step->description }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @else
+        {{-- Empty State --}}
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center py-12">
+                    <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900">Process information coming soon</h3>
+                    <p class="mt-2 text-gray-500">We're working on documenting our quality process. Check back later.</p>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ==================== QUALITY COMMITMENT SECTION ==================== --}}
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                {{-- Content --}}
+                <div>
+                    <span class="inline-block text-green-600 font-semibold text-sm uppercase tracking-wider mb-2">
+                        {{ setting('quality_commitment_subtitle', 'Our Promise') }}
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                        {{ setting('quality_commitment_title', 'Quality You Can Trust') }}
+                    </h2>
+                    <div class="prose prose-lg text-gray-600 mb-8">
+                        <p>{{ setting('quality_commitment_description', 'At Sofoodtchad, quality is not just a goal – it\'s our foundation. Every product that leaves our facility has been carefully inspected and tested to ensure it meets our exacting standards.') }}</p>
+                    </div>
+
+                    {{-- Quality Features --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        @php
+                            $qualityFeatures = [
+                                ['icon' => 'shield-check', 'title' => 'Quality Assured', 'description' => 'Rigorous testing at every stage'],
+                                ['icon' => 'leaf', 'title' => '100% Natural', 'description' => 'No artificial additives'],
+                                ['icon' => 'users', 'title' => 'Expert Team', 'description' => 'Trained quality professionals'],
+                                ['icon' => 'badge-check', 'title' => 'Certified', 'description' => 'International standards compliance'],
+                            ];
+                        @endphp
+                        @foreach($qualityFeatures as $feature)
+                            <div class="flex items-start gap-3 p-4 bg-white rounded-xl shadow-sm">
+                                <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        @if($feature['icon'] === 'shield-check')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                        @elseif($feature['icon'] === 'leaf')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                        @elseif($feature['icon'] === 'users')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                        @else
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                        @endif
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">{{ $feature['title'] }}</h4>
+                                    <p class="text-sm text-gray-600">{{ $feature['description'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Image --}}
+                <div class="relative">
+                    <img
+                        src="{{ setting('quality_commitment_image', 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=500&fit=crop') }}"
+                        alt="Quality Process"
+                        class="rounded-2xl shadow-xl w-full h-auto object-cover"
+                    >
+                    {{-- Decorative elements --}}
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-100 rounded-2xl -z-10"></div>
+                    <div class="absolute -top-6 -left-6 w-24 h-24 bg-yellow-100 rounded-2xl -z-10"></div>
+                </div>
+            </div>
         </div>
     </section>
-</body>
-</html>
+
+    {{-- ==================== STATS SECTION ==================== --}}
+    <section class="py-16 bg-green-600">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                @php
+                    $stats = [
+                        ['value' => setting('stat_years', '10+'), 'label' => 'Years of Excellence'],
+                        ['value' => setting('stat_products', '50+'), 'label' => 'Quality Products'],
+                        ['value' => setting('stat_customers', '10K+'), 'label' => 'Happy Customers'],
+                        ['value' => setting('stat_quality', '100%'), 'label' => 'Quality Tested'],
+                    ];
+                @endphp
+                @foreach($stats as $stat)
+                    <div>
+                        <div class="text-4xl md:text-5xl font-bold text-white mb-2">{{ $stat['value'] }}</div>
+                        <div class="text-green-100">{{ $stat['label'] }}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    {{-- ==================== CTA SECTION ==================== --}}
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                {{ setting('process_cta_title', 'Experience Our Quality') }}
+            </h2>
+            <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+                {{ setting('process_cta_description', 'Try our products and taste the difference that quality makes. From farm to table, we ensure excellence at every step.') }}
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="{{ route('products.index') }}" class="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-200">
+                    Explore Products
+                </a>
+                <a href="/contact" class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-green-600 hover:text-green-600 transition-colors duration-200">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+@endsection

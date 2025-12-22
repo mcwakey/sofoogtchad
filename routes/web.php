@@ -7,9 +7,13 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PartnersController;
+use App\Http\Controllers\AboutController;
 
 // Homepage with dynamic content
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// About page
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 // Products routes
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
@@ -33,4 +37,4 @@ Route::get('/become-distributor', [PartnersController::class, 'showDistributorFo
 Route::get('/pages/{slug}', [PageController::class, 'show'])->name('pages.show');
 Route::get('/{slug}', [PageController::class, 'show'])
     ->name('page.show')
-    ->where('slug', '^(?!admin|products|process|blog|partners|pages|become-distributor).*$');
+    ->where('slug', '^(?!admin|products|process|blog|partners|pages|become-distributor|about).*$');
