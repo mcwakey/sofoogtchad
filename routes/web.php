@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PartnersController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,7 +23,12 @@ Route::get('/process', [ProcessController::class, 'index'])->name('process.index
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
-// Dynamic page rendering (exclude admin, products, process, blog paths)
+// Partners routes
+Route::get('/partners', [PartnersController::class, 'index'])->name('partners.index');
+Route::get('/partners/become-distributor', [PartnersController::class, 'showDistributorForm'])->name('partners.become-distributor');
+Route::post('/partners/become-distributor', [PartnersController::class, 'submitDistributorRequest'])->name('partners.distributor-request');
+
+// Dynamic page rendering (exclude admin, products, process, blog, partners paths)
 Route::get('/{slug}', [PageController::class, 'show'])
     ->name('page.show')
-    ->where('slug', '^(?!admin|products|process|blog).*$');
+    ->where('slug', '^(?!admin|products|process|blog|partners).*$');

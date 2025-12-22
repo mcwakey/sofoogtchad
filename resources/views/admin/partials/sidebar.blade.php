@@ -37,6 +37,18 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('admin.partners.index') }}" class="{{ request()->routeIs('admin.partners*') ? 'active' : '' }}">
+                    Partners
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.distributor-requests.index') }}" class="{{ request()->routeIs('admin.distributor-requests*') ? 'active' : '' }}">
+                    Distributor Requests
+                </a>
+            </li>
+
             @if(auth()->user()->hasRole('admin'))
                 <li>
                     <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">

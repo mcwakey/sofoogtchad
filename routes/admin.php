@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProcessStepController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\DistributorRequestController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -137,4 +139,22 @@ Route::middleware('admin')->group(function () {
         ->name('admin.posts.images.store');
     Route::delete('posts/{post}/images/{image}', [PostController::class, 'deleteImage'])
         ->name('admin.posts.images.destroy');
+
+    // Partners management
+    Route::resource('partners', PartnerController::class)->names([
+        'index' => 'admin.partners.index',
+        'create' => 'admin.partners.create',
+        'store' => 'admin.partners.store',
+        'edit' => 'admin.partners.edit',
+        'update' => 'admin.partners.update',
+        'destroy' => 'admin.partners.destroy',
+    ]);
+
+    // Distributor requests management
+    Route::resource('distributor-requests', DistributorRequestController::class)->names([
+        'index' => 'admin.distributor-requests.index',
+        'show' => 'admin.distributor-requests.show',
+        'update' => 'admin.distributor-requests.update',
+        'destroy' => 'admin.distributor-requests.destroy',
+    ])->except(['create', 'store', 'edit']);
 });
