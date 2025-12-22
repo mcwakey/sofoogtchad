@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\DistributorRequestController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -171,4 +172,15 @@ Route::middleware('admin')->group(function () {
     ]);
     Route::get('media-picker', [MediaController::class, 'picker'])->name('admin.media.picker');
     Route::post('media/bulk-delete', [MediaController::class, 'bulkDelete'])->name('admin.media.bulk-delete');
+
+    // Settings management (admin only)
+    Route::middleware('role:admin')->group(function () {
+        Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
+        Route::put('settings', [SettingController::class, 'update'])->name('admin.settings.update');
+        Route::get('settings/create', [SettingController::class, 'create'])->name('admin.settings.create');
+        Route::post('settings', [SettingController::class, 'store'])->name('admin.settings.store');
+        Route::get('settings/{setting}/edit', [SettingController::class, 'edit'])->name('admin.settings.edit');
+        Route::put('settings/{setting}', [SettingController::class, 'updateSetting'])->name('admin.settings.update-setting');
+        Route::delete('settings/{setting}', [SettingController::class, 'destroy'])->name('admin.settings.destroy');
+    });
 });

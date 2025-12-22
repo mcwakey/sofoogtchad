@@ -66,6 +66,11 @@
                         Roles
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.settings.index') }}" class="{{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
+                        Settings
+                    </a>
+                </li>
             @endif
         </ul>
     </nav>
