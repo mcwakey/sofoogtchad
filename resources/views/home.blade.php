@@ -1,52 +1,225 @@
 @extends('layouts.app')
 
-@section('title', setting('site_name', 'Sofoodtchad') . ' - ' . setting('site_tagline', 'Quality Food Products'))
+@section('title', $pageTitle ?? setting('site_name', 'Sofoodtchad') . ' - ' . setting('site_tagline', 'Quality Food Products'))
+
+@section('meta_description', $metaDescription ?? setting('site_description'))
 
 @section('content')
-    {{-- Hero Section --}}
-    <section class="hero">
-        <div class="hero-container">
-            <h1>Welcome to {{ setting('site_name', 'Sofoodtchad') }}</h1>
-            <p>{{ setting('site_tagline', 'Quality Food Products') }}</p>
-            <div class="hero-actions">
-                <a href="{{ url('/products') }}" class="btn btn-primary">View Our Products</a>
-                <a href="{{ url('/contact') }}" class="btn btn-secondary">Contact Us</a>
+    {{-- ==================== HERO SECTION ==================== --}}
+    <x-hero
+        :background_image="$hero['background_image'] ?? null"
+        :title="$hero['title'] ?? setting('site_name', 'Welcome to Sofoodtchad')"
+        :subtitle="$hero['subtitle'] ?? setting('site_tagline', 'Premium Quality Food Products')"
+        :cta_text="$hero['cta_text'] ?? 'View Our Products'"
+        :cta_url="$hero['cta_url'] ?? '/products'"
+        :secondaryCtaText="$hero['secondary_cta_text'] ?? null"
+        :secondaryCtaUrl="$hero['secondary_cta_url'] ?? null"
+    />
+
+    {{-- ==================== ABOUT SNIPPET SECTION ==================== --}}
+    @if(isset($about) && $about)
+        <x-about-snippet
+            :title="$about['title'] ?? 'Our Story'"
+            :subtitle="$about['subtitle'] ?? 'About Us'"
+            :description="$about['description'] ?? ''"
+            :image="$about['image'] ?? null"
+            :imagePosition="$about['image_position'] ?? 'left'"
+        >
+            @if(isset($about['cta_text']) && isset($about['cta_url']))
+                <x-button
+                    type="primary"
+                    :text="$about['cta_text']"
+                    :url="$about['cta_url']"
+                />
+            @endif
+        </x-about-snippet>
+    @endif
+
+    {{-- ==================== PRODUCT HIGHLIGHTS SECTION ==================== --}}
+    @if(isset($products) && count($products) > 0)
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <x-product-grid
+                    :products="$products"
+                    :title="$productsSection['title'] ?? 'Our Products'"
+                    :subtitle="$productsSection['subtitle'] ?? 'Discover our range of premium quality products'"
+                    :viewAllUrl="$productsSection['view_all_url'] ?? '/products'"
+                    :viewAllText="$productsSection['view_all_text'] ?? 'View All Products'"
+                    :columns="$productsSection['columns'] ?? 4"
+                />
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
-    {{-- About Section --}}
-    <section class="section">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>{{ setting('site_description', 'We are committed to providing quality food products.') }}</p>
-        </div>
-    </section>
+    {{-- ==================== QUALITY & PROCESS SECTION ==================== --}}
+    @if(isset($processSteps) && count($processSteps) > 0)
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                {{-- Section Header --}}
+                <div class="text-center mb-12">
+                    @if(isset($processSection['subtitle']))
+                        <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                            {{ $processSection['subtitle'] }}
+                        </span>
+                    @endif
+                    <h2 class="text-3xl font-bold text-gray-900 mt-2">
+                        {{ $processSection['title'] ?? 'Our Process' }}
+                    </h2>
+                    @if(isset($processSection['description']))
+                        <p class="text-gray-600 mt-2 max-w-2xl mx-auto">
+                            {{ $processSection['description'] }}
+                        </p>
+                    @endif
+                </div>
 
-    {{-- Products Preview --}}
-    <section class="section section-alt">
-        <div class="container">
-            <h2>Our Products</h2>
-            <p>Discover our range of quality food products.</p>
-            <a href="{{ url('/products') }}">View All Products →</a>
-        </div>
-    </section>
+                {{-- Process Steps Grid --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ min(count($processSteps), 4) }} gap-8">
+                    @foreach($processSteps as $index => $step)
+                        <x-process-step
+                            :step_number="$step->sort_order ?? $index + 1"
+                            :title="$step->title"
+                            :description="$step->description ?? ''"
+                            :icon="$step->icon ?? null"
+                            :iconBgColor="$step->icon_color ?? 'green'"
+                        />
+                    @endforeach
+                </div>
 
-    {{-- Contact Section --}}
-    <section class="section">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <ul>
-                @if(setting('contact_phone'))
-                    <li><strong>Phone:</strong> {{ setting('contact_phone') }}</li>
+                {{-- View More Link --}}
+                @if(isset($processSection['cta_url']))
+                    <div class="text-center mt-10">
+                        <x-button
+                            type="outline"
+                            :text="$processSection['cta_text'] ?? 'Learn More About Our Process'"
+                            :url="$processSection['cta_url']"
+                        />
+                    </div>
                 @endif
-                @if(setting('contact_email'))
-                    <li><strong>Email:</strong> {{ setting('contact_email') }}</li>
+            </div>
+        </section>
+    @endif
+
+    {{-- ==================== PARTNERS SECTION ==================== --}}
+    @if(isset($partners) && count($partners) > 0)
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                {{-- Section Header --}}
+                <div class="text-center mb-12">
+                    @if(isset($partnersSection['subtitle']))
+                        <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                            {{ $partnersSection['subtitle'] }}
+                        </span>
+                    @endif
+                    <h2 class="text-3xl font-bold text-gray-900 mt-2">
+                        {{ $partnersSection['title'] ?? 'Our Partners' }}
+                    </h2>
+                    @if(isset($partnersSection['description']))
+                        <p class="text-gray-600 mt-2">
+                            {{ $partnersSection['description'] }}
+                        </p>
+                    @endif
+                </div>
+
+                {{-- Partners Grid --}}
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-{{ min(count($partners), 6) }} gap-6">
+                    @foreach($partners as $partner)
+                        <x-partner-card
+                            :name="$partner->name"
+                            :logo_image="$partner->logo ?? null"
+                            :link="$partner->website ?? null"
+                        />
+                    @endforeach
+                </div>
+
+                {{-- CTA Button --}}
+                @if(isset($partnersSection['cta_url']))
+                    <div class="text-center mt-10">
+                        <x-button
+                            type="outline"
+                            :text="$partnersSection['cta_text'] ?? 'Become a Partner'"
+                            :url="$partnersSection['cta_url']"
+                        />
+                    </div>
                 @endif
-                @if(setting('contact_address'))
-                    <li><strong>Address:</strong> {{ setting('contact_address') }}</li>
+            </div>
+        </section>
+    @endif
+
+    {{-- ==================== BLOG HIGHLIGHTS SECTION (Optional) ==================== --}}
+    @if(isset($posts) && count($posts) > 0)
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                {{-- Section Header --}}
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
+                    <div>
+                        @if(isset($blogSection['subtitle']))
+                            <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                                {{ $blogSection['subtitle'] }}
+                            </span>
+                        @endif
+                        <h2 class="text-3xl font-bold text-gray-900 mt-2">
+                            {{ $blogSection['title'] ?? 'Latest News' }}
+                        </h2>
+                    </div>
+                    @if(isset($blogSection['view_all_url']))
+                        <a href="{{ $blogSection['view_all_url'] }}" class="inline-flex items-center text-green-600 font-medium hover:text-green-700 mt-4 sm:mt-0">
+                            {{ $blogSection['view_all_text'] ?? 'View All Posts' }}
+                            <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    @endif
+                </div>
+
+                {{-- Posts Grid --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($posts as $post)
+                        <x-post-card
+                            :title="$post->title"
+                            :summary="$post->excerpt ?? Str::limit($post->content, 150)"
+                            :image="$post->featured_image ?? null"
+                            :link="route('blog.show', $post->slug)"
+                            :published_date="$post->published_at ?? $post->created_at"
+                            :category="$post->category ?? null"
+                        />
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- ==================== CTA SECTION (Optional) ==================== --}}
+    @if(isset($cta) && $cta)
+        <section class="py-20 bg-green-600">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    {{ $cta['title'] ?? 'Ready to Get Started?' }}
+                </h2>
+                @if(isset($cta['description']))
+                    <p class="text-green-100 text-lg mb-8 max-w-2xl mx-auto">
+                        {{ $cta['description'] }}
+                    </p>
                 @endif
-            </ul>
-        </div>
-    </section>
+                <div class="flex flex-wrap justify-center gap-4">
+                    @if(isset($cta['primary_text']) && isset($cta['primary_url']))
+                        <x-button
+                            type="white"
+                            :text="$cta['primary_text']"
+                            :url="$cta['primary_url']"
+                            size="lg"
+                        />
+                    @endif
+                    @if(isset($cta['secondary_text']) && isset($cta['secondary_url']))
+                        <x-button
+                            type="outline"
+                            :text="$cta['secondary_text']"
+                            :url="$cta['secondary_url']"
+                            size="lg"
+                            class="border-white text-white hover:bg-white hover:text-green-600"
+                        />
+                    @endif
+                </div>
+            </div>
+        </section>
+    @endif
 @endsection

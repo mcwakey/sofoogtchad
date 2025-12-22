@@ -47,38 +47,58 @@
     @if(count($products) > 0)
         <div class="grid {{ $gridCols }} gap-6">
             @foreach($products as $product)
+                @php
+                    // Support both array and object formats
+                    $isArray = is_array($product);
+                    $name = $isArray ? ($product['name'] ?? '') : ($product->name ?? '');
+                    $description = $isArray
+                        ? ($product['description'] ?? '')
+                        : Str::limit($product->short_description ?? $product->description ?? '', 100);
+                    $image = $isArray
+                        ? ($product['image'] ?? '/images/placeholder-product.jpg')
+                        : ($product->featured_image ?? $product->image ?? '/images/placeholder-product.jpg');
+                    $url = $isArray
+                        ? ($product['url'] ?? '#')
+                        : route('products.show', $product->slug);
+                    $badge = $isArray
+                        ? ($product['badge'] ?? null)
+                        : ($showBadge && $product->category ? $product->category->name : null);
+                    $price = $isArray ? ($product['price'] ?? null) : ($product->price ?? null);
+                    $salePrice = $isArray ? ($product['sale_price'] ?? null) : ($product->sale_price ?? null);
+                    $sizes = $isArray ? null : ($product->sizes ?? null);
+                @endphp
                 <x-card
-                    :image="$product->featured_image ?? $product->image ?? '/images/placeholder-product.jpg'"
-                    :imageAlt="$product->name"
-                    :title="$product->name"
-                    :description="Str::limit($product->short_description ?? $product->description ?? '', 100)"
-                    :link="route('products.show', $product->slug)"
+                    :image="$image"
+                    :imageAlt="$name"
+                    :title="$name"
+                    :description="$description"
+                    :link="$url"
                     linkText="View Product"
-                    :badge="$showBadge && $product->category ? $product->category->name : null"
+                    :badge="$badge"
                     badgeColor="green"
                 >
                     {{-- Price or additional info --}}
-                    @if(isset($product->price) && $product->price)
+                    @if($price)
                         <div class="flex items-center gap-2 mt-2">
-                            @if(isset($product->sale_price) && $product->sale_price)
+                            @if($salePrice)
                                 <span class="text-lg font-bold text-green-600">
-                                    {{ number_format($product->sale_price, 0) }} FCFA
+                                    {{ number_format($salePrice, 0) }} FCFA
                                 </span>
                                 <span class="text-sm text-gray-400 line-through">
-                                    {{ number_format($product->price, 0) }} FCFA
+                                    {{ number_format($price, 0) }} FCFA
                                 </span>
                             @else
                                 <span class="text-lg font-bold text-green-600">
-                                    {{ number_format($product->price, 0) }} FCFA
+                                    {{ number_format($price, 0) }} FCFA
                                 </span>
                             @endif
                         </div>
                     @endif
 
                     {{-- Sizes available --}}
-                    @if(isset($product->sizes) && $product->sizes->count() > 0)
+                    @if($sizes && $sizes->count() > 0)
                         <p class="text-xs text-gray-500 mt-1">
-                            {{ $product->sizes->count() }} size{{ $product->sizes->count() > 1 ? 's' : '' }} available
+                            {{ $sizes->count() }} size{{ $sizes->count() > 1 ? 's' : '' }} available
                         </p>
                     @endif
                 </x-card>
