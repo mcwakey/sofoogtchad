@@ -8,8 +8,8 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PartnersController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 // Products routes
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
