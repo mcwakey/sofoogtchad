@@ -5,15 +5,52 @@
 @section('meta_description', $metaDescription ?? setting('site_description'))
 
 @section('content')
-    {{-- ==================== HERO SECTION ==================== --}}
-    <x-hero
-        :background_image="$hero['background_image'] ?? null"
-        :title="$hero['title'] ?? setting('site_name', 'Welcome to Sofoodtchad')"
-        :subtitle="$hero['subtitle'] ?? setting('site_tagline', 'Premium Quality Food Products')"
-        :cta_text="$hero['cta_text'] ?? 'View Our Products'"
-        :cta_url="$hero['cta_url'] ?? '/products'"
-        :secondaryCtaText="$hero['secondary_cta_text'] ?? null"
-        :secondaryCtaUrl="$hero['secondary_cta_url'] ?? null"
+    {{-- ==================== HERO SLIDER SECTION ==================== --}}
+    @php
+        // Build slides array from hero data
+        $heroSlides = $heroSlides ?? [];
+
+        // If no slides provided, create default slides from hero data
+        if (empty($heroSlides)) {
+            $heroSlides = [
+                [
+                    'background_image' => $hero['background_image'] ?? null,
+                    'title' => $hero['title'] ?? setting('site_name', 'Welcome to Sofoodtchad'),
+                    'subtitle' => $hero['subtitle'] ?? setting('site_tagline', 'Premium Quality Food Products'),
+                    'cta_text' => $hero['cta_text'] ?? 'View Our Products',
+                    'cta_url' => $hero['cta_url'] ?? '/products',
+                    'secondary_cta_text' => $hero['secondary_cta_text'] ?? null,
+                    'secondary_cta_url' => $hero['secondary_cta_url'] ?? null,
+                ],
+                [
+                    'background_image' => $hero['slide2_image'] ?? $hero['background_image'] ?? null,
+                    'title' => 'Quality You Can Trust',
+                    'subtitle' => 'From farm to table, we ensure the highest standards of quality in every product',
+                    'cta_text' => 'Our Process',
+                    'cta_url' => '/process',
+                    'secondary_cta_text' => 'Contact Us',
+                    'secondary_cta_url' => '/contact',
+                ],
+                [
+                    'background_image' => $hero['slide3_image'] ?? $hero['background_image'] ?? null,
+                    'title' => 'Partner With Us',
+                    'subtitle' => 'Join our network of trusted distributors and retailers across Chad',
+                    'cta_text' => 'Become a Partner',
+                    'cta_url' => '/partners',
+                    'secondary_cta_text' => 'Learn More',
+                    'secondary_cta_url' => '/about',
+                ],
+            ];
+        }
+    @endphp
+
+    <x-hero-slider
+        :slides="$heroSlides"
+        :autoplay="true"
+        :interval="6000"
+        height="lg"
+        :showDots="true"
+        :showArrows="true"
     />
 
     {{-- ==================== ABOUT SNIPPET SECTION ==================== --}}
