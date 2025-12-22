@@ -8,18 +8,18 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
+
         .hero { background: linear-gradient(135deg, #2d5016 0%, #4a7c23 100%); color: white; padding: 60px 0; text-align: center; }
         .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        
+
         .filters { padding: 20px 0; background: #f5f5f5; border-bottom: 1px solid #ddd; }
         .filters .container { display: flex; gap: 15px; align-items: center; }
         .filter-btn { padding: 8px 20px; border: 1px solid #ddd; background: white; border-radius: 20px; text-decoration: none; color: #333; transition: all 0.3s; }
         .filter-btn:hover, .filter-btn.active { background: #2d5016; color: white; border-color: #2d5016; }
-        
+
         .posts-section { padding: 60px 0; }
         .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
-        
+
         .post-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
         .post-card:hover { transform: translateY(-5px); }
         .post-image { height: 200px; background: #eee; overflow: hidden; }
@@ -35,14 +35,14 @@
         .post-excerpt { color: #666; font-size: 0.95rem; margin-bottom: 15px; }
         .read-more { color: #2d5016; text-decoration: none; font-weight: 600; }
         .read-more:hover { text-decoration: underline; }
-        
+
         .empty-state { text-align: center; padding: 60px 20px; color: #666; }
-        
+
         .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 40px; }
         .pagination a, .pagination span { padding: 8px 15px; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; }
         .pagination a:hover { background: #f5f5f5; }
         .pagination .current { background: #2d5016; color: white; border-color: #2d5016; }
-        
+
         @media (max-width: 768px) {
             .posts-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 1.8rem; }

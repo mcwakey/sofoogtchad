@@ -14,7 +14,7 @@
     <div class="form-row">
         <div class="form-group" style="flex: 2;">
             <label for="title">Title *</label>
-            <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" 
+            <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
                    value="{{ old('title', $post->title) }}" required>
             @error('title')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -23,7 +23,7 @@
 
         <div class="form-group" style="flex: 1;">
             <label for="slug">Slug</label>
-            <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror" 
+            <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror"
                    value="{{ old('slug', $post->slug) }}">
             @error('slug')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -33,7 +33,7 @@
 
     <div class="form-group">
         <label for="excerpt">Excerpt</label>
-        <textarea name="excerpt" id="excerpt" rows="2" 
+        <textarea name="excerpt" id="excerpt" rows="2"
                   class="form-control @error('excerpt') is-invalid @enderror">{{ old('excerpt', $post->excerpt) }}</textarea>
         @error('excerpt')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -42,7 +42,7 @@
 
     <div class="form-group">
         <label for="content">Content *</label>
-        <textarea name="content" id="content" rows="12" 
+        <textarea name="content" id="content" rows="12"
                   class="form-control @error('content') is-invalid @enderror" required>{{ old('content', $post->content) }}</textarea>
         @error('content')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -75,8 +75,8 @@
 
         <div class="form-group">
             <label for="published_at">Publish Date</label>
-            <input type="datetime-local" name="published_at" id="published_at" 
-                   class="form-control @error('published_at') is-invalid @enderror" 
+            <input type="datetime-local" name="published_at" id="published_at"
+                   class="form-control @error('published_at') is-invalid @enderror"
                    value="{{ old('published_at', $post->published_at?->format('Y-m-d\TH:i')) }}">
             @error('published_at')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -91,7 +91,7 @@
                 <img src="{{ $post->image_url }}" alt="Featured" style="max-width: 200px; border-radius: 4px;">
             </div>
         @endif
-        <input type="file" name="featured_image" id="featured_image" 
+        <input type="file" name="featured_image" id="featured_image"
                class="form-control @error('featured_image') is-invalid @enderror" accept="image/*">
         @error('featured_image')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -103,8 +103,8 @@
 
     <div class="form-group">
         <label for="meta_title">Meta Title</label>
-        <input type="text" name="meta_title" id="meta_title" 
-               class="form-control @error('meta_title') is-invalid @enderror" 
+        <input type="text" name="meta_title" id="meta_title"
+               class="form-control @error('meta_title') is-invalid @enderror"
                value="{{ old('meta_title', $post->meta_title) }}">
         @error('meta_title')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -113,7 +113,7 @@
 
     <div class="form-group">
         <label for="meta_description">Meta Description</label>
-        <textarea name="meta_description" id="meta_description" rows="2" 
+        <textarea name="meta_description" id="meta_description" rows="2"
                   class="form-control @error('meta_description') is-invalid @enderror">{{ old('meta_description', $post->meta_description) }}</textarea>
         @error('meta_description')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -152,7 +152,7 @@
         @foreach($post->images as $image)
             <div class="gallery-item" style="position: relative;">
                 <img src="{{ $image->url }}" alt="{{ $image->alt_text }}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px;">
-                <form action="{{ route('admin.posts.images.destroy', [$post, $image]) }}" method="POST" 
+                <form action="{{ route('admin.posts.images.destroy', [$post, $image]) }}" method="POST"
                       style="position: absolute; top: 5px; right: 5px;">
                     @csrf
                     @method('DELETE')

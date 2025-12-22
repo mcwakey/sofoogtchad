@@ -14,21 +14,21 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #333; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        
+
         .breadcrumb { padding: 20px 0; background: #f5f5f5; font-size: 0.9rem; }
         .breadcrumb a { color: #2d5016; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
-        
+
         .post-header { padding: 60px 0 40px; text-align: center; }
         .post-type { display: inline-block; background: #2d5016; color: white; padding: 4px 15px; border-radius: 15px; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; }
         .post-type.news { background: #0066cc; }
         .post-title { font-size: 2.5rem; margin-bottom: 20px; line-height: 1.3; }
         .post-meta { color: #666; font-size: 0.95rem; }
         .post-meta span { margin: 0 10px; }
-        
+
         .featured-image { margin-bottom: 40px; }
         .featured-image img { width: 100%; max-height: 500px; object-fit: cover; border-radius: 12px; }
-        
+
         .post-content { padding-bottom: 60px; }
         .post-content p { margin-bottom: 20px; font-size: 1.1rem; }
         .post-content h2 { margin: 40px 0 20px; font-size: 1.8rem; }
@@ -37,13 +37,13 @@
         .post-content li { margin-bottom: 10px; }
         .post-content img { max-width: 100%; border-radius: 8px; margin: 20px 0; }
         .post-content blockquote { border-left: 4px solid #2d5016; padding-left: 20px; margin: 30px 0; font-style: italic; color: #555; }
-        
+
         .post-gallery { margin: 40px 0; }
         .post-gallery h3 { margin-bottom: 20px; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
         .gallery-grid img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; }
         .gallery-grid img:hover { transform: scale(1.05); }
-        
+
         .related-posts { padding: 60px 0; background: #f9f9f9; }
         .related-posts h2 { text-align: center; margin-bottom: 40px; color: #2d5016; }
         .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
@@ -54,10 +54,10 @@
         .related-card h4 a { color: #333; text-decoration: none; }
         .related-card h4 a:hover { color: #2d5016; }
         .related-card .date { color: #666; font-size: 0.85rem; }
-        
+
         .back-link { display: inline-block; margin-top: 40px; color: #2d5016; text-decoration: none; font-weight: 600; }
         .back-link:hover { text-decoration: underline; }
-        
+
         @media (max-width: 768px) {
             .post-title { font-size: 1.8rem; }
             .post-content p { font-size: 1rem; }
@@ -67,8 +67,8 @@
 <body>
     <nav class="breadcrumb">
         <div class="container">
-            <a href="/">Home</a> / 
-            <a href="{{ route('blog.index') }}">Blog</a> / 
+            <a href="/">Home</a> /
+            <a href="{{ route('blog.index') }}">Blog</a> /
             {{ $post->title }}
         </div>
     </nav>
