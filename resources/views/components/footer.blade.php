@@ -213,9 +213,14 @@
     <div class="border-t border-gray-800">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                {{-- Copyright --}}
+                {{-- Copyright & Designer Credit --}}
                 <p class="text-gray-500 text-sm text-center md:text-{{ app()->getLocale() === 'ar' ? 'right' : 'left' }}">
                     &copy; {{ $currentYear }} {{ $siteName }}. {{ __('general.all_rights_reserved') }}
+                    <span class="mx-2">|</span>
+                    {{ __('general.designed_by') }}
+                    <a href="https://clicksoftwaregh.com" target="_blank" rel="noopener noreferrer" class="text-green-400 hover:text-green-300 transition-colors duration-200 font-medium">
+                        Click Software GH
+                    </a>
                 </p>
 
                 {{-- Legal Links --}}
@@ -228,16 +233,6 @@
                         </li>
                     @endforeach
                 </ul>
-            </div>
-
-            {{-- Designer Credit --}}
-            <div class="mt-4 pt-4 border-t border-gray-800 text-center">
-                <p class="text-gray-500 text-sm">
-                    {{ __('general.designed_by') }}
-                    <a href="https://clicksoftwaregh.com" target="_blank" rel="noopener noreferrer" class="text-green-400 hover:text-green-300 transition-colors duration-200 font-medium">
-                        Click Software GH
-                    </a>
-                </p>
             </div>
         </div>
     </div>

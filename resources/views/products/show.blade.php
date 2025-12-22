@@ -164,7 +164,7 @@
                                 </a>
                             @endif
                             <a
-                                href="{{ route('contact') }}"
+                                href="{{ route('contact.index') }}"
                                 class="inline-flex items-center justify-center gap-2 px-6 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:border-green-500 hover:text-green-600 dark:hover:border-green-500 dark:hover:text-green-400 transition-colors"
                             >
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
