@@ -21,7 +21,7 @@
         'orange' => 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300',
     ];
 
-    $cardClasses = 'bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md dark:shadow-gray-900/30';
+    $cardClasses = 'bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-md dark:shadow-gray-900/30 border border-gray-100 dark:border-gray-600';
     if ($hover) {
         $cardClasses .= ' transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-900/50 hover:-translate-y-1';
     }

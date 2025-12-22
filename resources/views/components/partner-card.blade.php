@@ -23,7 +23,7 @@
     };
 @endphp
 
-<div {{ $attributes->merge(['class' => 'partner-card bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/30 hover:shadow-md dark:hover:shadow-gray-900/50 transition-all duration-300 ' . $sizeClasses]) }}>
+<div {{ $attributes->merge(['class' => 'partner-card bg-white dark:bg-gray-700 rounded-xl shadow-sm dark:shadow-gray-900/30 border border-gray-100 dark:border-gray-600 hover:shadow-md dark:hover:shadow-gray-900/50 transition-all duration-300 ' . $sizeClasses]) }}>
     @if($link)
         <a
             href="{{ $link }}"

@@ -6,7 +6,7 @@
 
 @section('content')
     {{-- ==================== PAGE HEADER ==================== --}}
-    <section class="relative bg-gradient-to-br from-green-600 to-green-800 py-16 md:py-20">
+    <section class="relative bg-gradient-to-br from-green-600 to-green-800 py-16 md:py-20 overflow-hidden">
         <div class="absolute inset-0 bg-black/20"></div>
         <div class="absolute inset-0 overflow-hidden">
             <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
@@ -24,6 +24,13 @@
                     {{ isset($category) ? $category->description : setting('homepage_products_subtitle', 'Discover our range of premium quality food products') }}
                 </p>
             </div>
+        </div>
+
+        {{-- Wave Divider --}}
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                <path d="M0 60V30C240 50 480 10 720 30C960 50 1200 10 1440 30V60H0Z" class="fill-gray-50 dark:fill-gray-800"/>
+            </svg>
         </div>
     </section>
 

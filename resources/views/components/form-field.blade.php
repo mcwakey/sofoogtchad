@@ -25,14 +25,14 @@
     $hasError = $errors->has($name);
     $fieldValue = old($name, $value);
 
-    $inputClasses = 'block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 shadow-sm transition-colors duration-200 focus:border-green-500 focus:ring-green-500 sm:text-sm';
+    $inputClasses = 'block w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 shadow-sm transition-all duration-200 focus:border-green-500 dark:focus:border-green-400 focus:ring-4 focus:ring-green-500/20 dark:focus:ring-green-400/20 focus:outline-none text-base';
 
     if ($hasError) {
-        $inputClasses = 'block w-full rounded-lg border-red-500 dark:border-red-500 dark:bg-gray-700 shadow-sm transition-colors duration-200 focus:border-red-500 focus:ring-red-500 sm:text-sm text-red-900 dark:text-red-400 placeholder-red-300 dark:placeholder-red-400';
+        $inputClasses = 'block w-full px-4 py-3 rounded-xl border-2 border-red-400 dark:border-red-500 bg-white dark:bg-gray-700 shadow-sm transition-all duration-200 focus:border-red-500 focus:ring-4 focus:ring-red-500/20 focus:outline-none text-base text-red-900 dark:text-red-400 placeholder-red-300 dark:placeholder-red-400';
     }
 
     if ($disabled) {
-        $inputClasses .= ' bg-gray-100 dark:bg-gray-600 cursor-not-allowed';
+        $inputClasses .= ' bg-gray-50 dark:bg-gray-600 cursor-not-allowed opacity-60';
     }
 @endphp
 
