@@ -49,6 +49,12 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('admin.media.index') }}" class="{{ request()->routeIs('admin.media*') ? 'active' : '' }}">
+                    Media Library
+                </a>
+            </li>
+
             @if(auth()->user()->hasRole('admin'))
                 <li>
                     <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">

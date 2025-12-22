@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ProcessStepController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\DistributorRequestController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -157,4 +158,17 @@ Route::middleware('admin')->group(function () {
         'update' => 'admin.distributor-requests.update',
         'destroy' => 'admin.distributor-requests.destroy',
     ])->except(['create', 'store', 'edit']);
+
+    // Media management
+    Route::resource('media', MediaController::class)->names([
+        'index' => 'admin.media.index',
+        'create' => 'admin.media.create',
+        'store' => 'admin.media.store',
+        'show' => 'admin.media.show',
+        'edit' => 'admin.media.edit',
+        'update' => 'admin.media.update',
+        'destroy' => 'admin.media.destroy',
+    ]);
+    Route::get('media-picker', [MediaController::class, 'picker'])->name('admin.media.picker');
+    Route::post('media/bulk-delete', [MediaController::class, 'bulkDelete'])->name('admin.media.bulk-delete');
 });
