@@ -131,6 +131,7 @@ Route::middleware('admin')->group(function () {
         'index' => 'admin.posts.index',
         'create' => 'admin.posts.create',
         'store' => 'admin.posts.store',
+        'show' => 'admin.posts.show',
         'edit' => 'admin.posts.edit',
         'update' => 'admin.posts.update',
         'destroy' => 'admin.posts.destroy',

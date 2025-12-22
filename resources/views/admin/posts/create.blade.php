@@ -1,124 +1,277 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Add Post')
+@section('title', 'Create Blog Post')
+@section('page-title', 'Create Post')
+
+@section('page-header')
+    <div class="sm:flex sm:items-center sm:justify-between">
+        <div>
+            <nav class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                <a href="{{ route('admin.posts.index') }}" class="hover:text-gray-700">Blog Posts</a>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span class="text-gray-900">Create Post</span>
+            </nav>
+            <h1 class="text-2xl font-bold text-gray-900">Create New Post</h1>
+        </div>
+    </div>
+@endsection
 
 @section('content')
-<div class="content-header">
-    <h1>Add Post</h1>
-</div>
+    <form method="POST" action="{{ route('admin.posts.store') }}" enctype="multipart/form-data">
+        @csrf
 
-<form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {{-- Main Content --}}
+            <div class="lg:col-span-2 space-y-6">
+                {{-- Basic Info --}}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Post Content</h2>
 
-    <div class="form-row">
-        <div class="form-group" style="flex: 2;">
-            <label for="title">Title *</label>
-            <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-                   value="{{ old('title') }}" required>
-            @error('title')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+                    <div class="space-y-4">
+                        {{-- Title --}}
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
+                                Title <span class="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                value="{{ old('title') }}"
+                                required
+                                class="block w-full @error('title') border-red-500 @enderror"
+                                placeholder="Enter post title"
+                            >
+                            @error('title')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Slug --}}
+                        <div>
+                            <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
+                                Slug <span class="text-gray-400 text-xs font-normal">(auto-generated if empty)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="slug"
+                                name="slug"
+                                value="{{ old('slug') }}"
+                                class="block w-full @error('slug') border-red-500 @enderror"
+                                placeholder="post-url-slug"
+                            >
+                            @error('slug')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Excerpt / Summary --}}
+                        <div>
+                            <label for="excerpt" class="block text-sm font-medium text-gray-700 mb-1">
+                                Summary / Excerpt
+                            </label>
+                            <textarea
+                                id="excerpt"
+                                name="excerpt"
+                                rows="3"
+                                class="block w-full @error('excerpt') border-red-500 @enderror"
+                                placeholder="Brief summary for listings and SEO"
+                            >{{ old('excerpt') }}</textarea>
+                            @error('excerpt')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Content --}}
+                        <div>
+                            <label for="content" class="block text-sm font-medium text-gray-700 mb-1">
+                                Content <span class="text-red-500">*</span>
+                            </label>
+                            <textarea
+                                id="content"
+                                name="content"
+                                rows="15"
+                                required
+                                class="block w-full font-mono text-sm @error('content') border-red-500 @enderror"
+                                placeholder="Write your post content here... HTML is supported."
+                            >{{ old('content') }}</textarea>
+                            @error('content')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                            <p class="mt-1 text-xs text-gray-500">You can use HTML for formatting. A rich text editor can be integrated later.</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Featured Image --}}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Featured Image</h2>
+
+                    <div x-data="{ imagePreview: null }">
+                        <div class="flex items-center justify-center w-full">
+                            <label
+                                for="featured_image"
+                                class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors"
+                                x-show="!imagePreview"
+                            >
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-xs text-gray-400">PNG, JPG, GIF up to 2MB</p>
+                                </div>
+                                <input
+                                    id="featured_image"
+                                    name="featured_image"
+                                    type="file"
+                                    class="hidden"
+                                    accept="image/*"
+                                    @change="const file = $event.target.files[0]; if(file) { const reader = new FileReader(); reader.onload = (e) => imagePreview = e.target.result; reader.readAsDataURL(file); }"
+                                >
+                            </label>
+
+                            {{-- Preview --}}
+                            <div x-show="imagePreview" class="relative w-full">
+                                <img :src="imagePreview" class="w-full h-48 object-cover rounded-lg">
+                                <button
+                                    type="button"
+                                    @click="imagePreview = null; document.getElementById('featured_image').value = ''"
+                                    class="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                                >
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        @error('featured_image')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- SEO Settings --}}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">SEO Settings</h2>
+
+                    <div class="space-y-4">
+                        {{-- Meta Title --}}
+                        <div>
+                            <label for="meta_title" class="block text-sm font-medium text-gray-700 mb-1">
+                                Meta Title
+                            </label>
+                            <input
+                                type="text"
+                                id="meta_title"
+                                name="meta_title"
+                                value="{{ old('meta_title') }}"
+                                class="block w-full"
+                                placeholder="SEO title (defaults to post title)"
+                            >
+                        </div>
+
+                        {{-- Meta Description --}}
+                        <div>
+                            <label for="meta_description" class="block text-sm font-medium text-gray-700 mb-1">
+                                Meta Description
+                            </label>
+                            <textarea
+                                id="meta_description"
+                                name="meta_description"
+                                rows="2"
+                                class="block w-full"
+                                placeholder="SEO description for search engines"
+                            >{{ old('meta_description') }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Sidebar --}}
+            <div class="space-y-6">
+                {{-- Publish --}}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Publish</h2>
+
+                    <div class="space-y-4">
+                        {{-- Status --}}
+                        <div>
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">
+                                Status
+                            </label>
+                            <select id="status" name="status" class="block w-full">
+                                <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>Draft</option>
+                                <option value="published" {{ old('status') === 'published' ? 'selected' : '' }}>Published</option>
+                                <option value="archived" {{ old('status') === 'archived' ? 'selected' : '' }}>Archived</option>
+                            </select>
+                        </div>
+
+                        {{-- Type --}}
+                        <div>
+                            <label for="type" class="block text-sm font-medium text-gray-700 mb-1">
+                                Type
+                            </label>
+                            <select id="type" name="type" class="block w-full">
+                                <option value="blog" {{ old('type', 'blog') === 'blog' ? 'selected' : '' }}>Blog</option>
+                                <option value="news" {{ old('type') === 'news' ? 'selected' : '' }}>News</option>
+                            </select>
+                        </div>
+
+                        {{-- Publish Date --}}
+                        <div>
+                            <label for="published_at" class="block text-sm font-medium text-gray-700 mb-1">
+                                Publish Date
+                            </label>
+                            <input
+                                type="datetime-local"
+                                id="published_at"
+                                name="published_at"
+                                value="{{ old('published_at') }}"
+                                class="block w-full"
+                            >
+                            <p class="mt-1 text-xs text-gray-500">Leave empty for immediate publish</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex gap-3">
+                        <button type="submit" class="flex-1 inline-flex justify-center items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Save Post
+                        </button>
+                    </div>
+
+                    <div class="mt-3">
+                        <a href="{{ route('admin.posts.index') }}" class="block w-full text-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Tips --}}
+                <div class="bg-blue-50 rounded-xl border border-blue-200 p-6">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-blue-900">Writing Tips</h3>
+                            <ul class="mt-2 text-sm text-blue-800 space-y-1">
+                                <li>• Use a compelling headline</li>
+                                <li>• Add a featured image</li>
+                                <li>• Write a clear summary</li>
+                                <li>• Include relevant keywords</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group" style="flex: 1;">
-            <label for="slug">Slug (auto-generated if empty)</label>
-            <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror"
-                   value="{{ old('slug') }}" placeholder="leave-empty-for-auto">
-            @error('slug')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="excerpt">Excerpt</label>
-        <textarea name="excerpt" id="excerpt" rows="2"
-                  class="form-control @error('excerpt') is-invalid @enderror"
-                  placeholder="Brief summary for listings...">{{ old('excerpt') }}</textarea>
-        @error('excerpt')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="form-group">
-        <label for="content">Content *</label>
-        <textarea name="content" id="content" rows="12"
-                  class="form-control @error('content') is-invalid @enderror" required>{{ old('content') }}</textarea>
-        @error('content')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="type">Type *</label>
-            <select name="type" id="type" class="form-control @error('type') is-invalid @enderror" required>
-                <option value="blog" {{ old('type') === 'blog' ? 'selected' : '' }}>Blog</option>
-                <option value="news" {{ old('type') === 'news' ? 'selected' : '' }}>News</option>
-            </select>
-            @error('type')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="form-group">
-            <label for="status">Status *</label>
-            <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
-                <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>Draft</option>
-                <option value="published" {{ old('status') === 'published' ? 'selected' : '' }}>Published</option>
-                <option value="archived" {{ old('status') === 'archived' ? 'selected' : '' }}>Archived</option>
-            </select>
-            @error('status')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="form-group">
-            <label for="published_at">Publish Date</label>
-            <input type="datetime-local" name="published_at" id="published_at"
-                   class="form-control @error('published_at') is-invalid @enderror"
-                   value="{{ old('published_at') }}">
-            @error('published_at')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="featured_image">Featured Image</label>
-        <input type="file" name="featured_image" id="featured_image"
-               class="form-control @error('featured_image') is-invalid @enderror" accept="image/*">
-        @error('featured_image')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <hr style="margin: 30px 0;">
-    <h3>SEO Settings</h3>
-
-    <div class="form-group">
-        <label for="meta_title">Meta Title</label>
-        <input type="text" name="meta_title" id="meta_title"
-               class="form-control @error('meta_title') is-invalid @enderror"
-               value="{{ old('meta_title') }}" placeholder="Defaults to post title if empty">
-        @error('meta_title')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="form-group">
-        <label for="meta_description">Meta Description</label>
-        <textarea name="meta_description" id="meta_description" rows="2"
-                  class="form-control @error('meta_description') is-invalid @enderror"
-                  placeholder="Description for search engines...">{{ old('meta_description') }}</textarea>
-        @error('meta_description')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Create Post</button>
-        <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">Cancel</a>
-    </div>
-</form>
+    </form>
 @endsection
