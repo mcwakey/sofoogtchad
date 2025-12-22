@@ -24,24 +24,24 @@
 
     // Quick links
     $quickLinks = [
-        ['label' => 'Home', 'route' => '/'],
-        ['label' => 'About Us', 'route' => '/about'],
-        ['label' => 'Our Products', 'route' => '/products'],
-        ['label' => 'Quality & Process', 'route' => '/process'],
+        ['label' => __('navigation.home'), 'route' => '/'],
+        ['label' => __('general.about_us'), 'route' => '/about'],
+        ['label' => __('general.our_products'), 'route' => '/products'],
+        ['label' => __('general.quality_process'), 'route' => '/process'],
     ];
 
     // Company links
     $companyLinks = [
-        ['label' => 'Our Partners', 'route' => '/partners'],
-        ['label' => 'Become a Distributor', 'route' => '/partners/become-distributor'],
-        ['label' => 'Blog & News', 'route' => '/blog'],
-        ['label' => 'Contact Us', 'route' => '/contact'],
+        ['label' => __('general.our_partners'), 'route' => '/partners'],
+        ['label' => __('navigation.become_distributor'), 'route' => '/partners/become-distributor'],
+        ['label' => __('general.blog_news'), 'route' => '/blog'],
+        ['label' => __('general.contact_us'), 'route' => '/contact'],
     ];
 
     // Legal links
     $legalLinks = [
-        ['label' => 'Privacy Policy', 'route' => '/privacy-policy'],
-        ['label' => 'Terms of Service', 'route' => '/terms-of-service'],
+        ['label' => __('general.privacy_policy'), 'route' => '/privacy-policy'],
+        ['label' => __('general.terms_of_service'), 'route' => '/terms-of-service'],
     ];
 
     $currentYear = date('Y');
@@ -81,7 +81,7 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-gray-400 hover:bg-green-600 hover:text-white transition-colors duration-200"
-                                aria-label="Follow us on {{ $social['label'] }}"
+                                aria-label="{{ __('general.follow_us') }} {{ $social['label'] }}"
                             >
                                 @switch($platform)
                                     @case('facebook')
@@ -123,7 +123,7 @@
 
             {{-- Quick Links Column --}}
             <div>
-                <h3 class="text-white font-semibold text-lg mb-4">Quick Links</h3>
+                <h3 class="text-white font-semibold text-lg mb-4">{{ __('general.quick_links') }}</h3>
                 <ul class="space-y-3">
                     @foreach($quickLinks as $link)
                         <li>
@@ -137,7 +137,7 @@
 
             {{-- Company Column --}}
             <div>
-                <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+                <h3 class="text-white font-semibold text-lg mb-4">{{ __('general.company') }}</h3>
                 <ul class="space-y-3">
                     @foreach($companyLinks as $link)
                         <li>
@@ -151,7 +151,7 @@
 
             {{-- Contact Column --}}
             <div>
-                <h3 class="text-white font-semibold text-lg mb-4">Contact Us</h3>
+                <h3 class="text-white font-semibold text-lg mb-4">{{ __('general.contact_us') }}</h3>
                 <ul class="space-y-4">
                     @if($contactAddress)
                         <li class="flex items-start gap-3">
@@ -214,8 +214,8 @@
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 {{-- Copyright --}}
-                <p class="text-gray-500 text-sm text-center md:text-left">
-                    &copy; {{ $currentYear }} {{ $siteName }}. All rights reserved.
+                <p class="text-gray-500 text-sm text-center md:text-{{ app()->getLocale() === 'ar' ? 'right' : 'left' }}">
+                    &copy; {{ $currentYear }} {{ $siteName }}. {{ __('general.all_rights_reserved') }}
                 </p>
 
                 {{-- Legal Links --}}

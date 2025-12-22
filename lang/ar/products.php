@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'منتجاتنا',
+    'subtitle' => 'اكتشف مجموعتنا من المنتجات عالية الجودة',
+    'all_products' => 'جميع المنتجات',
+    'category' => 'الفئة',
+    'categories' => 'الفئات',
+    'all_categories' => 'جميع الفئات',
+    'type' => 'النوع',
+    'all_types' => 'جميع الأنواع',
+    'filters' => 'الفلاتر',
+    'active_filters' => 'الفلاتر النشطة:',
+    'clear_all' => 'مسح الكل',
+    'no_products_found' => 'لم يتم العثور على منتجات تطابق معاييرك.',
+    'try_different_filters' => 'حاول تعديل الفلاتر أو تصفح جميع المنتجات.',
+    'browse_all' => 'تصفح جميع المنتجات',
+    'product_details' => 'تفاصيل المنتج',
+    'description' => 'الوصف',
+    'sizes_available' => 'الأحجام المتاحة',
+    'related_products' => 'منتجات مشابهة',
+    'need_help' => 'هل تحتاج مساعدة في الاختيار؟',
+    'contact_support' => 'تواصل مع فريقنا للمساعدة',
+    'new' => 'جديد',
+    'featured' => 'مميز',
+    'discover' => 'اكتشف',
+];

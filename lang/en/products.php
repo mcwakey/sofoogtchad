@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Our Products',
+    'subtitle' => 'Discover our range of quality products',
+    'all_products' => 'All Products',
+    'category' => 'Category',
+    'categories' => 'Categories',
+    'all_categories' => 'All Categories',
+    'type' => 'Type',
+    'all_types' => 'All Types',
+    'filters' => 'Filters',
+    'active_filters' => 'Active filters:',
+    'clear_all' => 'Clear all',
+    'no_products_found' => 'No products found matching your criteria.',
+    'try_different_filters' => 'Try adjusting your filters or browse all products.',
+    'browse_all' => 'Browse All Products',
+    'product_details' => 'Product Details',
+    'description' => 'Description',
+    'sizes_available' => 'Sizes Available',
+    'related_products' => 'Related Products',
+    'need_help' => 'Need Help Choosing?',
+    'contact_support' => 'Contact our team for assistance',
+    'new' => 'New',
+    'featured' => 'Featured',
+    'discover' => 'Discover',
+];
