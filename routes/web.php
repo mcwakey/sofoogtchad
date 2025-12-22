@@ -8,6 +8,7 @@ use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactController;
 
 // Homepage with dynamic content
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -33,8 +34,12 @@ Route::get('/partners/become-distributor', [PartnersController::class, 'showDist
 Route::post('/partners/become-distributor', [PartnersController::class, 'submitDistributorRequest'])->name('partners.distributor-request');
 Route::get('/become-distributor', [PartnersController::class, 'showDistributorForm'])->name('distributor.request');
 
-// Dynamic page rendering (exclude admin, products, process, blog, partners paths)
+// Contact routes
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+// Dynamic page rendering (exclude admin, products, process, blog, partners, contact paths)
 Route::get('/pages/{slug}', [PageController::class, 'show'])->name('pages.show');
 Route::get('/{slug}', [PageController::class, 'show'])
     ->name('page.show')
-    ->where('slug', '^(?!admin|products|process|blog|partners|pages|become-distributor|about).*$');
+    ->where('slug', '^(?!admin|products|process|blog|partners|pages|become-distributor|about|contact).*$');

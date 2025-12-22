@@ -12,13 +12,13 @@
     $isReversed = $reverse || $imagePosition === 'right';
 @endphp
 
-<section {{ $attributes->merge(['class' => 'about-snippet py-12 md:py-16']) }}>
+<section {{ $attributes->merge(['class' => 'about-snippet py-12 md:py-16 bg-white dark:bg-gray-900 transition-colors duration-200']) }}>
     <div class="container mx-auto px-4">
         <div class="flex flex-col {{ $isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row' }} items-center gap-8 lg:gap-12">
             {{-- Image --}}
             @if($image)
                 <div class="w-full lg:w-1/2">
-                    <div class="relative rounded-2xl overflow-hidden shadow-lg">
+                    <div class="relative rounded-2xl overflow-hidden shadow-lg dark:shadow-gray-800/30">
                         <img
                             src="{{ $image }}"
                             alt="{{ $imageAlt ?? $title }}"
@@ -35,21 +35,21 @@
             <div class="w-full {{ $image ? 'lg:w-1/2' : '' }}">
                 {{-- Subtitle --}}
                 @if($subtitle)
-                    <span class="inline-block text-green-600 font-semibold text-sm uppercase tracking-wider mb-2">
+                    <span class="inline-block text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider mb-2">
                         {{ $subtitle }}
                     </span>
                 @endif
 
                 {{-- Title --}}
                 @if($title)
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                         {{ $title }}
                     </h2>
                 @endif
 
                 {{-- Description --}}
                 @if($description)
-                    <div class="text-gray-600 leading-relaxed space-y-4">
+                    <div class="text-gray-600 dark:text-gray-300 leading-relaxed space-y-4">
                         {!! nl2br(e($description)) !!}
                     </div>
                 @endif
