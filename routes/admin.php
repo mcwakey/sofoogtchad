@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProcessStepController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -109,4 +110,14 @@ Route::middleware('admin')->group(function () {
         ->name('admin.products.sizes.store');
     Route::delete('products/{product}/sizes/{size}', [ProductController::class, 'deleteSize'])
         ->name('admin.products.sizes.destroy');
+
+    // Process steps management
+    Route::resource('process-steps', ProcessStepController::class)->names([
+        'index' => 'admin.process-steps.index',
+        'create' => 'admin.process-steps.create',
+        'store' => 'admin.process-steps.store',
+        'edit' => 'admin.process-steps.edit',
+        'update' => 'admin.process-steps.update',
+        'destroy' => 'admin.process-steps.destroy',
+    ]);
 });

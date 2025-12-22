@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProcessController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,7 +14,10 @@ Route::get('/products', [ProductsController::class, 'index'])->name('products.in
 Route::get('/products/category/{slug}', [ProductsController::class, 'category'])->name('products.category');
 Route::get('/products/{slug}', [ProductsController::class, 'show'])->name('products.show');
 
-// Dynamic page rendering (exclude admin and products paths)
+// Process page
+Route::get('/process', [ProcessController::class, 'index'])->name('process.index');
+
+// Dynamic page rendering (exclude admin, products, process paths)
 Route::get('/{slug}', [PageController::class, 'show'])
     ->name('page.show')
-    ->where('slug', '^(?!admin|products).*$');
+    ->where('slug', '^(?!admin|products|process).*$');

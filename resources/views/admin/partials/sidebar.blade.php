@@ -25,6 +25,12 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('admin.process-steps.index') }}" class="{{ request()->routeIs('admin.process-steps*') ? 'active' : '' }}">
+                    Process Steps
+                </a>
+            </li>
+
             @if(auth()->user()->hasRole('admin'))
                 <li>
                     <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">
