@@ -26,7 +26,8 @@ class HomeController extends Controller
         $about = $this->getAboutData($homePage);
 
         // Featured Products (active, featured, limited to 6)
-        $products = Product::where('is_active', true)
+        $products = Product::with('images')
+            ->where('is_active', true)
             ->orderBy('sort_order')
             ->limit(6)
             ->get()
@@ -34,7 +35,7 @@ class HomeController extends Controller
                 return [
                     'name' => $product->name,
                     'description' => $product->short_description ?? $product->description,
-                    'image' => $product->image ?? '/images/placeholder-product.jpg',
+                    'image' => $product->imageUrl ?? '/images/placeholder-product.jpg',
                     'price' => $product->price,
                     'url' => route('products.show', $product->slug),
                     'badge' => $product->badge ?? null,
@@ -128,24 +129,42 @@ class HomeController extends Controller
 
     /**
      * Get about section data from page or settings.
+     * Returns null if no data exists in the database.
      */
     private function getAboutData(?Page $page): ?array
     {
         $aboutSection = $page?->sections->where('identifier', 'about')->first();
 
-        // If no about section exists and no settings, return null
-        if (!$aboutSection && !setting('homepage_about_title')) {
+        // Check if we have any about data in the database
+        $title = $aboutSection?->title ?? setting('homepage_about_title');
+        $subtitle = setting('homepage_about_subtitle');
+        $description = $aboutSection?->content ?? setting('homepage_about_description');
+        $image = $aboutSection?->image ?? setting('homepage_about_image');
+
+        // If no essential data exists in database, return null to hide the section
+        if (empty($title) && empty($description)) {
             return null;
         }
 
+        // Get features from settings (stored as JSON)
+        $featuresValue = setting('homepage_about_features');
+        $features = [];
+
+        if (is_array($featuresValue)) {
+            $features = $featuresValue;
+        } elseif (is_string($featuresValue) && !empty($featuresValue)) {
+            $features = json_decode($featuresValue, true) ?? [];
+        }
+
         return [
-            'title' => $aboutSection?->title ?? setting('homepage_about_title', 'Our Story'),
-            'subtitle' => setting('homepage_about_subtitle', 'About Sofoodtchad'),
-            'description' => $aboutSection?->content ?? setting('homepage_about_description', ''),
-            'image' => $aboutSection?->image ?? setting('homepage_about_image', '/images/about-preview.jpg'),
+            'title' => $title,
+            'subtitle' => $subtitle,
+            'description' => $description,
+            'image' => $image,
             'image_position' => setting('homepage_about_image_position', 'left'),
-            'cta_text' => setting('homepage_about_cta_text', 'Learn More'),
-            'cta_url' => setting('homepage_about_cta_url', '/about'),
+            'cta_text' => setting('homepage_about_cta_text'),
+            'cta_url' => setting('homepage_about_cta_url'),
+            'features' => $features,
         ];
     }
 

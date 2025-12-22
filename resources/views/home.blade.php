@@ -17,22 +17,74 @@
     />
 
     {{-- ==================== ABOUT SNIPPET SECTION ==================== --}}
-    @if(isset($about) && $about)
-        <x-about-snippet
-            :title="$about['title'] ?? 'Our Story'"
-            :subtitle="$about['subtitle'] ?? 'About Us'"
-            :description="$about['description'] ?? ''"
-            :image="$about['image'] ?? null"
-            :imagePosition="$about['image_position'] ?? 'left'"
-        >
-            @if(isset($about['cta_text']) && isset($about['cta_url']))
-                <x-button
-                    type="primary"
-                    :text="$about['cta_text']"
-                    :url="$about['cta_url']"
-                />
-            @endif
-        </x-about-snippet>
+    @if($about)
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    {{-- Image Column --}}
+                    @if($about['image'])
+                        <div class="order-2 lg:order-1">
+                            <div class="relative">
+                                <img
+                                    src="{{ $about['image'] }}"
+                                    alt="About {{ setting('site_name', 'Sofoodtchad') }}"
+                                    class="rounded-2xl shadow-xl w-full h-auto object-cover"
+                                    onerror="this.style.display='none'"
+                                >
+                                {{-- Decorative element --}}
+                                <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-100 rounded-2xl -z-10"></div>
+                                <div class="absolute -top-6 -left-6 w-24 h-24 bg-yellow-100 rounded-2xl -z-10"></div>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Content Column --}}
+                    <div class="{{ $about['image'] ? 'order-1 lg:order-2' : 'col-span-full text-center max-w-3xl mx-auto' }}">
+                        @if($about['subtitle'])
+                            <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                                {{ $about['subtitle'] }}
+                            </span>
+                        @endif
+                        @if($about['title'])
+                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6">
+                                {{ $about['title'] }}
+                            </h2>
+                        @endif
+                        @if($about['description'])
+                            <div class="prose prose-lg text-gray-600 mb-8">
+                                <p>{{ $about['description'] }}</p>
+                            </div>
+                        @endif
+
+                        {{-- Features List --}}
+                        @if(!empty($about['features']))
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 {{ !$about['image'] ? 'justify-center' : '' }}">
+                                @foreach($about['features'] as $feature)
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="text-gray-700 font-medium">{{ $feature }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        {{-- CTA Button --}}
+                        @if($about['cta_text'] && $about['cta_url'])
+                            <a href="{{ $about['cta_url'] }}" class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-200">
+                                {{ $about['cta_text'] }}
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </section>
     @endif
 
     {{-- ==================== PRODUCT HIGHLIGHTS SECTION ==================== --}}
