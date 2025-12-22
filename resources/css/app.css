@@ -1,3 +1,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* Form Input Styles */
+    .form-input,
+    .form-select,
+    .form-textarea {
+        @apply block w-full px-4 py-2.5 text-gray-900 bg-white border border-gray-300 rounded-lg;
+        @apply placeholder-gray-400;
+        @apply transition duration-150 ease-in-out;
+        @apply focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500;
+        @apply hover:border-gray-400;
+    }
+}
+
+@layer base {
+    /* Base input styles */
+    [type='text'],
+    [type='email'],
+    [type='password'],
+    [type='number'],
+    [type='url'],
+    [type='tel'],
+    [type='date'],
+    [type='search'],
+    select,
+    textarea {
+        @apply px-4 py-2.5 text-gray-900 bg-white border-gray-300 rounded-lg;
+        @apply placeholder-gray-400;
+        @apply transition duration-150 ease-in-out;
+        @apply focus:ring-2 focus:ring-green-500/20 focus:border-green-500;
+    }
+
+    /* Hover state for inputs */
+    [type='text']:hover,
+    [type='email']:hover,
+    [type='password']:hover,
+    [type='number']:hover,
+    [type='url']:hover,
+    [type='tel']:hover,
+    [type='date']:hover,
+    [type='search']:hover,
+    select:hover,
+    textarea:hover {
+        @apply border-gray-400;
+    }
+
+    /* Select specific styling */
+    select {
+        @apply pr-10 bg-no-repeat;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-size: 1.5em 1.5em;
+    }
+
+    /* Checkbox & Radio */
+    [type='checkbox'],
+    [type='radio'] {
+        @apply w-4 h-4 text-green-600 bg-white border-gray-300 focus:ring-green-500 focus:ring-2 focus:ring-offset-0;
+    }
+
+    [type='checkbox'] {
+        @apply rounded;
+    }
+
+    [type='radio'] {
+        @apply rounded-full;
+    }
+
+    /* Disabled state */
+    [type='text']:disabled,
+    [type='email']:disabled,
+    [type='password']:disabled,
+    [type='number']:disabled,
+    select:disabled,
+    textarea:disabled {
+        @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+    }
+}
