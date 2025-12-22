@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -51,4 +53,25 @@ Route::middleware('admin')->group(function () {
             'destroy' => 'admin.roles.destroy',
         ]);
     });
+
+    // Page management (admin and editor)
+    Route::resource('pages', PageController::class)->names([
+        'index' => 'admin.pages.index',
+        'create' => 'admin.pages.create',
+        'store' => 'admin.pages.store',
+        'show' => 'admin.pages.show',
+        'edit' => 'admin.pages.edit',
+        'update' => 'admin.pages.update',
+        'destroy' => 'admin.pages.destroy',
+    ]);
+
+    // Page sections management
+    Route::post('pages/{page}/sections', [PageSectionController::class, 'store'])
+        ->name('admin.pages.sections.store');
+    Route::put('pages/{page}/sections/{section}', [PageSectionController::class, 'update'])
+        ->name('admin.pages.sections.update');
+    Route::delete('pages/{page}/sections/{section}', [PageSectionController::class, 'destroy'])
+        ->name('admin.pages.sections.destroy');
+    Route::post('pages/{page}/sections/reorder', [PageSectionController::class, 'reorder'])
+        ->name('admin.pages.sections.reorder');
 });
