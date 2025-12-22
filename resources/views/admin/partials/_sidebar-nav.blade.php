@@ -133,7 +133,7 @@
 @endif
 
 {{-- View Site Link --}}
-<div class="mt-6 pt-6 border-t border-gray-800">
+<!-- <div class="mt-6 pt-6 border-t border-gray-800">
     <a
         href="{{ url('/') }}"
         target="_blank"
@@ -144,4 +144,4 @@
         </svg>
         <span>View Site</span>
     </a>
-</div>
+</div> -->

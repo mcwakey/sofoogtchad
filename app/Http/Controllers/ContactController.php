@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,24 +36,18 @@ class ContactController extends Controller
             'privacy_consent' => 'required|accepted',
         ]);
 
-        // Store the contact message in database or send email
-        // You can implement your own logic here
+        // Store the contact message in database
+        ContactMessage::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+        ]);
 
-        // Option 1: Store in database (create ContactMessage model and migration)
-        // ContactMessage::create([
-        //     'name' => $validated['name'],
-        //     'email' => $validated['email'],
-        //     'phone' => $validated['phone'] ?? null,
-        //     'subject' => $validated['subject'],
-        //     'message' => $validated['message'],
-        // ]);
-
-        // Option 2: Send email notification
+        // Optionally send email notification
         // Mail::to(setting('contact_email', config('mail.from.address')))
         //     ->send(new \App\Mail\ContactFormSubmission($validated));
-
-        // Log the submission for now
-        \Log::info('Contact Form Submission', $validated);
 
         return redirect()->route('contact.index')
             ->with('success', setting('contact_success_message', 'Thank you for your message! We will get back to you soon.'));

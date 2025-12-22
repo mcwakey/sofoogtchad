@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\DistributorRequestController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -173,6 +174,12 @@ Route::middleware('admin')->group(function () {
     ]);
     Route::get('media-picker', [MediaController::class, 'picker'])->name('admin.media.picker');
     Route::post('media/bulk-delete', [MediaController::class, 'bulkDelete'])->name('admin.media.bulk-delete');
+
+    // Contact messages management
+    Route::get('messages', [ContactMessageController::class, 'index'])->name('admin.messages.index');
+    Route::get('messages/{message}', [ContactMessageController::class, 'show'])->name('admin.messages.show');
+    Route::post('messages/{message}/toggle-read', [ContactMessageController::class, 'toggleRead'])->name('admin.messages.toggle-read');
+    Route::delete('messages/{message}', [ContactMessageController::class, 'destroy'])->name('admin.messages.destroy');
 
     // Settings management (admin only)
     Route::middleware('role:admin')->group(function () {

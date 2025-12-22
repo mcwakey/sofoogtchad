@@ -33,17 +33,22 @@
             @include('admin.partials._sidebar-nav')
         </nav>
 
-        {{-- User Info at Bottom --}}
+        {{-- View Site Link --}}
         <div class="border-t border-gray-800 p-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-semibold">
-                    {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
+            <a href="{{ url('/') }}" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors group">
+                <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-white truncate">{{ auth()->user()->name ?? 'Admin' }}</p>
-                    <p class="text-xs text-gray-400 truncate">{{ auth()->user()->email ?? '' }}</p>
+                    <p class="text-sm font-medium text-white">View Site</p>
+                    <p class="text-xs text-gray-400">Open in new tab</p>
                 </div>
-            </div>
+                <svg class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
         </div>
     </div>
 </aside>
@@ -68,17 +73,22 @@
             @include('admin.partials._sidebar-nav')
         </nav>
 
-        {{-- User Info at Bottom --}}
+        {{-- View Site Link --}}
         <div class="border-t border-gray-800 p-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-semibold">
-                    {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
+            <a href="{{ url('/') }}" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors group">
+                <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-white truncate">{{ auth()->user()->name ?? 'Admin' }}</p>
-                    <p class="text-xs text-gray-400 truncate">{{ auth()->user()->email ?? '' }}</p>
+                    <p class="text-sm font-medium text-white">View Site</p>
+                    <p class="text-xs text-gray-400">Open in new tab</p>
                 </div>
-            </div>
+                <svg class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
         </div>
     </div>
 </aside>

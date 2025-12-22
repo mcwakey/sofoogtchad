@@ -29,6 +29,22 @@
         {{-- Right Side Actions --}}
         <div class="flex items-center gap-x-4 lg:gap-x-6">
 
+            {{-- Messages --}}
+            @php
+                $unreadMessages = \App\Models\ContactMessage::unread()->count();
+            @endphp
+            <a href="{{ route('admin.messages.index') }}" class="hidden sm:block -m-2.5 p-2.5 text-gray-400 hover:text-gray-500 transition-colors relative" title="Messages">
+                <span class="sr-only">View messages</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                @if($unreadMessages > 0)
+                    <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                        {{ $unreadMessages > 9 ? '9+' : $unreadMessages }}
+                    </span>
+                @endif
+            </a>
+
             {{-- Notifications (optional) --}}
             <button type="button" class="hidden sm:block -m-2.5 p-2.5 text-gray-400 hover:text-gray-500 transition-colors">
                 <span class="sr-only">View notifications</span>
