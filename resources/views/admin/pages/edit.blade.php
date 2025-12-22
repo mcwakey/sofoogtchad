@@ -314,6 +314,8 @@
 
 @push('scripts')
 <script>
+let slideCount = 1;
+
 function updateContentFields() {
     const sectionType = document.getElementById('section_type').value;
     const contentFields = document.getElementById('content-fields');
@@ -324,22 +326,19 @@ function updateContentFields() {
 
     switch(sectionType) {
         case 'hero':
+            slideCount = 1;
             html = `
-                <div>
-                    <label class="${labelClass}">Title <span class="text-red-500">*</span></label>
-                    <input type="text" name="content[title]" required class="${inputClass}" placeholder="Hero title...">
+                <div class="mb-4 flex items-center justify-between">
+                    <span class="${labelClass} mb-0">Hero Slider Slides</span>
+                    <button type="button" onclick="addSlide()" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 rounded-lg hover:bg-green-200 dark:hover:bg-green-800 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Add Slide
+                    </button>
                 </div>
-                <div>
-                    <label class="${labelClass}">Subtitle</label>
-                    <input type="text" name="content[subtitle]" class="${inputClass}" placeholder="Hero subtitle...">
-                </div>
-                <div>
-                    <label class="${labelClass}">Button Text</label>
-                    <input type="text" name="content[button_text]" class="${inputClass}" placeholder="Learn More">
-                </div>
-                <div>
-                    <label class="${labelClass}">Button URL</label>
-                    <input type="text" name="content[button_url]" class="${inputClass}" placeholder="/contact">
+                <div id="slides-container">
+                    ${createSlideHtml(0)}
                 </div>
             `;
             break;
@@ -407,6 +406,91 @@ function updateContentFields() {
     }
 
     contentFields.innerHTML = html;
+}
+
+function createSlideHtml(index) {
+    const inputClass = 'block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500';
+    const labelClass = 'block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2';
+
+    return `
+        <div class="slide-item p-4 bg-gray-50 dark:bg-gray-900 rounded-lg mb-4 relative" data-slide-index="${index}">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-semibold text-gray-600 dark:text-gray-400">Slide ${index + 1}</span>
+                ${index > 0 ? `
+                    <button type="button" onclick="removeSlide(this)" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                ` : ''}
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="${labelClass}">Background Image URL</label>
+                    <input type="text" name="content[slides][${index}][background_image]" class="${inputClass}" placeholder="https://example.com/image.jpg">
+                </div>
+                <div>
+                    <label class="${labelClass}">Title <span class="text-red-500">*</span></label>
+                    <input type="text" name="content[slides][${index}][title]" required class="${inputClass}" placeholder="Slide title...">
+                </div>
+                <div>
+                    <label class="${labelClass}">Subtitle</label>
+                    <input type="text" name="content[slides][${index}][subtitle]" class="${inputClass}" placeholder="Slide subtitle...">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="${labelClass}">Button Text</label>
+                        <input type="text" name="content[slides][${index}][cta_text]" class="${inputClass}" placeholder="Learn More">
+                    </div>
+                    <div>
+                        <label class="${labelClass}">Button URL</label>
+                        <input type="text" name="content[slides][${index}][cta_url]" class="${inputClass}" placeholder="/products">
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function addSlide() {
+    const container = document.getElementById('slides-container');
+    if (container) {
+        const slideHtml = createSlideHtml(slideCount);
+        container.insertAdjacentHTML('beforeend', slideHtml);
+        slideCount++;
+    }
+}
+
+function removeSlide(button) {
+    const slideItem = button.closest('.slide-item');
+    if (slideItem) {
+        slideItem.remove();
+        reindexSlides();
+    }
+}
+
+function reindexSlides() {
+    const container = document.getElementById('slides-container');
+    if (!container) return;
+
+    const slides = container.querySelectorAll('.slide-item');
+    slides.forEach((slide, index) => {
+        // Update slide label
+        const label = slide.querySelector('.text-sm.font-semibold');
+        if (label) label.textContent = `Slide ${index + 1}`;
+
+        // Update all input names
+        const inputs = slide.querySelectorAll('input');
+        inputs.forEach(input => {
+            const name = input.getAttribute('name');
+            if (name) {
+                input.setAttribute('name', name.replace(/\[slides\]\[\d+\]/, `[slides][${index}]`));
+            }
+        });
+
+        slide.setAttribute('data-slide-index', index);
+    });
+    slideCount = slides.length;
 }
 </script>
 @endpush

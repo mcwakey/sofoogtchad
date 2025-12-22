@@ -1,136 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $post->meta_title ?? $post->title }} - Sofoodtchad</title>
-    <meta name="description" content="{{ $post->meta_description ?? $post->excerpt ?? Str::limit(strip_tags($post->content), 160) }}">
-    <meta property="og:title" content="{{ $post->meta_title ?? $post->title }}">
-    <meta property="og:description" content="{{ $post->meta_description ?? $post->excerpt }}">
-    @if($post->featured_image)
-        <meta property="og:image" content="{{ $post->image_url }}">
-    @endif
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; color: #333; }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+@extends('layouts.app')
 
-        .breadcrumb { padding: 20px 0; background: #f5f5f5; font-size: 0.9rem; }
-        .breadcrumb a { color: #2d5016; text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
+@section('title', ($post->meta_title ?? $post->title) . ' - ' . setting('site_name', 'Sofoodtchad'))
+@section('meta_description', $post->meta_description ?? $post->excerpt ?? Str::limit(strip_tags($post->content), 160))
+@section('og_title', $post->meta_title ?? $post->title)
+@section('og_description', $post->meta_description ?? $post->excerpt)
+@if($post->featured_image)
+    @section('og_image', $post->image_url)
+@endif
 
-        .post-header { padding: 60px 0 40px; text-align: center; }
-        .post-type { display: inline-block; background: #2d5016; color: white; padding: 4px 15px; border-radius: 15px; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; }
-        .post-type.news { background: #0066cc; }
-        .post-title { font-size: 2.5rem; margin-bottom: 20px; line-height: 1.3; }
-        .post-meta { color: #666; font-size: 0.95rem; }
-        .post-meta span { margin: 0 10px; }
+@section('content')
+    {{-- Spacer for fixed navbar --}}
+    <div class="h-16 lg:h-20"></div>
 
-        .featured-image { margin-bottom: 40px; }
-        .featured-image img { width: 100%; max-height: 500px; object-fit: cover; border-radius: 12px; }
-
-        .post-content { padding-bottom: 60px; }
-        .post-content p { margin-bottom: 20px; font-size: 1.1rem; }
-        .post-content h2 { margin: 40px 0 20px; font-size: 1.8rem; }
-        .post-content h3 { margin: 30px 0 15px; font-size: 1.4rem; }
-        .post-content ul, .post-content ol { margin: 20px 0; padding-left: 30px; }
-        .post-content li { margin-bottom: 10px; }
-        .post-content img { max-width: 100%; border-radius: 8px; margin: 20px 0; }
-        .post-content blockquote { border-left: 4px solid #2d5016; padding-left: 20px; margin: 30px 0; font-style: italic; color: #555; }
-
-        .post-gallery { margin: 40px 0; }
-        .post-gallery h3 { margin-bottom: 20px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .gallery-grid img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; }
-        .gallery-grid img:hover { transform: scale(1.05); }
-
-        .related-posts { padding: 60px 0; background: #f9f9f9; }
-        .related-posts h2 { text-align: center; margin-bottom: 40px; color: #2d5016; }
-        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-        .related-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-        .related-card img { width: 100%; height: 150px; object-fit: cover; }
-        .related-card .content { padding: 20px; }
-        .related-card h4 { margin-bottom: 10px; }
-        .related-card h4 a { color: #333; text-decoration: none; }
-        .related-card h4 a:hover { color: #2d5016; }
-        .related-card .date { color: #666; font-size: 0.85rem; }
-
-        .back-link { display: inline-block; margin-top: 40px; color: #2d5016; text-decoration: none; font-weight: 600; }
-        .back-link:hover { text-decoration: underline; }
-
-        @media (max-width: 768px) {
-            .post-title { font-size: 1.8rem; }
-            .post-content p { font-size: 1rem; }
-        }
-    </style>
-</head>
-<body>
-    <nav class="breadcrumb">
-        <div class="container">
-            <a href="/">Home</a> /
-            <a href="{{ route('blog.index') }}">Blog</a> /
-            {{ $post->title }}
+    {{-- Breadcrumb --}}
+    <nav class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-4">
+            <ol class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                <li>
+                    <a href="{{ url('/') }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
+                        {{ __('navigation.home') }}
+                    </a>
+                </li>
+                <li class="mx-2">/</li>
+                <li>
+                    <a href="{{ route('blog.index') }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
+                        {{ __('navigation.blog') }}
+                    </a>
+                </li>
+                <li class="mx-2">/</li>
+                <li class="text-gray-900 dark:text-white font-medium truncate max-w-xs">
+                    {{ $post->title }}
+                </li>
+            </ol>
         </div>
     </nav>
 
-    <article>
-        <header class="post-header">
-            <div class="container">
-                <span class="post-type {{ $post->type }}">{{ $post->type }}</span>
-                <h1 class="post-title">{{ $post->title }}</h1>
-                <div class="post-meta">
-                    <span>{{ $post->published_at->format('F d, Y') }}</span>
-                    <span>•</span>
-                    <span>By {{ $post->author->name ?? 'Admin' }}</span>
-                </div>
+    <article class="py-12 lg:py-16">
+        {{-- Post Header --}}
+        <header class="container mx-auto px-4 max-w-4xl text-center mb-10">
+            <span class="inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full mb-4
+                {{ $post->type === 'news' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' : 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' }}">
+                {{ ucfirst($post->type) }}
+            </span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
+                {{ $post->title }}
+            </h1>
+            <div class="flex items-center justify-center gap-4 text-gray-600 dark:text-gray-400 text-sm">
+                <span>{{ $post->published_at->format('F d, Y') }}</span>
+                <span class="w-1 h-1 rounded-full bg-gray-400"></span>
+                <span>{{ __('blog.by') }} {{ $post->author->name ?? 'Admin' }}</span>
             </div>
         </header>
 
+        {{-- Featured Image --}}
         @if($post->featured_image)
-            <div class="featured-image">
-                <div class="container">
-                    <img src="{{ $post->image_url }}" alt="{{ $post->title }}">
+            <div class="container mx-auto px-4 max-w-5xl mb-12">
+                <div class="relative aspect-video rounded-2xl overflow-hidden shadow-xl">
+                    <img
+                        src="{{ $post->image_url }}"
+                        alt="{{ $post->title }}"
+                        class="w-full h-full object-cover"
+                        loading="eager"
+                    >
                 </div>
             </div>
         @endif
 
-        <div class="post-content">
-            <div class="container">
+        {{-- Post Content --}}
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="prose prose-lg dark:prose-invert prose-green max-w-none
+                        prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
+                        prose-p:text-gray-700 dark:prose-p:text-gray-300
+                        prose-a:text-green-600 dark:prose-a:text-green-400
+                        prose-blockquote:border-l-green-500 prose-blockquote:text-gray-600 dark:prose-blockquote:text-gray-400
+                        prose-img:rounded-xl prose-img:shadow-lg">
                 {!! nl2br(e($post->content)) !!}
+            </div>
 
-                @if($post->images->count())
-                    <div class="post-gallery">
-                        <h3>Gallery</h3>
-                        <div class="gallery-grid">
-                            @foreach($post->images as $image)
-                                <img src="{{ $image->url }}" alt="{{ $image->alt_text ?? $post->title }}">
-                            @endforeach
-                        </div>
+            {{-- Post Gallery --}}
+            @if($post->images->count())
+                <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">{{ __('blog.gallery') }}</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        @foreach($post->images as $image)
+                            <div class="relative aspect-square rounded-lg overflow-hidden group cursor-pointer">
+                                <img
+                                    src="{{ $image->url }}"
+                                    alt="{{ $image->alt_text ?? $post->title }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                    loading="lazy"
+                                >
+                                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+                            </div>
+                        @endforeach
                     </div>
-                @endif
+                </div>
+            @endif
 
-                <a href="{{ route('blog.index') }}" class="back-link">← Back to Blog</a>
+            {{-- Back Link --}}
+            <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-green-600 dark:text-green-400 font-semibold hover:text-green-700 dark:hover:text-green-300 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    {{ __('blog.back_to_blog') }}
+                </a>
             </div>
         </div>
     </article>
 
+    {{-- Related Posts --}}
     @if($relatedPosts->count())
-        <section class="related-posts">
-            <h2>Related Posts</h2>
-            <div class="related-grid">
-                @foreach($relatedPosts as $related)
-                    <div class="related-card">
-                        @if($related->featured_image)
-                            <img src="{{ $related->image_url }}" alt="{{ $related->title }}">
-                        @endif
-                        <div class="content">
-                            <h4><a href="{{ route('blog.show', $related->slug) }}">{{ $related->title }}</a></h4>
-                            <span class="date">{{ $related->published_at->format('M d, Y') }}</span>
-                        </div>
-                    </div>
-                @endforeach
+        <section class="py-16 bg-gray-50 dark:bg-gray-800">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white text-center mb-10">
+                    {{ __('blog.related_posts') }}
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    @foreach($relatedPosts as $related)
+                        <article class="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
+                            @if($related->featured_image)
+                                <div class="relative aspect-video overflow-hidden">
+                                    <img
+                                        src="{{ $related->image_url }}"
+                                        alt="{{ $related->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                    >
+                                </div>
+                            @endif
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                                    <a href="{{ route('blog.show', $related->slug) }}">
+                                        {{ $related->title }}
+                                    </a>
+                                </h3>
+                                <span class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ $related->published_at->format('M d, Y') }}
+                                </span>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
             </div>
         </section>
     @endif
-</body>
-</html>
+@endsection

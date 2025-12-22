@@ -229,6 +229,16 @@
                     @endforeach
                 </ul>
             </div>
+
+            {{-- Designer Credit --}}
+            <div class="mt-4 pt-4 border-t border-gray-800 text-center">
+                <p class="text-gray-500 text-sm">
+                    {{ __('general.designed_by') }}
+                    <a href="https://clicksoftwaregh.com" target="_blank" rel="noopener noreferrer" class="text-green-400 hover:text-green-300 transition-colors duration-200 font-medium">
+                        Click Software GH
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 </footer>

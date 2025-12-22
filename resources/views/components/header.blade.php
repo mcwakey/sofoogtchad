@@ -21,7 +21,13 @@
     ];
 @endphp
 
-<header class="bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800/20 sticky top-0 z-50 transition-colors duration-200" role="banner">
+<header
+    x-data="{ scrolled: false, mobileMenuOpen: false }"
+    x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 50 })"
+    :class="scrolled ? 'bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800/20' : 'bg-transparent'"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out"
+    role="banner"
+>
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between h-16 lg:h-20">
             {{-- Logo --}}
@@ -31,11 +37,12 @@
                         <img
                             src="{{ $siteLogo }}"
                             alt="{{ $logoAltText }}"
-                            class="h-10 lg:h-12 w-auto dark:brightness-110"
+                            :class="scrolled ? '' : 'brightness-0 invert'"
+                            class="h-10 lg:h-12 w-auto dark:brightness-110 transition-all duration-300"
                             loading="eager"
                         >
                     @else
-                        <span class="text-xl lg:text-2xl font-bold text-green-600 dark:text-green-400">{{ $siteName }}</span>
+                        <span :class="scrolled ? 'text-green-600 dark:text-green-400' : 'text-white'" class="text-xl lg:text-2xl font-bold transition-colors duration-300">{{ $siteName }}</span>
                     @endif
                 </a>
             </div>
@@ -45,10 +52,14 @@
                 @foreach($navItems as $item)
                     <a
                         href="{{ url($item['route']) }}"
-                        class="px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200
-                            {{ $item['active']
+                        :class="scrolled
+                            ? '{{ $item['active']
                                 ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30'
-                                : 'text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800' }}"
+                                : 'text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800' }}'
+                            : '{{ $item['active']
+                                ? 'text-white bg-white/20'
+                                : 'text-white/90 hover:text-white hover:bg-white/10' }}'"
+                        class="px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200"
                         @if($item['active']) aria-current="page" @endif
                     >
                         {{ $item['label'] }}
@@ -83,16 +94,18 @@
                 {{-- Mobile Menu Toggle --}}
                 <button
                     type="button"
-                    class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
+                    @click="mobileMenuOpen = !mobileMenuOpen"
+                    :class="scrolled ? 'text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800' : 'text-white hover:text-white hover:bg-white/10'"
+                    class="lg:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 transition-colors duration-300"
                     aria-label="{{ __('navigation.toggle_menu') }}"
-                    aria-expanded="false"
+                    :aria-expanded="mobileMenuOpen"
                     aria-controls="mobile-menu"
                     id="mobile-menu-button"
                 >
-                    <svg class="h-6 w-6 block" id="menu-icon-open" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <svg x-show="!mobileMenuOpen" class="h-6 w-6" id="menu-icon-open" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                    <svg class="h-6 w-6 hidden" id="menu-icon-close" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <svg x-show="mobileMenuOpen" x-cloak class="h-6 w-6" id="menu-icon-close" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -103,9 +116,19 @@
     {{-- Mobile Navigation --}}
     <div
         id="mobile-menu"
-        class="lg:hidden hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800"
+        x-show="mobileMenuOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 -translate-y-2"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-2"
+        @click.away="mobileMenuOpen = false"
+        @keydown.escape.window="mobileMenuOpen = false"
+        class="lg:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 shadow-lg"
         role="navigation"
         aria-label="{{ __('navigation.mobile_navigation') }}"
+        x-cloak
     >
         <div class="container mx-auto px-4 py-4 space-y-1">
             @foreach($navItems as $item)
@@ -140,38 +163,3 @@
         </div>
     </div>
 </header>
-
-{{-- Mobile Menu Script --}}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const iconOpen = document.getElementById('menu-icon-open');
-    const iconClose = document.getElementById('menu-icon-close');
-
-    if (menuButton && mobileMenu) {
-        menuButton.addEventListener('click', function() {
-            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-
-            menuButton.setAttribute('aria-expanded', !isExpanded);
-            mobileMenu.classList.toggle('hidden');
-            iconOpen.classList.toggle('hidden');
-            iconOpen.classList.toggle('block');
-            iconClose.classList.toggle('hidden');
-            iconClose.classList.toggle('block');
-        });
-
-        // Close menu on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
-                menuButton.setAttribute('aria-expanded', 'false');
-                mobileMenu.classList.add('hidden');
-                iconOpen.classList.remove('hidden');
-                iconOpen.classList.add('block');
-                iconClose.classList.add('hidden');
-                iconClose.classList.remove('block');
-            }
-        });
-    }
-});
-</script>

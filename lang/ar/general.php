@@ -77,4 +77,7 @@ return [
     'close_menu' => 'إغلاق القائمة',
     'whatsapp' => 'واتساب',
     'contact_whatsapp' => 'تواصل معنا عبر واتساب',
+
+    // Credits
+    'designed_by' => 'صمم بواسطة',
 ];

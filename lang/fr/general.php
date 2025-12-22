@@ -77,4 +77,7 @@ return [
     'close_menu' => 'Fermer le menu',
     'whatsapp' => 'WhatsApp',
     'contact_whatsapp' => 'Contactez-nous sur WhatsApp',
+
+    // Credits
+    'designed_by' => 'Conçu par',
 ];

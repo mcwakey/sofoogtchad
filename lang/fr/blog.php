@@ -8,6 +8,7 @@ return [
     'read_more' => 'Lire la suite',
     'published_on' => 'Publié le',
     'by_author' => 'par',
+    'by' => 'Par',
     'categories' => 'Catégories',
     'tags' => 'Tags',
     'share' => 'Partager',
@@ -15,4 +16,5 @@ return [
     'no_posts' => 'Aucun article trouvé.',
     'search_posts' => 'Rechercher des articles...',
     'back_to_blog' => 'Retour au blog',
+    'gallery' => 'Galerie',
 ];
