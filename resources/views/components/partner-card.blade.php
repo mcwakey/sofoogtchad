@@ -23,7 +23,7 @@
     };
 @endphp
 
-<div {{ $attributes->merge(['class' => 'partner-card bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 ' . $sizeClasses]) }}>
+<div {{ $attributes->merge(['class' => 'partner-card bg-white dark:bg-gray-800 rounded-xl shadow-sm dark:shadow-gray-900/30 hover:shadow-md dark:hover:shadow-gray-900/50 transition-all duration-300 ' . $sizeClasses]) }}>
     @if($link)
         <a
             href="{{ $link }}"
@@ -44,7 +44,7 @@
                 loading="lazy"
             >
         @else
-            <span class="text-gray-600 font-semibold text-center">{{ $name }}</span>
+            <span class="text-gray-600 dark:text-gray-300 font-semibold text-center">{{ $name }}</span>
         @endif
 
     @if($link)

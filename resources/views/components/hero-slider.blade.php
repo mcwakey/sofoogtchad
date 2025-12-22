@@ -215,22 +215,6 @@
         </div>
     @endif
 
-    {{-- Progress Bar (optional) --}}
-    @if($autoplay && count($slides) > 1)
-        <div class="absolute bottom-0 left-0 right-0 z-20 h-1 bg-white/20">
-            <div
-                x-data="{ progress: 0 }"
-                x-init="
-                    setInterval(() => {
-                        progress = (progress + 1) % 100;
-                    }, {{ $interval / 100 }})
-                "
-                :style="`width: ${progress}%`"
-                class="h-full bg-green-500 transition-all duration-100"
-            ></div>
-        </div>
-    @endif
-
     {{-- Decorative Wave --}}
     <div class="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
         <svg class="w-full h-12 sm:h-16 text-white dark:text-gray-900" viewBox="0 0 1440 48" fill="currentColor" preserveAspectRatio="none">

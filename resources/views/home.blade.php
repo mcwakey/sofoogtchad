@@ -55,7 +55,7 @@
 
     {{-- ==================== ABOUT SNIPPET SECTION ==================== --}}
     @if($about)
-        <section class="py-16 bg-white">
+        <section class="py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {{-- Image Column --}}
@@ -65,12 +65,12 @@
                                 <img
                                     src="{{ $about['image'] }}"
                                     alt="About {{ setting('site_name', 'Sofoodtchad') }}"
-                                    class="rounded-2xl shadow-xl w-full h-auto object-cover"
+                                    class="rounded-2xl shadow-xl dark:shadow-gray-900/50 w-full h-auto object-cover"
                                     onerror="this.style.display='none'"
                                 >
                                 {{-- Decorative element --}}
-                                <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-100 rounded-2xl -z-10"></div>
-                                <div class="absolute -top-6 -left-6 w-24 h-24 bg-yellow-100 rounded-2xl -z-10"></div>
+                                <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-100 dark:bg-green-900/30 rounded-2xl -z-10"></div>
+                                <div class="absolute -top-6 -left-6 w-24 h-24 bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl -z-10"></div>
                             </div>
                         </div>
                     @endif
@@ -78,17 +78,17 @@
                     {{-- Content Column --}}
                     <div class="{{ $about['image'] ? 'order-1 lg:order-2' : 'col-span-full text-center max-w-3xl mx-auto' }}">
                         @if($about['subtitle'])
-                            <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                            <span class="text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider">
                                 {{ $about['subtitle'] }}
                             </span>
                         @endif
                         @if($about['title'])
-                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6">
+                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-6">
                                 {{ $about['title'] }}
                             </h2>
                         @endif
                         @if($about['description'])
-                            <div class="prose prose-lg text-gray-600 mb-8">
+                            <div class="prose prose-lg text-gray-600 dark:text-gray-300 mb-8">
                                 <p>{{ $about['description'] }}</p>
                             </div>
                         @endif
@@ -98,12 +98,12 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 {{ !$about['image'] ? 'justify-center' : '' }}">
                                 @foreach($about['features'] as $feature)
                                     <div class="flex items-center gap-3">
-                                        <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div class="flex-shrink-0 w-10 h-10 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                             </svg>
                                         </div>
-                                        <span class="text-gray-700 font-medium">{{ $feature }}</span>
+                                        <span class="text-gray-700 dark:text-gray-300 font-medium">{{ $feature }}</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -126,7 +126,7 @@
 
     {{-- ==================== PRODUCT HIGHLIGHTS SECTION ==================== --}}
     @if(isset($products) && count($products) > 0)
-        <section class="py-16 bg-gray-50">
+        <section class="py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
             <div class="container mx-auto px-4">
                 <x-product-grid
                     :products="$products"
@@ -142,20 +142,20 @@
 
     {{-- ==================== QUALITY & PROCESS SECTION ==================== --}}
     @if(isset($processSteps) && count($processSteps) > 0)
-        <section class="py-16 bg-white">
+        <section class="py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
             <div class="container mx-auto px-4">
                 {{-- Section Header --}}
                 <div class="text-center mb-12">
                     @if(isset($processSection['subtitle']))
-                        <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                        <span class="text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider">
                             {{ $processSection['subtitle'] }}
                         </span>
                     @endif
-                    <h2 class="text-3xl font-bold text-gray-900 mt-2">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                         {{ $processSection['title'] ?? 'Our Process' }}
                     </h2>
                     @if(isset($processSection['description']))
-                        <p class="text-gray-600 mt-2 max-w-2xl mx-auto">
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 max-w-2xl mx-auto">
                             {{ $processSection['description'] }}
                         </p>
                     @endif
@@ -190,20 +190,20 @@
 
     {{-- ==================== PARTNERS SECTION ==================== --}}
     @if(isset($partners) && count($partners) > 0)
-        <section class="py-16 bg-gray-50">
+        <section class="py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
             <div class="container mx-auto px-4">
                 {{-- Section Header --}}
                 <div class="text-center mb-12">
                     @if(isset($partnersSection['subtitle']))
-                        <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                        <span class="text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider">
                             {{ $partnersSection['subtitle'] }}
                         </span>
                     @endif
-                    <h2 class="text-3xl font-bold text-gray-900 mt-2">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                         {{ $partnersSection['title'] ?? 'Our Partners' }}
                     </h2>
                     @if(isset($partnersSection['description']))
-                        <p class="text-gray-600 mt-2">
+                        <p class="text-gray-600 dark:text-gray-300 mt-2">
                             {{ $partnersSection['description'] }}
                         </p>
                     @endif
@@ -236,22 +236,22 @@
 
     {{-- ==================== BLOG HIGHLIGHTS SECTION (Optional) ==================== --}}
     @if(isset($posts) && count($posts) > 0)
-        <section class="py-16 bg-white">
+        <section class="py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
             <div class="container mx-auto px-4">
                 {{-- Section Header --}}
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
                     <div>
                         @if(isset($blogSection['subtitle']))
-                            <span class="text-green-600 font-semibold text-sm uppercase tracking-wider">
+                            <span class="text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider">
                                 {{ $blogSection['subtitle'] }}
                             </span>
                         @endif
-                        <h2 class="text-3xl font-bold text-gray-900 mt-2">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             {{ $blogSection['title'] ?? 'Latest News' }}
                         </h2>
                     </div>
                     @if(isset($blogSection['view_all_url']))
-                        <a href="{{ $blogSection['view_all_url'] }}" class="inline-flex items-center text-green-600 font-medium hover:text-green-700 mt-4 sm:mt-0">
+                        <a href="{{ $blogSection['view_all_url'] }}" class="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300 mt-4 sm:mt-0">
                             {{ $blogSection['view_all_text'] ?? 'View All Posts' }}
                             <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

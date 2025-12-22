@@ -50,10 +50,10 @@
         {{-- Content --}}
         <div class="flex-1">
             @if($title)
-                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{{ $title }}</h3>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $title }}</h3>
             @endif
             @if($description)
-                <p class="text-gray-600 leading-relaxed">{{ $description }}</p>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ $description }}</p>
             @endif
 
             @if($slot->isNotEmpty())
@@ -86,12 +86,12 @@
 
         {{-- Title --}}
         @if($title)
-            <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{{ $title }}</h3>
+            <h3 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $title }}</h3>
         @endif
 
         {{-- Description --}}
         @if($description)
-            <p class="text-gray-600 leading-relaxed">{{ $description }}</p>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ $description }}</p>
         @endif
 
         {{-- Extra Content Slot --}}

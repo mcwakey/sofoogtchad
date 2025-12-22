@@ -21,7 +21,7 @@
 
 @if($layout === 'horizontal')
     {{-- Horizontal Layout --}}
-    <article {{ $attributes->merge(['class' => 'post-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row']) }}>
+    <article {{ $attributes->merge(['class' => 'post-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md dark:shadow-gray-900/30 hover:shadow-xl dark:hover:shadow-gray-900/50 transition-all duration-300 flex flex-col md:flex-row']) }}>
         {{-- Image --}}
         @if($image)
             <div class="md:w-2/5 flex-shrink-0">
@@ -43,14 +43,14 @@
         {{-- Content --}}
         <div class="p-5 md:p-6 flex flex-col justify-center flex-1">
             {{-- Meta --}}
-            <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-3">
+            <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-3">
                 @if($category)
                     @if($categoryLink)
-                        <a href="{{ $categoryLink }}" class="text-green-600 hover:text-green-700 font-medium">
+                        <a href="{{ $categoryLink }}" class="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium">
                             {{ $category }}
                         </a>
                     @else
-                        <span class="text-green-600 font-medium">{{ $category }}</span>
+                        <span class="text-green-600 dark:text-green-400 font-medium">{{ $category }}</span>
                     @endif
                     <span>•</span>
                 @endif
@@ -64,9 +64,9 @@
             </div>
 
             {{-- Title --}}
-            <h3 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
                 @if($link)
-                    <a href="{{ $link }}" class="hover:text-green-600 transition-colors">
+                    <a href="{{ $link }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
                         {{ $title }}
                     </a>
                 @else
@@ -76,12 +76,12 @@
 
             {{-- Summary --}}
             @if($desc)
-                <p class="text-gray-600 line-clamp-2 mb-4">{{ $desc }}</p>
+                <p class="text-gray-600 dark:text-gray-300 line-clamp-2 mb-4">{{ $desc }}</p>
             @endif
 
             {{-- Read More --}}
             @if($link)
-                <a href="{{ $link }}" class="inline-flex items-center text-green-600 font-medium hover:text-green-700 transition-colors mt-auto">
+                <a href="{{ $link }}" class="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300 transition-colors mt-auto">
                     Read More
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -92,7 +92,7 @@
     </article>
 @else
     {{-- Vertical Layout (default) --}}
-    <article {{ $attributes->merge(['class' => 'post-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1' . ($featured ? ' md:col-span-2' : '')]) }}>
+    <article {{ $attributes->merge(['class' => 'post-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md dark:shadow-gray-900/30 hover:shadow-xl dark:hover:shadow-gray-900/50 transition-all duration-300 hover:-translate-y-1' . ($featured ? ' md:col-span-2' : '')]) }}>
         {{-- Image --}}
         @if($image)
             <div class="relative">
@@ -119,7 +119,7 @@
         {{-- Content --}}
         <div class="p-5">
             {{-- Meta --}}
-            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+            <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-3">
                 @if($formattedDate)
                     <time datetime="{{ $date }}" class="flex items-center">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -139,9 +139,9 @@
             </div>
 
             {{-- Title --}}
-            <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
                 @if($link)
-                    <a href="{{ $link }}" class="hover:text-green-600 transition-colors">
+                    <a href="{{ $link }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
                         {{ $title }}
                     </a>
                 @else
@@ -151,7 +151,7 @@
 
             {{-- Summary --}}
             @if($desc)
-                <p class="text-gray-600 text-sm line-clamp-3 mb-4">{{ $desc }}</p>
+                <p class="text-gray-600 dark:text-gray-300 text-sm line-clamp-3 mb-4">{{ $desc }}</p>
             @endif
 
             {{-- Extra Content Slot --}}
@@ -163,7 +163,7 @@
 
             {{-- Read More --}}
             @if($link)
-                <a href="{{ $link }}" class="inline-flex items-center text-green-600 font-medium text-sm hover:text-green-700 transition-colors">
+                <a href="{{ $link }}" class="inline-flex items-center text-green-600 dark:text-green-400 font-medium text-sm hover:text-green-700 dark:hover:text-green-300 transition-colors">
                     Read More
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

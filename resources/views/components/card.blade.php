@@ -13,17 +13,17 @@
 
 @php
     $badgeColors = [
-        'green' => 'bg-green-100 text-green-800',
-        'blue' => 'bg-blue-100 text-blue-800',
-        'red' => 'bg-red-100 text-red-800',
-        'yellow' => 'bg-yellow-100 text-yellow-800',
-        'gray' => 'bg-gray-100 text-gray-800',
-        'orange' => 'bg-orange-100 text-orange-800',
+        'green' => 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300',
+        'blue' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300',
+        'red' => 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300',
+        'yellow' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300',
+        'gray' => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+        'orange' => 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300',
     ];
 
-    $cardClasses = 'bg-white rounded-xl overflow-hidden shadow-md';
+    $cardClasses = 'bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md dark:shadow-gray-900/30';
     if ($hover) {
-        $cardClasses .= ' transition-all duration-300 hover:shadow-xl hover:-translate-y-1';
+        $cardClasses .= ' transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-900/50 hover:-translate-y-1';
     }
 
     $variantClasses = match($variant) {
@@ -65,9 +65,9 @@
     <div class="p-5 {{ $variant === 'horizontal' ? 'md:flex md:flex-col md:justify-center' : '' }}">
         {{-- Title --}}
         @if($title)
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 @if($link)
-                    <a href="{{ $link }}" class="hover:text-green-600 transition-colors">
+                    <a href="{{ $link }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
                         {{ $title }}
                     </a>
                 @else
@@ -78,7 +78,7 @@
 
         {{-- Description --}}
         @if($description)
-            <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
                 {{ $description }}
             </p>
         @endif
@@ -92,7 +92,7 @@
 
         {{-- Link --}}
         @if($link && $linkText)
-            <a href="{{ $link }}" class="inline-flex items-center text-green-600 font-medium text-sm hover:text-green-700 transition-colors mt-auto">
+            <a href="{{ $link }}" class="inline-flex items-center text-green-600 dark:text-green-400 font-medium text-sm hover:text-green-700 dark:hover:text-green-300 transition-colors mt-auto">
                 {{ $linkText }}
                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
