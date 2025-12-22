@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\DistributorRequestController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\LegalController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -190,5 +191,11 @@ Route::middleware('admin')->group(function () {
         Route::get('settings/{setting}/edit', [SettingController::class, 'edit'])->name('admin.settings.edit');
         Route::put('settings/{setting}', [SettingController::class, 'updateSetting'])->name('admin.settings.update-setting');
         Route::delete('settings/{setting}', [SettingController::class, 'destroy'])->name('admin.settings.destroy');
+
+        // Legal pages management
+        Route::get('legal/privacy', [LegalController::class, 'editPrivacy'])->name('admin.legal.privacy');
+        Route::put('legal/privacy', [LegalController::class, 'updatePrivacy'])->name('admin.legal.privacy.update');
+        Route::get('legal/terms', [LegalController::class, 'editTerms'])->name('admin.legal.terms');
+        Route::put('legal/terms', [LegalController::class, 'updateTerms'])->name('admin.legal.terms.update');
     });
 });

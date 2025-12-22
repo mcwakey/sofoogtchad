@@ -9,6 +9,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LegalController;
 
 // Homepage with dynamic content
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -37,6 +38,10 @@ Route::get('/become-distributor', [PartnersController::class, 'showDistributorFo
 // Contact routes
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+// Legal pages
+Route::get('/privacy-policy', [LegalController::class, 'privacy'])->name('legal.privacy');
+Route::get('/terms-of-service', [LegalController::class, 'terms'])->name('legal.terms');
 
 // Dynamic page rendering (exclude admin, products, process, blog, partners, contact paths)
 Route::get('/pages/{slug}', [PageController::class, 'show'])->name('pages.show');

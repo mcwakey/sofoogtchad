@@ -16,6 +16,14 @@ class SettingController extends Controller
         $groups = Setting::getGroups();
         $activeGroup = $request->get('group', $groups[0] ?? 'general');
 
+        // Handle legal tab
+        if ($activeGroup === 'legal') {
+            $privacyPolicy = $this->getLegalPage('privacy_policy');
+            $termsOfService = $this->getLegalPage('terms_of_service');
+
+            return view('admin.settings.index', compact('groups', 'activeGroup', 'privacyPolicy', 'termsOfService'));
+        }
+
         $settings = Setting::where('group', $activeGroup)
             ->orderBy('sort_order')
             ->get();
@@ -148,5 +156,26 @@ class SettingController extends Controller
         return redirect()
             ->route('admin.settings.index', ['group' => $group])
             ->with('success', 'Setting deleted successfully.');
+    }
+
+    /**
+     * Get a legal page from settings.
+     */
+    private function getLegalPage(string $key): ?object
+    {
+        $setting = Setting::where('key', $key)->first();
+
+        if (!$setting) {
+            return null;
+        }
+
+        $value = json_decode($setting->value, true);
+
+        return (object) [
+            'title' => $value['title'] ?? ucwords(str_replace('_', ' ', $key)),
+            'content' => $value['content'] ?? '',
+            'status' => $value['status'] ?? 'draft',
+            'updated_at' => $setting->updated_at,
+        ];
     }
 }
