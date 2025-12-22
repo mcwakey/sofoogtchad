@@ -26,7 +26,7 @@
                     </li>
                     @foreach($categories as $cat)
                         <li>
-                            <a href="{{ route('products.category', $cat->slug) }}" 
+                            <a href="{{ route('products.category', $cat->slug) }}"
                                class="{{ (isset($category) && $category->id === $cat->id) || request('category') === $cat->slug ? 'active' : '' }}">
                                 {{ $cat->name }} ({{ $cat->products_count }})
                             </a>
@@ -43,7 +43,7 @@
                     </li>
                     @foreach($types as $value => $label)
                         <li>
-                            <a href="{{ request()->fullUrlWithQuery(['type' => $value]) }}" 
+                            <a href="{{ request()->fullUrlWithQuery(['type' => $value]) }}"
                                class="{{ request('type') === $value ? 'active' : '' }}">
                                 {{ $label }}
                             </a>
