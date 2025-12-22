@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreProcessStepRequest;
+use App\Http\Requests\Admin\UpdateProcessStepRequest;
 use App\Models\ProcessStep;
 use Illuminate\Http\Request;
 
@@ -19,20 +21,26 @@ class ProcessStepController extends Controller
         return view('admin.process-steps.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreProcessStepRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'icon' => 'nullable|string|max:255',
-            'sort_order' => 'nullable|integer',
-            'is_active' => 'boolean',
+        $validated = $request->validated();
+
+        $step = ProcessStep::create([
+            'icon' => $validated['icon'] ?? null,
+            'sort_order' => $validated['sort_order'] ?? ProcessStep::max('sort_order') + 1,
+            'is_active' => $validated['is_active'] ?? true,
         ]);
 
-        $validated['is_active'] = $request->has('is_active');
-        $validated['sort_order'] = $validated['sort_order'] ?? ProcessStep::max('sort_order') + 1;
-
-        ProcessStep::create($validated);
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            if (!empty($validated['title'][$locale])) {
+                $step->setTranslation('title', $locale, $validated['title'][$locale]);
+            }
+            if (!empty($validated['description'][$locale])) {
+                $step->setTranslation('description', $locale, $validated['description'][$locale]);
+            }
+        }
+        $step->save();
 
         return redirect()->route('admin.process-steps.index')
             ->with('success', 'Process step created successfully.');
@@ -43,19 +51,22 @@ class ProcessStepController extends Controller
         return view('admin.process-steps.edit', compact('processStep'));
     }
 
-    public function update(Request $request, ProcessStep $processStep)
+    public function update(UpdateProcessStepRequest $request, ProcessStep $processStep)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'icon' => 'nullable|string|max:255',
-            'sort_order' => 'nullable|integer',
-            'is_active' => 'boolean',
+        $validated = $request->validated();
+
+        $processStep->update([
+            'icon' => $validated['icon'] ?? null,
+            'sort_order' => $validated['sort_order'] ?? $processStep->sort_order,
+            'is_active' => $validated['is_active'] ?? true,
         ]);
 
-        $validated['is_active'] = $request->has('is_active');
-
-        $processStep->update($validated);
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            $processStep->setTranslation('title', $locale, $validated['title'][$locale] ?? null);
+            $processStep->setTranslation('description', $locale, $validated['description'][$locale] ?? null);
+        }
+        $processStep->save();
 
         return redirect()->route('admin.process-steps.index')
             ->with('success', 'Process step updated successfully.');

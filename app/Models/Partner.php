@@ -3,9 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Partner extends Model
 {
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['name', 'description'];
     protected $fillable = [
         'name',
         'logo',

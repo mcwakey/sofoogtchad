@@ -40,74 +40,49 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h2>
 
-                    <div class="space-y-4">
-                        {{-- Product Name --}}
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
-                                Product Name <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
+                    {{-- Slug --}}
+                    <div class="mb-6">
+                        <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
+                            Slug <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            value="{{ old('slug', $product->slug) }}"
+                            required
+                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('slug') border-red-500 @enderror"
+                        >
+                        @error('slug')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Translatable Fields --}}
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
                                 name="name"
-                                value="{{ old('name', $product->name) }}"
-                                required
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('name') border-red-500 @enderror"
-                            >
-                            @error('name')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                                label="Product Name"
+                                :model="$product"
+                                :required="true"
+                            />
 
-                        {{-- Slug --}}
-                        <div>
-                            <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
-                                Slug <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="slug"
-                                name="slug"
-                                value="{{ old('slug', $product->slug) }}"
-                                required
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('slug') border-red-500 @enderror"
-                            >
-                            @error('slug')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Short Description --}}
-                        <div>
-                            <label for="short_description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Short Description
-                            </label>
-                            <textarea
-                                id="short_description"
+                            <x-admin.translatable-textarea
                                 name="short_description"
-                                rows="2"
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('short_description') border-red-500 @enderror"
-                            >{{ old('short_description', $product->short_description) }}</textarea>
-                            @error('short_description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                                label="Short Description"
+                                :model="$product"
+                                :rows="2"
+                            />
 
-                        {{-- Full Description --}}
-                        <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Full Description
-                            </label>
-                            <textarea
-                                id="description"
+                            <x-admin.translatable-textarea
                                 name="description"
-                                rows="6"
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('description') border-red-500 @enderror"
-                            >{{ old('description', $product->description) }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                                label="Full Description"
+                                :model="$product"
+                                :rows="6"
+                            />
                         </div>
+                    </x-admin.language-tabs>
 
                         {{-- Hidden fields for sidebar values --}}
                         <input type="hidden" name="category_id" id="form_category_id" value="{{ old('category_id', $product->category_id) }}">
@@ -116,7 +91,6 @@
                         <input type="hidden" name="sort_order" id="form_sort_order" value="{{ old('sort_order', $product->sort_order) }}">
                         <input type="hidden" name="is_active" id="form_is_active" value="{{ old('is_active', $product->is_active) ? '1' : '0' }}">
                         <input type="hidden" name="is_featured" id="form_is_featured" value="{{ old('is_featured', $product->is_featured) ? '1' : '0' }}">
-                    </div>
                 </div>
             </form>
 

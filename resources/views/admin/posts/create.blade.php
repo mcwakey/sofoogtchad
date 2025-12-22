@@ -29,80 +29,51 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Post Content</h2>
 
-                    <div class="space-y-4">
-                        {{-- Title --}}
-                        <div>
-                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
-                                Title <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                value="{{ old('title') }}"
-                                required
-                                class="block w-full @error('title') border-red-500 @enderror"
-                                placeholder="Enter post title"
-                            >
-                            @error('title')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Slug --}}
-                        <div>
-                            <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
-                                Slug <span class="text-gray-400 text-xs font-normal">(auto-generated if empty)</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="slug"
-                                name="slug"
-                                value="{{ old('slug') }}"
-                                class="block w-full @error('slug') border-red-500 @enderror"
-                                placeholder="post-url-slug"
-                            >
-                            @error('slug')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Excerpt / Summary --}}
-                        <div>
-                            <label for="excerpt" class="block text-sm font-medium text-gray-700 mb-1">
-                                Summary / Excerpt
-                            </label>
-                            <textarea
-                                id="excerpt"
-                                name="excerpt"
-                                rows="3"
-                                class="block w-full @error('excerpt') border-red-500 @enderror"
-                                placeholder="Brief summary for listings and SEO"
-                            >{{ old('excerpt') }}</textarea>
-                            @error('excerpt')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Content --}}
-                        <div>
-                            <label for="content" class="block text-sm font-medium text-gray-700 mb-1">
-                                Content <span class="text-red-500">*</span>
-                            </label>
-                            <textarea
-                                id="content"
-                                name="content"
-                                rows="15"
-                                required
-                                class="block w-full font-mono text-sm @error('content') border-red-500 @enderror"
-                                placeholder="Write your post content here... HTML is supported."
-                            >{{ old('content') }}</textarea>
-                            @error('content')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-1 text-xs text-gray-500">You can use HTML for formatting. A rich text editor can be integrated later.</p>
-                        </div>
+                    {{-- Slug --}}
+                    <div class="mb-6">
+                        <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
+                            Slug <span class="text-gray-400 text-xs font-normal">(auto-generated from French title if empty)</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            value="{{ old('slug') }}"
+                            class="block w-full @error('slug') border-red-500 @enderror"
+                            placeholder="post-url-slug"
+                        >
+                        @error('slug')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
+
+                    {{-- Translatable Fields --}}
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
+                                name="title"
+                                label="Title"
+                                :required="true"
+                                placeholder="Enter post title"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="excerpt"
+                                label="Summary / Excerpt"
+                                :rows="3"
+                                placeholder="Brief summary for listings and SEO"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="content"
+                                label="Content"
+                                :required="true"
+                                :rows="15"
+                                placeholder="Write your post content here... HTML is supported."
+                            />
+                        </div>
+                    </x-admin.language-tabs>
+                    <p class="mt-2 text-xs text-gray-500">You can use HTML for formatting. A rich text editor can be integrated later.</p>
                 </div>
 
                 {{-- Featured Image --}}
@@ -157,50 +128,22 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">SEO Settings</h2>
 
-                    <div class="space-y-4">
-                        {{-- Meta Title --}}
-                        <div>
-                            <label for="meta_title" class="block text-sm font-medium text-gray-700 mb-1">
-                                Meta Title
-                            </label>
-                            <input
-                                type="text"
-                                id="meta_title"
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
                                 name="meta_title"
-                                value="{{ old('meta_title') }}"
-                                class="block w-full"
+                                label="Meta Title"
                                 placeholder="SEO title (defaults to post title)"
-                            >
-                        </div>
+                            />
 
-                        {{-- Meta Description --}}
-                        <div>
-                            <label for="meta_description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Meta Description
-                            </label>
-                            <textarea
-                                id="meta_description"
+                            <x-admin.translatable-textarea
                                 name="meta_description"
-                                rows="2"
-                                class="block w-full"
+                                label="Meta Description"
+                                :rows="2"
                                 placeholder="SEO description for search engines"
-                            >{{ old('meta_description') }}</textarea>
+                            />
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Sidebar --}}
-            <div class="space-y-6">
-                {{-- Publish --}}
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Publish</h2>
-
-                    <div class="space-y-4">
-                        {{-- Status --}}
-                        <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">
-                                Status
+                    </x-admin.language-tabs       Status
                             </label>
                             <select id="status" name="status" class="block w-full">
                                 <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>Draft</option>

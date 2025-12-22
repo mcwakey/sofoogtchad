@@ -34,17 +34,37 @@ class PageController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|array',
+            'title.fr' => 'required|string|max:255',
+            'title.en' => 'nullable|string|max:255',
+            'title.ar' => 'nullable|string|max:255',
             'slug' => 'nullable|string|unique:pages,slug',
             'status' => 'required|in:draft,published',
-            'meta_description' => 'nullable|string|max:500',
+            'meta_description' => 'nullable|array',
+            'meta_description.fr' => 'nullable|string|max:500',
+            'meta_description.en' => 'nullable|string|max:500',
+            'meta_description.ar' => 'nullable|string|max:500',
         ]);
 
         if (empty($validated['slug'])) {
-            $validated['slug'] = Str::slug($validated['title']);
+            $validated['slug'] = Str::slug($validated['title']['fr']);
         }
 
-        $page = Page::create($validated);
+        $page = new Page();
+        $page->slug = $validated['slug'];
+        $page->status = $validated['status'];
+
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            if (!empty($validated['title'][$locale])) {
+                $page->setTranslation('title', $locale, $validated['title'][$locale]);
+            }
+            if (!empty($validated['meta_description'][$locale])) {
+                $page->setTranslation('meta_description', $locale, $validated['meta_description'][$locale]);
+            }
+        }
+
+        $page->save();
 
         return redirect()->route('admin.pages.edit', $page)
             ->with('success', 'Page created successfully. Now add sections.');
@@ -74,13 +94,32 @@ class PageController extends Controller
     public function update(Request $request, Page $page): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|array',
+            'title.fr' => 'required|string|max:255',
+            'title.en' => 'nullable|string|max:255',
+            'title.ar' => 'nullable|string|max:255',
             'slug' => 'required|string|unique:pages,slug,' . $page->id,
             'status' => 'required|in:draft,published',
-            'meta_description' => 'nullable|string|max:500',
+            'meta_description' => 'nullable|array',
+            'meta_description.fr' => 'nullable|string|max:500',
+            'meta_description.en' => 'nullable|string|max:500',
+            'meta_description.ar' => 'nullable|string|max:500',
         ]);
 
-        $page->update($validated);
+        $page->slug = $validated['slug'];
+        $page->status = $validated['status'];
+
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            if (!empty($validated['title'][$locale])) {
+                $page->setTranslation('title', $locale, $validated['title'][$locale]);
+            }
+            if (!empty($validated['meta_description'][$locale])) {
+                $page->setTranslation('meta_description', $locale, $validated['meta_description'][$locale]);
+            }
+        }
+
+        $page->save();
 
         return redirect()->route('admin.pages.edit', $page)
             ->with('success', 'Page updated successfully.');

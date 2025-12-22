@@ -30,25 +30,6 @@
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Category Details</h3>
                 </div>
                 <div class="p-6 space-y-5">
-                    {{-- Name --}}
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Category Name <span class="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value="{{ old('name', $category->name) }}"
-                            required
-                            class="block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500 @error('name') border-red-500 @enderror"
-                            placeholder="e.g., Fruits, Vegetables, Dairy"
-                        >
-                        @error('name')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-
                     {{-- Slug --}}
                     <div>
                         <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -72,22 +53,26 @@
                         @enderror
                     </div>
 
-                    {{-- Description --}}
-                    <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Description
-                        </label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows="4"
-                            class="block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500 @error('description') border-red-500 @enderror"
-                            placeholder="Brief description of the category..."
-                        >{{ old('description', $category->description) }}</textarea>
-                        @error('description')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    {{-- Translatable Fields --}}
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
+                                name="name"
+                                label="Category Name"
+                                :model="$category"
+                                :required="true"
+                                placeholder="e.g., Fruits, Vegetables, Dairy"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="description"
+                                label="Description"
+                                :model="$category"
+                                :rows="4"
+                                placeholder="Brief description of the category..."
+                            />
+                        </div>
+                    </x-admin.language-tabs>
 
                     {{-- Image URL --}}
                     <div>
@@ -107,7 +92,7 @@
                         @enderror
                         @if($category->image)
                             <div class="mt-2">
-                                <img src="{{ $category->image }}" alt="{{ $category->name }}" class="h-20 w-20 object-cover rounded-lg border border-gray-200 dark:border-gray-600">
+                                <img src="{{ $category->image }}" alt="{{ $category->getTranslation('name', 'fr') }}" class="h-20 w-20 object-cover rounded-lg border border-gray-200 dark:border-gray-600">
                             </div>
                         @endif
                     </div>

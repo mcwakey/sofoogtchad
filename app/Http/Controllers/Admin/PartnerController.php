@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StorePartnerRequest;
+use App\Http\Requests\Admin\UpdatePartnerRequest;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,28 +29,35 @@ class PartnerController extends Controller
         return view('admin.partners.create');
     }
 
-    public function store(Request $request)
+    public function store(StorePartnerRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'nullable|image|max:1024',
-            'description' => 'nullable|string',
-            'website' => 'nullable|url|max:255',
-            'type' => 'required|in:partner,distributor,supplier',
-            'is_featured' => 'boolean',
-            'is_active' => 'boolean',
-            'sort_order' => 'nullable|integer',
-        ]);
+        $validated = $request->validated();
 
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['is_active'] = $request->has('is_active');
-        $validated['sort_order'] = $validated['sort_order'] ?? Partner::max('sort_order') + 1;
-
+        // Handle logo upload
+        $logoPath = null;
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('partners', 'public');
+            $logoPath = $request->file('logo')->store('partners', 'public');
         }
 
-        Partner::create($validated);
+        $partner = Partner::create([
+            'logo' => $logoPath,
+            'website' => $validated['website'] ?? null,
+            'type' => $validated['type'],
+            'sort_order' => $validated['sort_order'] ?? Partner::max('sort_order') + 1,
+            'is_featured' => $validated['is_featured'] ?? false,
+            'is_active' => $validated['is_active'] ?? true,
+        ]);
+
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            if (!empty($validated['name'][$locale])) {
+                $partner->setTranslation('name', $locale, $validated['name'][$locale]);
+            }
+            if (!empty($validated['description'][$locale])) {
+                $partner->setTranslation('description', $locale, $validated['description'][$locale]);
+            }
+        }
+        $partner->save();
 
         return redirect()->route('admin.partners.index')
             ->with('success', 'Partner created successfully.');
@@ -59,30 +68,32 @@ class PartnerController extends Controller
         return view('admin.partners.edit', compact('partner'));
     }
 
-    public function update(Request $request, Partner $partner)
+    public function update(UpdatePartnerRequest $request, Partner $partner)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'nullable|image|max:1024',
-            'description' => 'nullable|string',
-            'website' => 'nullable|url|max:255',
-            'type' => 'required|in:partner,distributor,supplier',
-            'is_featured' => 'boolean',
-            'is_active' => 'boolean',
-            'sort_order' => 'nullable|integer',
-        ]);
+        $validated = $request->validated();
 
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['is_active'] = $request->has('is_active');
-
+        // Handle logo upload
         if ($request->hasFile('logo')) {
             if ($partner->logo) {
                 Storage::disk('public')->delete($partner->logo);
             }
-            $validated['logo'] = $request->file('logo')->store('partners', 'public');
+            $partner->logo = $request->file('logo')->store('partners', 'public');
         }
 
-        $partner->update($validated);
+        $partner->update([
+            'website' => $validated['website'] ?? null,
+            'type' => $validated['type'],
+            'sort_order' => $validated['sort_order'] ?? $partner->sort_order,
+            'is_featured' => $validated['is_featured'] ?? false,
+            'is_active' => $validated['is_active'] ?? true,
+        ]);
+
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            $partner->setTranslation('name', $locale, $validated['name'][$locale] ?? null);
+            $partner->setTranslation('description', $locale, $validated['description'][$locale] ?? null);
+        }
+        $partner->save();
 
         return redirect()->route('admin.partners.index')
             ->with('success', 'Partner updated successfully.');

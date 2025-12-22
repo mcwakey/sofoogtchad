@@ -29,68 +29,49 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Partner Information</h2>
 
-                    <div class="space-y-4">
-                        {{-- Partner Name --}}
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
-                                Partner Name <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value="{{ old('name') }}"
-                                required
-                                class="block w-full @error('name') border-red-500 @enderror"
-                                placeholder="Enter partner name"
-                            >
-                            @error('name')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Website URL --}}
-                        <div>
-                            <label for="website" class="block text-sm font-medium text-gray-700 mb-1">
-                                Website URL <span class="text-gray-400 text-xs font-normal">(optional)</span>
-                            </label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-                                    </svg>
-                                </div>
-                                <input
-                                    type="url"
-                                    id="website"
-                                    name="website"
-                                    value="{{ old('website') }}"
-                                    class="block w-full pl-10 @error('website') border-red-500 @enderror"
-                                    placeholder="https://example.com"
-                                >
+                    {{-- Website URL (not translatable) --}}
+                    <div class="mb-6">
+                        <label for="website" class="block text-sm font-medium text-gray-700 mb-1">
+                            Website URL <span class="text-gray-400 text-xs font-normal">(optional)</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                                </svg>
                             </div>
-                            @error('website')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            <input
+                                type="url"
+                                id="website"
+                                name="website"
+                                value="{{ old('website') }}"
+                                class="block w-full pl-10 @error('website') border-red-500 @enderror"
+                                placeholder="https://example.com"
+                            >
                         </div>
-
-                        {{-- Description --}}
-                        <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Description <span class="text-gray-400 text-xs font-normal">(optional)</span>
-                            </label>
-                            <textarea
-                                id="description"
-                                name="description"
-                                rows="4"
-                                class="block w-full @error('description') border-red-500 @enderror"
-                                placeholder="Brief description about this partner"
-                            >{{ old('description') }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                        @error('website')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
+
+                    {{-- Translatable Fields --}}
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
+                                name="name"
+                                label="Partner Name"
+                                :required="true"
+                                placeholder="Enter partner name"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="description"
+                                label="Description"
+                                :rows="4"
+                                placeholder="Brief description about this partner"
+                            />
+                        </div>
+                    </x-admin.language-tabs>
                 </div>
 
                 {{-- Logo Upload --}}

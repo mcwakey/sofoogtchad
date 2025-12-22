@@ -29,43 +29,24 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Step Information</h2>
 
-                    <div class="space-y-4">
-                        {{-- Title --}}
-                        <div>
-                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
-                                Title <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="title"
+                    {{-- Translatable Fields --}}
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
                                 name="title"
-                                value="{{ old('title') }}"
-                                required
-                                class="block w-full @error('title') border-red-500 @enderror"
+                                label="Title"
+                                :required="true"
                                 placeholder="e.g., Sourcing Raw Materials"
-                            >
-                            @error('title')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                            />
 
-                        {{-- Description --}}
-                        <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Description <span class="text-gray-400 text-xs font-normal">(optional)</span>
-                            </label>
-                            <textarea
-                                id="description"
+                            <x-admin.translatable-textarea
                                 name="description"
-                                rows="4"
-                                class="block w-full @error('description') border-red-500 @enderror"
+                                label="Description"
+                                :rows="4"
                                 placeholder="Describe what happens in this step..."
-                            >{{ old('description') }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            />
                         </div>
-                    </div>
+                    </x-admin.language-tabs>
                 </div>
 
                 {{-- Icon/Emoji --}}

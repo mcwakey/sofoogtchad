@@ -29,78 +29,49 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h2>
 
-                    <div class="space-y-4">
-                        {{-- Product Name --}}
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
-                                Product Name <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value="{{ old('name') }}"
-                                required
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('name') border-red-500 @enderror"
-                                placeholder="Enter product name"
-                            >
-                            @error('name')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Slug --}}
-                        <div>
-                            <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
-                                Slug <span class="text-gray-400 text-xs font-normal">(auto-generated if empty)</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="slug"
-                                name="slug"
-                                value="{{ old('slug') }}"
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('slug') border-red-500 @enderror"
-                                placeholder="product-url-slug"
-                            >
-                            @error('slug')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Short Description --}}
-                        <div>
-                            <label for="short_description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Short Description
-                            </label>
-                            <textarea
-                                id="short_description"
-                                name="short_description"
-                                rows="2"
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('short_description') border-red-500 @enderror"
-                                placeholder="Brief product description for listings"
-                            >{{ old('short_description') }}</textarea>
-                            @error('short_description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Full Description --}}
-                        <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Full Description
-                            </label>
-                            <textarea
-                                id="description"
-                                name="description"
-                                rows="6"
-                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('description') border-red-500 @enderror"
-                                placeholder="Detailed product description"
-                            >{{ old('description') }}</textarea>
-                            @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                    {{-- Slug --}}
+                    <div class="mb-6">
+                        <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
+                            Slug <span class="text-gray-400 text-xs font-normal">(auto-generated from French name if empty)</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            value="{{ old('slug') }}"
+                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 @error('slug') border-red-500 @enderror"
+                            placeholder="product-url-slug"
+                        >
+                        @error('slug')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
+
+                    {{-- Translatable Fields --}}
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
+                                name="name"
+                                label="Product Name"
+                                :required="true"
+                                placeholder="Enter product name"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="short_description"
+                                label="Short Description"
+                                :rows="2"
+                                placeholder="Brief product description for listings"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="description"
+                                label="Full Description"
+                                :rows="6"
+                                placeholder="Detailed product description"
+                            />
+                        </div>
+                    </x-admin.language-tabs>
                 </div>
 
                 {{-- Image Upload --}}

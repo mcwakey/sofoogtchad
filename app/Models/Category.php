@@ -6,10 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['name', 'description'];
 
     protected $fillable = [
         'name',
@@ -30,7 +36,8 @@ class Category extends Model
 
         static::creating(function ($category) {
             if (empty($category->slug)) {
-                $category->slug = Str::slug($category->name);
+                $name = $category->getTranslation('name', 'fr') ?? $category->name;
+                $category->slug = Str::slug($name);
             }
         });
     }

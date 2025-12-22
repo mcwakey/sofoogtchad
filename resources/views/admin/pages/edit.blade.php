@@ -53,24 +53,6 @@
                     @csrf
                     @method('PUT')
 
-                    {{-- Title --}}
-                    <div>
-                        <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Page Title <span class="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            value="{{ old('title', $page->title) }}"
-                            required
-                            class="block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500 @error('title') border-red-500 @enderror"
-                        >
-                        @error('title')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-
                     {{-- Slug --}}
                     <div>
                         <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -93,6 +75,16 @@
                             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    {{-- Translatable Title --}}
+                    <x-admin.language-tabs>
+                        <x-admin.translatable-input
+                            name="title"
+                            label="Page Title"
+                            :model="$page"
+                            :required="true"
+                        />
+                    </x-admin.language-tabs>
 
                     <div class="grid grid-cols-2 gap-5">
                         {{-- Status --}}
@@ -125,24 +117,17 @@
                         </div>
                     </div>
 
-                    {{-- Meta Description --}}
-                    <div>
-                        <label for="meta_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Meta Description
-                        </label>
-                        <textarea
-                            id="meta_description"
+                    {{-- Meta Description (Translatable) --}}
+                    <x-admin.language-tabs>
+                        <x-admin.translatable-textarea
                             name="meta_description"
-                            rows="3"
-                            maxlength="500"
-                            class="block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500 @error('meta_description') border-red-500 @enderror"
+                            label="Meta Description"
+                            :model="$page"
+                            :rows="3"
                             placeholder="Brief description for search engines..."
-                        >{{ old('meta_description', $page->meta_description) }}</textarea>
-                        @error('meta_description')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                        @enderror
-                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Recommended: 150-160 characters for optimal SEO</p>
-                    </div>
+                        />
+                    </x-admin.language-tabs>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Recommended: 150-160 characters for optimal SEO</p>
 
                     <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
                         <a href="{{ route('admin.pages.index') }}" class="px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">

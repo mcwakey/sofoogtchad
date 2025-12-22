@@ -6,10 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['title', 'meta_description'];
 
     protected $fillable = [
         'title',
@@ -35,7 +41,8 @@ class Page extends Model
 
         static::creating(function ($page) {
             if (empty($page->slug)) {
-                $page->slug = Str::slug($page->title);
+                $title = $page->getTranslation('title', 'fr') ?? $page->title;
+                $page->slug = Str::slug($title);
             }
         });
     }

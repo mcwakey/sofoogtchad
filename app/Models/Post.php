@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['title', 'excerpt', 'content', 'meta_title', 'meta_description'];
     protected $fillable = [
         'user_id',
         'title',
@@ -40,7 +47,8 @@ class Post extends Model
 
         static::creating(function ($post) {
             if (empty($post->slug)) {
-                $post->slug = Str::slug($post->title);
+                $title = $post->getTranslation('title', 'fr') ?? $post->title;
+                $post->slug = Str::slug($title);
             }
 
             $originalSlug = $post->slug;

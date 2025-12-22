@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreProductRequest;
+use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductImage;
@@ -56,32 +58,41 @@ class ProductController extends Controller
     /**
      * Store a newly created product.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreProductRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:products,slug',
-            'category_id' => 'nullable|exists:categories,id',
-            'description' => 'nullable|string',
-            'short_description' => 'nullable|string|max:500',
-            'type' => 'required|in:natural,roasted,grilled',
-            'is_featured' => 'boolean',
-            'is_active' => 'boolean',
-            'sort_order' => 'nullable|integer',
-            'price' => 'nullable|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0',
-            'sku' => 'nullable|string|unique:products,sku',
-            'stock_quantity' => 'nullable|integer|min:0',
-        ]);
+        $validated = $request->validated();
 
+        // Generate slug from French name
         if (empty($validated['slug'])) {
-            $validated['slug'] = Str::slug($validated['name']);
+            $validated['slug'] = Str::slug($validated['name']['fr']);
         }
 
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['is_active'] = $request->has('is_active');
+        $product = Product::create([
+            'category_id' => $validated['category_id'] ?? null,
+            'slug' => $validated['slug'],
+            'type' => $validated['type'],
+            'price' => $validated['price'] ?? null,
+            'sale_price' => $validated['sale_price'] ?? null,
+            'sku' => $validated['sku'] ?? null,
+            'stock_quantity' => $validated['stock_quantity'] ?? null,
+            'sort_order' => $validated['sort_order'] ?? 0,
+            'is_featured' => $validated['is_featured'] ?? false,
+            'is_active' => $validated['is_active'] ?? true,
+        ]);
 
-        $product = Product::create($validated);
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            if (!empty($validated['name'][$locale])) {
+                $product->setTranslation('name', $locale, $validated['name'][$locale]);
+            }
+            if (!empty($validated['description'][$locale])) {
+                $product->setTranslation('description', $locale, $validated['description'][$locale]);
+            }
+            if (!empty($validated['short_description'][$locale])) {
+                $product->setTranslation('short_description', $locale, $validated['short_description'][$locale]);
+            }
+        }
+        $product->save();
 
         return redirect()->route('admin.products.edit', $product)
             ->with('success', 'Product created. Now add images.');
@@ -110,28 +121,30 @@ class ProductController extends Controller
     /**
      * Update the specified product.
      */
-    public function update(Request $request, Product $product): RedirectResponse
+    public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:products,slug,' . $product->id,
-            'category_id' => 'nullable|exists:categories,id',
-            'description' => 'nullable|string',
-            'short_description' => 'nullable|string|max:500',
-            'type' => 'required|in:natural,roasted,grilled',
-            'is_featured' => 'boolean',
-            'is_active' => 'boolean',
-            'sort_order' => 'nullable|integer',
-            'price' => 'nullable|numeric|min:0',
-            'sale_price' => 'nullable|numeric|min:0',
-            'sku' => 'nullable|string|unique:products,sku,' . $product->id,
-            'stock_quantity' => 'nullable|integer|min:0',
+        $validated = $request->validated();
+
+        $product->update([
+            'category_id' => $validated['category_id'] ?? null,
+            'slug' => $validated['slug'],
+            'type' => $validated['type'],
+            'price' => $validated['price'] ?? null,
+            'sale_price' => $validated['sale_price'] ?? null,
+            'sku' => $validated['sku'] ?? null,
+            'stock_quantity' => $validated['stock_quantity'] ?? null,
+            'sort_order' => $validated['sort_order'] ?? 0,
+            'is_featured' => $validated['is_featured'] ?? false,
+            'is_active' => $validated['is_active'] ?? true,
         ]);
 
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['is_active'] = $request->has('is_active');
-
-        $product->update($validated);
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            $product->setTranslation('name', $locale, $validated['name'][$locale] ?? null);
+            $product->setTranslation('description', $locale, $validated['description'][$locale] ?? null);
+            $product->setTranslation('short_description', $locale, $validated['short_description'][$locale] ?? null);
+        }
+        $product->save();
 
         return redirect()->route('admin.products.edit', $product)
             ->with('success', 'Product updated successfully.');

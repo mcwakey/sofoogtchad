@@ -40,75 +40,49 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">Post Content</h2>
 
-                    <div class="space-y-4">
-                        {{-- Title --}}
-                        <div>
-                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
-                                Title <span class="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                value="{{ old('title', $post->title) }}"
-                                required
-                                class="block w-full @error('title') border-red-500 @enderror"
-                            >
-                            @error('title')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Slug --}}
-                        <div>
-                            <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
-                                Slug
-                            </label>
-                            <input
-                                type="text"
-                                id="slug"
-                                name="slug"
-                                value="{{ old('slug', $post->slug) }}"
-                                class="block w-full @error('slug') border-red-500 @enderror"
-                            >
-                            @error('slug')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Excerpt / Summary --}}
-                        <div>
-                            <label for="excerpt" class="block text-sm font-medium text-gray-700 mb-1">
-                                Summary / Excerpt
-                            </label>
-                            <textarea
-                                id="excerpt"
-                                name="excerpt"
-                                rows="3"
-                                class="block w-full @error('excerpt') border-red-500 @enderror"
-                            >{{ old('excerpt', $post->excerpt) }}</textarea>
-                            @error('excerpt')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        {{-- Content --}}
-                        <div>
-                            <label for="content" class="block text-sm font-medium text-gray-700 mb-1">
-                                Content <span class="text-red-500">*</span>
-                            </label>
-                            <textarea
-                                id="content"
-                                name="content"
-                                rows="15"
-                                required
-                                class="block w-full font-mono text-sm @error('content') border-red-500 @enderror"
-                            >{{ old('content', $post->content) }}</textarea>
-                            @error('content')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                    {{-- Slug --}}
+                    <div class="mb-6">
+                        <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
+                            Slug
+                        </label>
+                        <input
+                            type="text"
+                            id="slug"
+                            name="slug"
+                            value="{{ old('slug', $post->slug) }}"
+                            class="block w-full @error('slug') border-red-500 @enderror"
+                        >
+                        @error('slug')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
+
+                    {{-- Translatable Fields --}}
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
+                                name="title"
+                                label="Title"
+                                :model="$post"
+                                :required="true"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="excerpt"
+                                label="Summary / Excerpt"
+                                :model="$post"
+                                :rows="3"
+                            />
+
+                            <x-admin.translatable-textarea
+                                name="content"
+                                label="Content"
+                                :model="$post"
+                                :required="true"
+                                :rows="15"
+                            />
+                        </div>
+                    </x-admin.language-tabs>
                 </div>
 
                 {{-- Featured Image --}}
@@ -176,35 +150,23 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-4">SEO Settings</h2>
 
-                    <div class="space-y-4">
-                        {{-- Meta Title --}}
-                        <div>
-                            <label for="meta_title" class="block text-sm font-medium text-gray-700 mb-1">
-                                Meta Title
-                            </label>
-                            <input
-                                type="text"
-                                id="meta_title"
+                    <x-admin.language-tabs>
+                        <div class="space-y-4">
+                            <x-admin.translatable-input
                                 name="meta_title"
-                                value="{{ old('meta_title', $post->meta_title) }}"
-                                class="block w-full"
+                                label="Meta Title"
+                                :model="$post"
                                 placeholder="SEO title (defaults to post title)"
-                            >
-                        </div>
+                            />
 
-                        {{-- Meta Description --}}
-                        <div>
-                            <label for="meta_description" class="block text-sm font-medium text-gray-700 mb-1">
-                                Meta Description
-                            </label>
-                            <textarea
-                                id="meta_description"
+                            <x-admin.translatable-textarea
                                 name="meta_description"
-                                rows="2"
-                                class="block w-full"
-                            >{{ old('meta_description', $post->meta_description) }}</textarea>
+                                label="Meta Description"
+                                :model="$post"
+                                :rows="2"
+                            />
                         </div>
-                    </div>
+                    </x-admin.language-tabs>
                 </div>
             </div>
 

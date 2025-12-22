@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Spatie\Translatable\HasTranslations;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['name', 'description', 'short_description'];
 
     protected $fillable = [
         'category_id',
@@ -54,7 +60,8 @@ class Product extends Model
 
         static::creating(function ($product) {
             if (empty($product->slug)) {
-                $product->slug = Str::slug($product->name);
+                $name = $product->getTranslation('name', 'fr') ?? $product->name;
+                $product->slug = Str::slug($name);
             }
         });
     }

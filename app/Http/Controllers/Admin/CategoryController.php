@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -31,24 +34,38 @@ class CategoryController extends Controller
     /**
      * Store a newly created category.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|unique:categories,slug',
-            'description' => 'nullable|string',
-            'image' => 'nullable|string|max:500',
-            'is_active' => 'boolean',
-            'sort_order' => 'nullable|integer',
-        ]);
+        $validated = $request->validated();
 
+        // Generate slug from French name
         if (empty($validated['slug'])) {
-            $validated['slug'] = Str::slug($validated['name']);
+            $validated['slug'] = Str::slug($validated['name']['fr']);
         }
 
-        $validated['is_active'] = $request->has('is_active');
+        // Handle image upload
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+        }
 
-        Category::create($validated);
+        $category = Category::create([
+            'slug' => $validated['slug'],
+            'image' => $imagePath,
+            'sort_order' => $validated['sort_order'] ?? 0,
+            'is_active' => $validated['is_active'] ?? true,
+        ]);
+
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            if (!empty($validated['name'][$locale])) {
+                $category->setTranslation('name', $locale, $validated['name'][$locale]);
+            }
+            if (!empty($validated['description'][$locale])) {
+                $category->setTranslation('description', $locale, $validated['description'][$locale]);
+            }
+        }
+        $category->save();
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category created successfully.');
@@ -65,20 +82,30 @@ class CategoryController extends Controller
     /**
      * Update the specified category.
      */
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:categories,slug,' . $category->id,
-            'description' => 'nullable|string',
-            'image' => 'nullable|string|max:500',
-            'is_active' => 'boolean',
-            'sort_order' => 'nullable|integer',
+        $validated = $request->validated();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
+            $category->image = $request->file('image')->store('categories', 'public');
+        }
+
+        $category->update([
+            'slug' => $validated['slug'],
+            'sort_order' => $validated['sort_order'] ?? 0,
+            'is_active' => $validated['is_active'] ?? true,
         ]);
 
-        $validated['is_active'] = $request->has('is_active');
-
-        $category->update($validated);
+        // Set translations
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            $category->setTranslation('name', $locale, $validated['name'][$locale] ?? null);
+            $category->setTranslation('description', $locale, $validated['description'][$locale] ?? null);
+        }
+        $category->save();
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category updated successfully.');
@@ -92,6 +119,10 @@ class CategoryController extends Controller
         if ($category->products()->count() > 0) {
             return redirect()->route('admin.categories.index')
                 ->with('error', 'Cannot delete category with products. Move or delete products first.');
+        }
+
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
         }
 
         $category->delete();
