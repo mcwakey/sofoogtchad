@@ -31,6 +31,12 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('admin.posts.index') }}" class="{{ request()->routeIs('admin.posts*') ? 'active' : '' }}">
+                    Posts
+                </a>
+            </li>
+
             @if(auth()->user()->hasRole('admin'))
                 <li>
                     <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">

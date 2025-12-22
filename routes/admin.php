@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProcessStepController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -120,4 +121,20 @@ Route::middleware('admin')->group(function () {
         'update' => 'admin.process-steps.update',
         'destroy' => 'admin.process-steps.destroy',
     ]);
+
+    // Posts management
+    Route::resource('posts', PostController::class)->names([
+        'index' => 'admin.posts.index',
+        'create' => 'admin.posts.create',
+        'store' => 'admin.posts.store',
+        'edit' => 'admin.posts.edit',
+        'update' => 'admin.posts.update',
+        'destroy' => 'admin.posts.destroy',
+    ]);
+
+    // Post images
+    Route::post('posts/{post}/images', [PostController::class, 'addImage'])
+        ->name('admin.posts.images.store');
+    Route::delete('posts/{post}/images/{image}', [PostController::class, 'deleteImage'])
+        ->name('admin.posts.images.destroy');
 });

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProcessController;
+use App\Http\Controllers\BlogController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,7 +18,11 @@ Route::get('/products/{slug}', [ProductsController::class, 'show'])->name('produ
 // Process page
 Route::get('/process', [ProcessController::class, 'index'])->name('process.index');
 
-// Dynamic page rendering (exclude admin, products, process paths)
+// Blog routes
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+// Dynamic page rendering (exclude admin, products, process, blog paths)
 Route::get('/{slug}', [PageController::class, 'show'])
     ->name('page.show')
-    ->where('slug', '^(?!admin|products|process).*$');
+    ->where('slug', '^(?!admin|products|process|blog).*$');
