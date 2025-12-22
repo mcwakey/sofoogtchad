@@ -13,6 +13,18 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
+                    Categories
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">
+                    Products
+                </a>
+            </li>
+
             @if(auth()->user()->hasRole('admin'))
                 <li>
                     <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">

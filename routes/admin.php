@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PageSectionController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -74,4 +76,37 @@ Route::middleware('admin')->group(function () {
         ->name('admin.pages.sections.destroy');
     Route::post('pages/{page}/sections/reorder', [PageSectionController::class, 'reorder'])
         ->name('admin.pages.sections.reorder');
+
+    // Category management
+    Route::resource('categories', CategoryController::class)->names([
+        'index' => 'admin.categories.index',
+        'create' => 'admin.categories.create',
+        'store' => 'admin.categories.store',
+        'edit' => 'admin.categories.edit',
+        'update' => 'admin.categories.update',
+        'destroy' => 'admin.categories.destroy',
+    ]);
+
+    // Product management
+    Route::resource('products', ProductController::class)->names([
+        'index' => 'admin.products.index',
+        'create' => 'admin.products.create',
+        'store' => 'admin.products.store',
+        'show' => 'admin.products.show',
+        'edit' => 'admin.products.edit',
+        'update' => 'admin.products.update',
+        'destroy' => 'admin.products.destroy',
+    ]);
+
+    // Product images
+    Route::post('products/{product}/images', [ProductController::class, 'addImage'])
+        ->name('admin.products.images.store');
+    Route::delete('products/{product}/images/{image}', [ProductController::class, 'deleteImage'])
+        ->name('admin.products.images.destroy');
+
+    // Product sizes
+    Route::post('products/{product}/sizes', [ProductController::class, 'addSize'])
+        ->name('admin.products.sizes.store');
+    Route::delete('products/{product}/sizes/{size}', [ProductController::class, 'deleteSize'])
+        ->name('admin.products.sizes.destroy');
 });
