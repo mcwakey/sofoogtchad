@@ -28,7 +28,7 @@
     </section>
 
     {{-- ==================== FILTERS & PRODUCTS ==================== --}}
-    <section class="py-12 md:py-16 bg-gray-50">
+    <section class="py-12 md:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
         <div class="container mx-auto px-4">
             {{-- Category & Type Filters --}}
             @if((isset($categories) && $categories->count() > 0) || (isset($types) && count($types) > 0))
@@ -36,33 +36,33 @@
                     {{-- Mobile Filter Toggle --}}
                     <button
                         type="button"
-                        class="md:hidden w-full flex items-center justify-between px-4 py-3 bg-white rounded-lg shadow mb-4"
+                        class="md:hidden w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-700 rounded-lg shadow mb-4"
                         onclick="document.getElementById('filter-panel').classList.toggle('hidden')"
                     >
-                        <span class="font-medium text-gray-900">Filters</span>
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <span class="font-medium text-gray-900 dark:text-white">Filters</span>
+                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                         </svg>
                     </button>
 
                     {{-- Filter Panel --}}
-                    <div id="filter-panel" class="hidden md:block bg-white rounded-xl shadow-sm p-6">
+                    <div id="filter-panel" class="hidden md:block bg-white dark:bg-gray-700 rounded-xl shadow-sm dark:shadow-gray-900/30 p-6">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                             {{-- Categories --}}
                             @if(isset($categories) && $categories->count() > 0)
                                 <div class="flex-1">
-                                    <h3 class="text-sm font-semibold text-gray-700 mb-3">Categories</h3>
+                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Categories</h3>
                                     <div class="flex flex-wrap gap-2">
                                         <a
                                             href="{{ route('products.index') }}"
-                                            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !isset($category) && !request('category') ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !isset($category) && !request('category') ? 'bg-green-600 text-white' : 'bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500' }}"
                                         >
                                             All Products
                                         </a>
                                         @foreach($categories as $cat)
                                             <a
                                                 href="{{ route('products.category', $cat->slug) }}"
-                                                class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ (isset($category) && $category->id === $cat->id) || request('category') === $cat->slug ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                                class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ (isset($category) && $category->id === $cat->id) || request('category') === $cat->slug ? 'bg-green-600 text-white' : 'bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500' }}"
                                             >
                                                 {{ $cat->name }}
                                                 @if($cat->products_count)
@@ -76,19 +76,19 @@
 
                             {{-- Product Types --}}
                             @if(isset($types) && count($types) > 0)
-                                <div class="md:border-l md:pl-6 md:ml-6">
-                                    <h3 class="text-sm font-semibold text-gray-700 mb-3">Type</h3>
+                                <div class="md:border-l md:border-gray-200 dark:md:border-gray-600 md:pl-6 md:ml-6">
+                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Type</h3>
                                     <div class="flex flex-wrap gap-2">
                                         <a
                                             href="{{ request()->fullUrlWithQuery(['type' => null]) }}"
-                                            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !request('type') ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                            class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !request('type') ? 'bg-green-600 text-white' : 'bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500' }}"
                                         >
                                             All Types
                                         </a>
                                         @foreach($types as $typeKey => $typeLabel)
                                             <a
                                                 href="{{ request()->fullUrlWithQuery(['type' => $typeKey]) }}"
-                                                class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ request('type') === $typeKey ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}"
+                                                class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ request('type') === $typeKey ? 'bg-green-600 text-white' : 'bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500' }}"
                                             >
                                                 {{ $typeLabel }}
                                             </a>
@@ -104,11 +104,11 @@
             {{-- Active Filters Display --}}
             @if(request('type') || isset($category))
                 <div class="flex flex-wrap items-center gap-2 mb-6">
-                    <span class="text-sm text-gray-500">Active filters:</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Active filters:</span>
                     @if(isset($category))
-                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 text-sm rounded-full">
                             {{ $category->name }}
-                            <a href="{{ route('products.index', request()->except('category')) }}" class="ml-1 hover:text-green-600">
+                            <a href="{{ route('products.index', request()->except('category')) }}" class="ml-1 hover:text-green-600 dark:hover:text-green-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
@@ -116,16 +116,16 @@
                         </span>
                     @endif
                     @if(request('type'))
-                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 text-sm rounded-full">
                             {{ $types[request('type')] ?? request('type') }}
-                            <a href="{{ request()->fullUrlWithQuery(['type' => null]) }}" class="ml-1 hover:text-green-600">
+                            <a href="{{ request()->fullUrlWithQuery(['type' => null]) }}" class="ml-1 hover:text-green-600 dark:hover:text-green-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
                             </a>
                         </span>
                     @endif
-                    <a href="{{ route('products.index') }}" class="text-sm text-red-600 hover:text-red-700 ml-2">
+                    <a href="{{ route('products.index') }}" class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 ml-2">
                         Clear all
                     </a>
                 </div>
@@ -149,11 +149,11 @@
 
     {{-- ==================== CATEGORY INFO (if viewing a category) ==================== --}}
     @if(isset($category) && $category->description)
-        <section class="py-12 bg-white">
+        <section class="py-12 bg-white dark:bg-gray-900 transition-colors duration-200">
             <div class="container mx-auto px-4">
                 <div class="max-w-3xl mx-auto text-center">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">About {{ $category->name }}</h2>
-                    <p class="text-gray-600 leading-relaxed">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">About {{ $category->name }}</h2>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
                         {{ $category->description }}
                     </p>
                 </div>

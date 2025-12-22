@@ -25,29 +25,29 @@
         {{-- Wave Divider --}}
         <div class="absolute bottom-0 left-0 right-0">
             <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                <path d="M0 60V30C240 50 480 10 720 30C960 50 1200 10 1440 30V60H0Z" fill="white"/>
+                <path d="M0 60V30C240 50 480 10 720 30C960 50 1200 10 1440 30V60H0Z" class="fill-white dark:fill-gray-900"/>
             </svg>
         </div>
     </section>
 
     {{-- Category Filter --}}
-    <section class="bg-gray-50 border-b border-gray-200">
+    <section class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex flex-wrap items-center gap-3">
-                <span class="text-sm font-medium text-gray-600 mr-2">Filter:</span>
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400 mr-2">Filter:</span>
                 <a href="{{ route('blog.index') }}"
-                   class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ !request('type') ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 hover:bg-green-50 hover:text-green-700 border border-gray-200' }}">
+                   class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ !request('type') ? 'bg-green-600 text-white shadow-md' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-gray-600 hover:text-green-700 dark:hover:text-green-400 border border-gray-200 dark:border-gray-600' }}">
                     All Posts
                 </a>
                 <a href="{{ route('blog.index', ['type' => 'blog']) }}"
-                   class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('type') === 'blog' ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 hover:bg-green-50 hover:text-green-700 border border-gray-200' }}">
+                   class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('type') === 'blog' ? 'bg-green-600 text-white shadow-md' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-gray-600 hover:text-green-700 dark:hover:text-green-400 border border-gray-200 dark:border-gray-600' }}">
                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                     </svg>
                     Blog
                 </a>
                 <a href="{{ route('blog.index', ['type' => 'news']) }}"
-                   class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('type') === 'news' ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 hover:bg-green-50 hover:text-green-700 border border-gray-200' }}">
+                   class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('type') === 'news' ? 'bg-green-600 text-white shadow-md' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-gray-600 hover:text-green-700 dark:hover:text-green-400 border border-gray-200 dark:border-gray-600' }}">
                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                     </svg>
@@ -58,18 +58,18 @@
     </section>
 
     {{-- Posts Grid --}}
-    <section class="py-12 md:py-16 lg:py-20 bg-white">
+    <section class="py-12 md:py-16 lg:py-20 bg-white dark:bg-gray-900 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @if($posts->isEmpty())
                 {{-- Empty State --}}
                 <div class="text-center py-16">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-                        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+                        <svg class="w-10 h-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">No Posts Yet</h3>
-                    <p class="text-gray-600 max-w-md mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Posts Yet</h3>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
                         We're working on exciting content for you. Check back soon for updates!
                     </p>
                 </div>
@@ -113,13 +113,13 @@
                         <nav class="flex items-center gap-2">
                             {{-- Previous --}}
                             @if($posts->onFirstPage())
-                                <span class="px-4 py-2 text-gray-400 cursor-not-allowed">
+                                <span class="px-4 py-2 text-gray-400 dark:text-gray-500 cursor-not-allowed">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                                     </svg>
                                 </span>
                             @else
-                                <a href="{{ $posts->previousPageUrl() }}" class="px-4 py-2 text-gray-700 hover:text-green-600 transition-colors">
+                                <a href="{{ $posts->previousPageUrl() }}" class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                                     </svg>
@@ -131,19 +131,19 @@
                                 @if($page == $posts->currentPage())
                                     <span class="px-4 py-2 bg-green-600 text-white rounded-lg font-medium">{{ $page }}</span>
                                 @else
-                                    <a href="{{ $url }}" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">{{ $page }}</a>
+                                    <a href="{{ $url }}" class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">{{ $page }}</a>
                                 @endif
                             @endforeach
 
                             {{-- Next --}}
                             @if($posts->hasMorePages())
-                                <a href="{{ $posts->nextPageUrl() }}" class="px-4 py-2 text-gray-700 hover:text-green-600 transition-colors">
+                                <a href="{{ $posts->nextPageUrl() }}" class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>
                                 </a>
                             @else
-                                <span class="px-4 py-2 text-gray-400 cursor-not-allowed">
+                                <span class="px-4 py-2 text-gray-400 dark:text-gray-500 cursor-not-allowed">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                     </svg>

@@ -25,21 +25,21 @@
     $hasError = $errors->has($name);
     $fieldValue = old($name, $value);
 
-    $inputClasses = 'block w-full rounded-lg border-gray-300 shadow-sm transition-colors duration-200 focus:border-green-500 focus:ring-green-500 sm:text-sm';
+    $inputClasses = 'block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 shadow-sm transition-colors duration-200 focus:border-green-500 focus:ring-green-500 sm:text-sm';
 
     if ($hasError) {
-        $inputClasses = 'block w-full rounded-lg border-red-500 shadow-sm transition-colors duration-200 focus:border-red-500 focus:ring-red-500 sm:text-sm text-red-900 placeholder-red-300';
+        $inputClasses = 'block w-full rounded-lg border-red-500 dark:border-red-500 dark:bg-gray-700 shadow-sm transition-colors duration-200 focus:border-red-500 focus:ring-red-500 sm:text-sm text-red-900 dark:text-red-400 placeholder-red-300 dark:placeholder-red-400';
     }
 
     if ($disabled) {
-        $inputClasses .= ' bg-gray-100 cursor-not-allowed';
+        $inputClasses .= ' bg-gray-100 dark:bg-gray-600 cursor-not-allowed';
     }
 @endphp
 
 <div {{ $attributes->merge(['class' => 'form-field']) }}>
     {{-- Label --}}
     @if($label)
-        <label for="{{ $fieldId }}" class="block text-sm font-medium text-gray-700 mb-1">
+        <label for="{{ $fieldId }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             {{ $label }}
             @if($required)
                 <span class="text-red-500">*</span>
@@ -91,13 +91,13 @@
                     name="{{ $name }}"
                     id="{{ $fieldId }}"
                     value="1"
-                    class="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                    class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-green-600 focus:ring-green-500"
                     {{ $fieldValue ? 'checked' : '' }}
                     @if($required) required @endif
                     @if($disabled) disabled @endif
                 >
                 @if($label)
-                    <label for="{{ $fieldId }}" class="ml-2 text-sm text-gray-700">
+                    <label for="{{ $fieldId }}" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
                         {{ $label }}
                         @if($required)
                             <span class="text-red-500">*</span>
@@ -116,12 +116,12 @@
                             name="{{ $name }}"
                             id="{{ $fieldId }}_{{ $optionValue }}"
                             value="{{ $optionValue }}"
-                            class="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-500"
+                            class="h-4 w-4 border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-green-600 focus:ring-green-500"
                             {{ $fieldValue == $optionValue ? 'checked' : '' }}
                             @if($required) required @endif
                             @if($disabled) disabled @endif
                         >
-                        <label for="{{ $fieldId }}_{{ $optionValue }}" class="ml-2 text-sm text-gray-700">
+                        <label for="{{ $fieldId }}_{{ $optionValue }}" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
                             {{ $optionLabel }}
                         </label>
                     </div>
@@ -134,7 +134,7 @@
                 type="file"
                 name="{{ $name }}"
                 id="{{ $fieldId }}"
-                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 focus:outline-none"
+                class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 dark:file:bg-green-900/50 file:text-green-700 dark:file:text-green-300 hover:file:bg-green-100 dark:hover:file:bg-green-900/70 focus:outline-none"
                 @if($accept) accept="{{ $accept }}" @endif
                 @if($required) required @endif
                 @if($disabled) disabled @endif
@@ -162,12 +162,12 @@
 
     {{-- Help Text --}}
     @if($help && !$hasError)
-        <p class="mt-1 text-xs text-gray-500">{{ $help }}</p>
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ $help }}</p>
     @endif
 
     {{-- Error Message --}}
     @error($name)
-        <p class="mt-1 text-sm text-red-600 flex items-center">
+        <p class="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center">
             <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
             </svg>
