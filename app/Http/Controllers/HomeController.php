@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\ProcessStep;
 use App\Models\Product;
 use App\Models\Page;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,6 +22,9 @@ class HomeController extends Controller
 
         // Hero Section Data
         $hero = $this->getHeroData($homePage);
+
+        // Hero Slides from settings
+        $heroSlides = $this->getHeroSlides();
 
         // About Section Data
         $about = $this->getAboutData($homePage);
@@ -96,6 +100,7 @@ class HomeController extends Controller
 
         return view('home', compact(
             'hero',
+            'heroSlides',
             'about',
             'products',
             'productsSection',
@@ -107,6 +112,52 @@ class HomeController extends Controller
             'blogSection',
             'cta'
         ));
+    }
+
+    /**
+     * Get hero slides from settings.
+     */
+    private function getHeroSlides(): array
+    {
+        $heroSetting = Setting::where('key', 'hero_slides')->first();
+
+        if (!$heroSetting || empty($heroSetting->value)) {
+            return [];
+        }
+
+        $slides = json_decode($heroSetting->value, true) ?? [];
+        $locale = app()->getLocale();
+        $result = [];
+
+        foreach ($slides as $slide) {
+            // Skip inactive slides
+            if (isset($slide['is_active']) && !$slide['is_active']) {
+                continue;
+            }
+
+            // Resolve translatable fields
+            $title = is_array($slide['title'] ?? null)
+                ? ($slide['title'][$locale] ?? $slide['title']['en'] ?? $slide['title']['fr'] ?? '')
+                : ($slide['title'] ?? '');
+
+            $subtitle = is_array($slide['subtitle'] ?? null)
+                ? ($slide['subtitle'][$locale] ?? $slide['subtitle']['en'] ?? $slide['subtitle']['fr'] ?? '')
+                : ($slide['subtitle'] ?? '');
+
+            $ctaText = is_array($slide['cta_text'] ?? null)
+                ? ($slide['cta_text'][$locale] ?? $slide['cta_text']['en'] ?? $slide['cta_text']['fr'] ?? '')
+                : ($slide['cta_text'] ?? '');
+
+            $result[] = [
+                'background_image' => $slide['image'] ?? null,
+                'title' => $title,
+                'subtitle' => $subtitle,
+                'cta_text' => $ctaText,
+                'cta_url' => $slide['cta_url'] ?? '',
+            ];
+        }
+
+        return $result;
     }
 
     /**

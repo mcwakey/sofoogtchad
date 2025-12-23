@@ -1,4 +1,4 @@
-@php
+<?php
     $navItems = [
         [
             'label' => 'Dashboard',
@@ -81,67 +81,67 @@
             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>',
         ],
     ];
-@endphp
+?>
 
 <ul class="space-y-1">
-    {{-- Main Navigation --}}
-    @foreach($navItems as $item)
-        @php
+    
+    <?php $__currentLoopData = $navItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php
             $isActive = request()->routeIs($item['pattern'] ?? $item['route'] . '*');
-        @endphp
+        ?>
         <li>
             <a
-                href="{{ route($item['route']) }}"
+                href="<?php echo e(route($item['route'])); ?>"
                 class="group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
-                    {{ $isActive
+                    <?php echo e($isActive
                         ? 'bg-green-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                    }}"
+                        : 'text-gray-300 hover:bg-gray-800 hover:text-white'); ?>"
             >
-                <svg class="w-5 h-5 flex-shrink-0 {{ $isActive ? 'text-white' : 'text-gray-400 group-hover:text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {!! $item['icon'] !!}
+                <svg class="w-5 h-5 flex-shrink-0 <?php echo e($isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'); ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <?php echo $item['icon']; ?>
+
                 </svg>
-                <span>{{ $item['label'] }}</span>
+                <span><?php echo e($item['label']); ?></span>
             </a>
         </li>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </ul>
 
-{{-- Admin Section --}}
-@if(auth()->user() && auth()->user()->hasRole('admin'))
+
+<?php if(auth()->user() && auth()->user()->hasRole('admin')): ?>
     <div class="mt-6 pt-6 border-t border-gray-800">
         <p class="px-3 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
             Administration
         </p>
         <ul class="space-y-1">
-            @foreach($adminItems as $item)
-                @php
+            <?php $__currentLoopData = $adminItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
                     $isActive = request()->routeIs($item['pattern'] ?? $item['route'] . '*');
-                @endphp
+                ?>
                 <li>
                     <a
-                        href="{{ route($item['route']) }}"
+                        href="<?php echo e(route($item['route'])); ?>"
                         class="group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200
-                            {{ $isActive
+                            <?php echo e($isActive
                                 ? 'bg-green-600 text-white'
-                                : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                            }}"
+                                : 'text-gray-300 hover:bg-gray-800 hover:text-white'); ?>"
                     >
-                        <svg class="w-5 h-5 flex-shrink-0 {{ $isActive ? 'text-white' : 'text-gray-400 group-hover:text-white' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            {!! $item['icon'] !!}
+                        <svg class="w-5 h-5 flex-shrink-0 <?php echo e($isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'); ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <?php echo $item['icon']; ?>
+
                         </svg>
-                        <span>{{ $item['label'] }}</span>
+                        <span><?php echo e($item['label']); ?></span>
                     </a>
                 </li>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>
-@endif
+<?php endif; ?>
 
-{{-- View Site Link --}}
+
 <!-- <div class="mt-6 pt-6 border-t border-gray-800">
     <a
-        href="{{ url('/') }}"
+        href="<?php echo e(url('/')); ?>"
         target="_blank"
         class="group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200"
     >
@@ -151,3 +151,4 @@
         <span>View Site</span>
     </a>
 </div> -->
+<?php /**PATH C:\dev\projects\web\sofood\resources\views/admin/partials/_sidebar-nav.blade.php ENDPATH**/ ?>

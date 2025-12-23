@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\LegalController;
+use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
 /*
@@ -186,11 +187,17 @@ Route::middleware('admin')->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
         Route::put('settings', [SettingController::class, 'update'])->name('admin.settings.update');
+        Route::post('settings/remove-image', [SettingController::class, 'removeImage'])->name('admin.settings.remove-image');
         Route::get('settings/create', [SettingController::class, 'create'])->name('admin.settings.create');
         Route::post('settings', [SettingController::class, 'store'])->name('admin.settings.store');
         Route::get('settings/{setting}/edit', [SettingController::class, 'edit'])->name('admin.settings.edit');
         Route::put('settings/{setting}', [SettingController::class, 'updateSetting'])->name('admin.settings.update-setting');
         Route::delete('settings/{setting}', [SettingController::class, 'destroy'])->name('admin.settings.destroy');
+
+        // Hero slides management
+        Route::get('hero', [HeroController::class, 'index'])->name('admin.hero.index');
+        Route::put('hero', [HeroController::class, 'update'])->name('admin.hero.update');
+        Route::post('hero/delete-slide', [HeroController::class, 'deleteSlide'])->name('admin.hero.delete-slide');
 
         // Legal pages management
         Route::get('legal/privacy', [LegalController::class, 'editPrivacy'])->name('admin.legal.privacy');

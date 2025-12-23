@@ -347,6 +347,115 @@
                                         <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">Enter valid JSON format</p>
                                         @break
 
+                                    @case('image')
+                                        <div x-data="{
+                                            preview: '{{ $setting->value }}',
+                                            fileSelected: false,
+                                            removeImage() {
+                                                if (confirm('Are you sure you want to remove this image?')) {
+                                                    fetch('{{ route('admin.settings.remove-image') }}', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                                        },
+                                                        body: JSON.stringify({ key: '{{ $setting->key }}' })
+                                                    })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            this.preview = '';
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }" class="space-y-4">
+                                            {{-- Current Image Preview --}}
+                                            <div x-show="preview && !fileSelected" class="relative">
+                                                <div class="flex items-start gap-4">
+                                                    <div class="relative group">
+                                                        <img
+                                                            :src="preview"
+                                                            alt="Current {{ $setting->label }}"
+                                                            class="h-20 w-auto rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 object-contain"
+                                                        >
+                                                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                                                            <button
+                                                                type="button"
+                                                                @click="removeImage()"
+                                                                class="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                                                            >
+                                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">
+                                                        <p class="font-medium text-gray-700 dark:text-gray-300">Current image</p>
+                                                        <p class="text-xs mt-1">Hover to remove</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Upload Input --}}
+                                            <div class="relative">
+                                                <label
+                                                    for="images_{{ $setting->key }}"
+                                                    class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                                                >
+                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                        <svg class="w-8 h-8 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                                        </svg>
+                                                        <p class="mb-1 text-sm text-gray-500 dark:text-gray-400">
+                                                            <span class="font-semibold">Click to upload</span> or drag and drop
+                                                        </p>
+                                                        <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF, ICO (Max 2MB)</p>
+                                                    </div>
+                                                    <input
+                                                        type="file"
+                                                        name="images[{{ $setting->key }}]"
+                                                        id="images_{{ $setting->key }}"
+                                                        accept="image/*,.ico"
+                                                        class="hidden"
+                                                        @change="
+                                                            fileSelected = true;
+                                                            const file = $event.target.files[0];
+                                                            if (file) {
+                                                                const reader = new FileReader();
+                                                                reader.onload = (e) => preview = e.target.result;
+                                                                reader.readAsDataURL(file);
+                                                            }
+                                                        "
+                                                    >
+                                                </label>
+                                            </div>
+
+                                            {{-- New Image Preview --}}
+                                            <div x-show="fileSelected && preview" class="flex items-center gap-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                                <img
+                                                    :src="preview"
+                                                    alt="New image preview"
+                                                    class="h-12 w-auto rounded-lg object-contain"
+                                                >
+                                                <div class="flex-1">
+                                                    <p class="text-sm font-medium text-green-700 dark:text-green-400">New image selected</p>
+                                                    <p class="text-xs text-green-600 dark:text-green-500">Save to apply changes</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="fileSelected = false; preview = '{{ $setting->value }}'; document.getElementById('images_{{ $setting->key }}').value = ''"
+                                                    class="p-1.5 text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+                                                >
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        @break
+
                                     @default
                                         <input
                                             type="text"

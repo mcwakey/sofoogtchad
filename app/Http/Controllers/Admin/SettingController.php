@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -52,6 +53,25 @@ class SettingController extends Controller
             }
         }
 
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $key => $file) {
+                $setting = Setting::where('key', $key)->first();
+
+                if ($setting && $setting->type === 'image') {
+                    // Delete old image if exists
+                    if ($setting->value && Storage::disk('public')->exists($setting->value)) {
+                        Storage::disk('public')->delete($setting->value);
+                    }
+
+                    // Store new image
+                    $path = $file->store('settings', 'public');
+                    $setting->value = '/storage/' . $path;
+                    $setting->save();
+                }
+            }
+        }
+
         // Handle unchecked checkboxes (they won't be in the request)
         $booleanSettings = Setting::where('type', 'boolean')->get();
         foreach ($booleanSettings as $setting) {
@@ -66,6 +86,31 @@ class SettingController extends Controller
         return redirect()
             ->route('admin.settings.index', ['group' => $request->input('group', 'general')])
             ->with('success', 'Settings updated successfully.');
+    }
+
+    /**
+     * Remove an image from a setting.
+     */
+    public function removeImage(Request $request)
+    {
+        $key = $request->input('key');
+        $setting = Setting::where('key', $key)->first();
+
+        if ($setting && $setting->type === 'image' && $setting->value) {
+            // Delete the file
+            $path = str_replace('/storage/', '', $setting->value);
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+
+            $setting->value = '';
+            $setting->save();
+            Setting::clearCache();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 400);
     }
 
     /**
