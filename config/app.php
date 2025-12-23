@@ -17,6 +17,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is dynamically set by VersionService based on Git tags.
+    | In production, it reflects the latest Git tag (e.g., "1.0.0").
+    | In development, it shows "dev" or the development branch name.
+    | Access via config('app.version') or the app_version() helper.
+    |
+    */
+
+    'version' => 'dev', // Dynamically overridden by AppServiceProvider
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

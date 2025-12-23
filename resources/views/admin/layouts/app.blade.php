@@ -62,9 +62,19 @@
             {{-- Footer --}}
             <footer class="bg-white border-t border-gray-200 py-4 mt-auto">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <p class="text-center text-sm text-gray-500">
-                        &copy; {{ date('Y') }} {{ config('app.name', 'Sofoodtchad') }}. All rights reserved.
-                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+                        <p class="text-sm text-gray-500">
+                            &copy; {{ date('Y') }} {{ config('app.name', 'Sofoodtchad') }}. All rights reserved.
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            <span class="inline-flex items-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                </svg>
+                                {{ config('app.name', 'Sofoodtchad') }} {{ app_version('formatted') }}
+                            </span>
+                        </p>
+                    </div>
                 </div>
             </footer>
 

@@ -1,6 +1,32 @@
 <?php
 
 use App\Models\Setting;
+use App\Services\VersionService;
+
+if (!function_exists('app_version')) {
+    /**
+     * Get the application version information.
+     *
+     * @param  string|null  $key  Key to retrieve: 'version', 'tag', 'branch', 'is_stable', 'formatted', or null for full array
+     * @return mixed
+     */
+    function app_version(?string $key = null): mixed
+    {
+        $service = app(VersionService::class);
+
+        if ($key === 'formatted') {
+            return $service->getFormattedVersion();
+        }
+
+        if ($key === null) {
+            return $service->getVersionInfo();
+        }
+
+        $info = $service->getVersionInfo();
+
+        return $info[$key] ?? null;
+    }
+}
 
 if (!function_exists('setting')) {
     /**
