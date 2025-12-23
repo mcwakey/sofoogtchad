@@ -279,7 +279,7 @@
                         <x-post-card
                             :title="$post->title"
                             :summary="$post->excerpt ?? Str::limit($post->content, 150)"
-                            :image="$post->featured_image ?? null"
+                            :image="$post->image_url"
                             :link="route('blog.show', $post->slug)"
                             :published_date="$post->published_at ?? $post->created_at"
                             :category="$post->category ?? null"

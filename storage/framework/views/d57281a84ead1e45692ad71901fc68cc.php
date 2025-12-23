@@ -51,8 +51,8 @@ unset($__defined_vars); ?>
 ?>
 
 <header
-    x-data="{ 
-        scrollProgress: 0, 
+    x-data="{
+        scrollProgress: 0,
         mobileMenuOpen: false,
         updateScroll() {
             // Calculate scroll progress from 0 to 1 over 150px

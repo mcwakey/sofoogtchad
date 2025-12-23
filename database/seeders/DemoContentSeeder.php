@@ -58,8 +58,8 @@ class DemoContentSeeder extends Seeder
                 'en' => 'At SoFood, we believe that eating well starts with innovation. We offer healthy, simple and tasty products - premium cashew nuts from Chad.',
                 'ar' => 'في سوفود، نؤمن بأن الأكل الجيد يبدأ بالابتكار. نقدم منتجات صحية وبسيطة ولذيذة - كاجو ممتاز من تشاد.'
             ]), 'type' => 'textarea', 'group' => 'general'],
-            ['key' => 'site_logo', 'value' => '/images/logo.png', 'type' => 'text', 'group' => 'general'],
-            ['key' => 'site_favicon', 'value' => '/images/favicon.ico', 'type' => 'text', 'group' => 'general'],
+            ['key' => 'site_logo', 'value' => '/images/logo.png', 'type' => 'image', 'group' => 'general'],
+            ['key' => 'site_favicon', 'value' => '/images/favicon.ico', 'type' => 'image', 'group' => 'general'],
 
             // Contact Settings
             ['key' => 'contact_email', 'value' => 'contact@sofoodtchad.td', 'type' => 'email', 'group' => 'contact'],
@@ -112,7 +112,7 @@ class DemoContentSeeder extends Seeder
                 'en' => 'At SoFood, we believe that eating well starts with innovation. Guided by our founder, an engineer passionate about technology and entrepreneurship, we are reinventing the way to enjoy natural products. SoFood is committed to offering healthy, simple and tasty products.',
                 'ar' => 'في سوفود، نؤمن بأن الأكل الجيد يبدأ بالابتكار. بقيادة مؤسسنا، المهندس الشغوف بالتكنولوجيا وريادة الأعمال، نعيد ابتكار طريقة الاستمتاع بالمنتجات الطبيعية.'
             ]), 'type' => 'textarea', 'group' => 'homepage'],
-            ['key' => 'homepage_about_image', 'value' => 'https://images.unsplash.com/photo-1563292769-4e05b684851a?w=800&h=600&fit=crop', 'type' => 'text', 'group' => 'homepage'],
+            ['key' => 'homepage_about_image', 'value' => 'https://images.unsplash.com/photo-1563292769-4e05b684851a?w=800&h=600&fit=crop', 'type' => 'image', 'group' => 'homepage'],
             ['key' => 'homepage_about_cta_text', 'value' => json_encode(['fr' => 'En savoir plus', 'en' => 'Learn more', 'ar' => 'اعرف المزيد']), 'type' => 'text', 'group' => 'homepage'],
             ['key' => 'homepage_about_cta_url', 'value' => '/about', 'type' => 'text', 'group' => 'homepage'],
             ['key' => 'homepage_about_features', 'value' => json_encode([
