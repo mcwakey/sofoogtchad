@@ -9,39 +9,71 @@
 @endif
 
 @section('content')
-    {{-- Spacer for fixed navbar --}}
-    <div class="h-16 lg:h-20"></div>
-
-    {{-- Breadcrumb --}}
-    <nav class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div class="container mx-auto px-4 py-4">
-            <ol class="flex items-center text-sm text-gray-600 dark:text-gray-400 flex-wrap gap-y-1">
-                <li>
-                    <a href="{{ url('/') }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                        {{ __('navigation.home') }}
-                    </a>
-                </li>
-                <li class="mx-2">/</li>
-                <li>
-                    <a href="{{ route('products.index') }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                        {{ __('products.title') }}
-                    </a>
-                </li>
-                @if($product->category)
-                    <li class="mx-2">/</li>
-                    <li>
-                        <a href="{{ route('products.category', $product->category->slug) }}" class="hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                            {{ $product->category->name }}
-                        </a>
-                    </li>
-                @endif
-                <li class="mx-2">/</li>
-                <li class="text-gray-900 dark:text-white font-medium truncate max-w-xs">
-                    {{ $product->name }}
-                </li>
-            </ol>
+    {{-- Page Header --}}
+    <section class="relative bg-gradient-to-br from-green-800 via-green-700 to-green-600 text-white overflow-hidden">
+        {{-- Background Pattern --}}
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"%23ffffff\" fill-opacity=\"0.4\"><path d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/></g></g></svg>');"></div>
         </div>
-    </nav>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+            <div class="text-center max-w-4xl mx-auto">
+                {{-- Breadcrumb --}}
+                <nav class="mb-6">
+                    <ol class="flex items-center justify-center text-sm text-green-100 gap-2 flex-wrap">
+                        <li>
+                            <a href="{{ url('/') }}" class="hover:text-white transition-colors">
+                                {{ __('navigation.home') }}
+                            </a>
+                        </li>
+                        <li>/</li>
+                        <li>
+                            <a href="{{ route('products.index') }}" class="hover:text-white transition-colors">
+                                {{ __('products.title') }}
+                            </a>
+                        </li>
+                        @if($product->category)
+                            <li>/</li>
+                            <li>
+                                <a href="{{ route('products.category', $product->category->slug) }}" class="hover:text-white transition-colors">
+                                    {{ $product->category->name }}
+                                </a>
+                            </li>
+                        @endif
+                        <li>/</li>
+                        <li class="text-white font-medium truncate max-w-xs">
+                            {{ Str::limit($product->name, 30) }}
+                        </li>
+                    </ol>
+                </nav>
+
+                {{-- Category Badge --}}
+                @if($product->category)
+                    <span class="inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full mb-4 bg-white/20 text-white">
+                        {{ $product->category->name }}
+                    </span>
+                @endif
+
+                {{-- Product Name --}}
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+                    {{ $product->name }}
+                </h1>
+
+                {{-- Product Type Badge --}}
+                <span class="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-full
+                    {{ $product->type === 'finished' ? 'bg-blue-500/80 text-white' : 'bg-amber-500/80 text-white' }}">
+                    {{ $product->type_label }}
+                </span>
+            </div>
+        </div>
+
+        {{-- Wave Divider --}}
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                <path d="M0 60V30C240 50 480 10 720 30C960 50 1200 10 1440 30V60H0Z" class="fill-white dark:fill-gray-900"/>
+            </svg>
+        </div>
+    </section>
 
     {{-- Product Detail Section --}}
     <section class="py-12 lg:py-16">
@@ -90,24 +122,6 @@
 
                 {{-- Product Info --}}
                 <div class="space-y-6">
-                    {{-- Category Badge --}}
-                    @if($product->category)
-                        <a href="{{ route('products.category', $product->category->slug) }}" class="inline-flex items-center px-3 py-1 text-sm font-medium text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30 rounded-full hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors">
-                            {{ $product->category->name }}
-                        </a>
-                    @endif
-
-                    {{-- Product Name --}}
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
-                        {{ $product->name }}
-                    </h1>
-
-                    {{-- Product Type Badge --}}
-                    <span class="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg
-                        {{ $product->type === 'finished' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' }}">
-                        {{ $product->type_label }}
-                    </span>
-
                     {{-- Short Description --}}
                     @if($product->short_description)
                         <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">

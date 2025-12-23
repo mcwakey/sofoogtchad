@@ -52,7 +52,7 @@
             <div class="mt-8 text-center">
                 <p class="text-gray-600 dark:text-gray-400">
                     Questions about our terms?
-                    <a href="{{ route('contact') }}" class="text-green-600 dark:text-green-400 hover:underline font-medium">Contact us</a>
+                    <a href="{{ route('contact.index') }}" class="text-green-600 dark:text-green-400 hover:underline font-medium">Contact us</a>
                 </p>
             </div>
         </div>
