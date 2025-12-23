@@ -61,6 +61,35 @@ class SettingSeeder extends Seeder
                 'sort_order' => 5,
             ],
 
+            // Homepage settings
+            [
+                'key' => 'homepage_about_image',
+                'value' => '',
+                'type' => 'image',
+                'group' => 'homepage',
+                'label' => 'About Section Image',
+                'description' => 'Upload the image for the "Why Us" / About section on the homepage.',
+                'sort_order' => 1,
+            ],
+            [
+                'key' => 'homepage_about_title',
+                'value' => 'Why Choose Us',
+                'type' => 'text',
+                'group' => 'homepage',
+                'label' => 'About Section Title',
+                'description' => 'Title for the about section on homepage.',
+                'sort_order' => 2,
+            ],
+            [
+                'key' => 'homepage_about_description',
+                'value' => 'We are dedicated to providing the highest quality food products.',
+                'type' => 'textarea',
+                'group' => 'homepage',
+                'label' => 'About Section Description',
+                'description' => 'Description text for the about section.',
+                'sort_order' => 3,
+            ],
+
             // Contact settings
             [
                 'key' => 'contact_email',

@@ -12,10 +12,10 @@
 @php
     $heightClasses = match($height) {
         'sm' => 'min-h-[400px] py-20',
-        'md' => 'min-h-[500px] py-24',
-        'xl' => 'min-h-[700px] py-36',
+        'md' => 'min-h-[600px] py-24',
+        'lg' => 'min-h-[85vh] py-32',
         'full' => 'min-h-screen py-24',
-        default => 'min-h-[600px] py-28', // lg
+        default => 'min-h-[85vh] py-32', // xl
     };
 
     $overlayClass = match($overlayOpacity) {

@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\ProductImage;
 use App\Models\ProductSize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -167,15 +168,24 @@ class ProductController extends Controller
     public function addImage(Request $request, Product $product): RedirectResponse
     {
         $validated = $request->validate([
-            'image_path' => 'required|string|max:500',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'alt_text' => 'nullable|string|max:255',
             'is_primary' => 'boolean',
         ]);
+
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('products', $filename, 'public');
+            $validated['image_path'] = '/storage/' . $path;
+        }
 
         $validated['product_id'] = $product->id;
         $validated['is_primary'] = $request->has('is_primary');
         $validated['sort_order'] = $product->images()->max('sort_order') + 1;
 
+        unset($validated['image']); // Remove file from validated array
         $image = ProductImage::create($validated);
 
         // If marked as primary, unset others
@@ -184,7 +194,7 @@ class ProductController extends Controller
         }
 
         return redirect()->route('admin.products.edit', $product)
-            ->with('success', 'Image added successfully.');
+            ->with('success', 'Image uploaded successfully.');
     }
 
     /**
@@ -192,6 +202,12 @@ class ProductController extends Controller
      */
     public function deleteImage(Product $product, ProductImage $image): RedirectResponse
     {
+        // Delete file from storage if it exists
+        if ($image->image_path && str_starts_with($image->image_path, '/storage/')) {
+            $path = str_replace('/storage/', '', $image->image_path);
+            Storage::disk('public')->delete($path);
+        }
+
         $image->delete();
 
         return redirect()->route('admin.products.edit', $product)

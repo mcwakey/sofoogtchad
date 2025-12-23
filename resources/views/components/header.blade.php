@@ -23,8 +23,8 @@
     x-data="{ scrolled: false, mobileMenuOpen: false }"
     x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
     :class="scrolled
-        ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl shadow-xl shadow-black/10 dark:shadow-black/40 border-b border-white/20 dark:border-gray-700/50 mt-0'
-        : 'bg-black/20 backdrop-blur-md mt-3'"
+        ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl shadow-xl shadow-black/10 dark:shadow-black/40 border-b border-white/30 dark:border-gray-700/50'
+        : 'bg-white/10 dark:bg-gray-900/10 backdrop-blur-xl border-b border-white/20 dark:border-white/10'"
     class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out"
     role="banner"
 >
@@ -93,12 +93,16 @@
             {{-- Header Actions --}}
             <div class="flex items-center gap-1 sm:gap-2">
                 {{-- Language Switcher --}}
-                <div :class="scrolled ? '[&_button]:text-gray-700 [&_button]:dark:text-gray-200 [&_button]:font-semibold' : '[&_button]:text-white [&_button]:font-semibold [&_button:hover]:bg-white/20 [&_button]:drop-shadow-sm'">
+                <div :class="scrolled
+                    ? '[&_button]:text-gray-700 [&_button]:dark:text-gray-200 [&_button]:font-semibold [&_button]:bg-gray-100/80 [&_button]:dark:bg-gray-800/80 [&_button:hover]:bg-gray-200 [&_button]:dark:hover:bg-gray-700 [&_button]:rounded-full'
+                    : '[&_button]:text-white [&_button]:font-semibold [&_button]:bg-white/15 [&_button:hover]:bg-white/30 [&_button]:rounded-full [&_button]:drop-shadow-md'">
                     <x-language-switcher />
                 </div>
 
                 {{-- Theme Toggle --}}
-                <div :class="scrolled ? '[&_button]:text-gray-700 [&_button]:dark:text-gray-200' : '[&_button]:text-white [&_button:hover]:bg-white/20 [&_button]:drop-shadow-sm'">
+                <div :class="scrolled
+                    ? '[&_button]:text-gray-700 [&_button]:dark:text-gray-200 [&_button]:bg-gray-100/80 [&_button]:dark:bg-gray-800/80 [&_button:hover]:bg-gray-200 [&_button]:dark:hover:bg-gray-700 [&_button]:rounded-full'
+                    : '[&_button]:text-white [&_button]:bg-white/15 [&_button:hover]:bg-white/30 [&_button]:rounded-full [&_button]:drop-shadow-md'">
                     <x-theme-toggle />
                 </div>
 
