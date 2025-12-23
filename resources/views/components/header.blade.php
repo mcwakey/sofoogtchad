@@ -20,16 +20,25 @@
 @endphp
 
 <header
-    x-data="{ scrolled: false, mobileMenuOpen: false }"
-    x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
-    :class="scrolled
-        ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl shadow-xl shadow-black/10 dark:shadow-black/40 border-b border-white/30 dark:border-gray-700/50'
-        : 'bg-white/10 dark:bg-gray-900/10 backdrop-blur-xl border-b border-white/20 dark:border-white/10'"
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out"
+    x-data="{
+        scrollProgress: 0,
+        mobileMenuOpen: false,
+        updateScroll() {
+            // Calculate scroll progress from 0 to 1 over 150px
+            this.scrollProgress = Math.min(window.scrollY / 150, 1);
+        }
+    }"
+    x-init="window.addEventListener('scroll', () => updateScroll())"
+    :style="`background-color: rgba(255, 255, 255, ${0.15 + (scrollProgress * 0.8)}); backdrop-filter: blur(${12 + (scrollProgress * 12)}px);`"
+    :class="{
+        'shadow-lg shadow-black/5 dark:shadow-black/30': scrollProgress > 0.5,
+        'dark:!bg-gray-900/95': scrollProgress > 0.5
+    }"
+    class="fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 ease-out"
     role="banner"
 >
     {{-- Top accent line --}}
-    <div :class="scrolled ? 'opacity-100' : 'opacity-0'" class="h-0.5 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 transition-opacity duration-300"></div>
+    <div :style="`opacity: ${scrollProgress}`" class="h-0.5 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500"></div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-[72px]">
@@ -46,7 +55,7 @@
                             <img
                                 src="{{ $siteLogo }}"
                                 alt="{{ $logoAltText }}"
-                                :class="scrolled ? '' : 'brightness-0 invert'"
+                                :class="scrollProgress > 0.5 ? 'brightness-110 saturate-110' : 'brightness-0 invert drop-shadow-lg'"
                                 class="h-12 lg:h-14 max-w-[180px] lg:max-w-[220px] w-auto object-contain transition-all duration-300 group-hover:scale-105"
                                 loading="eager"
                             >
@@ -54,13 +63,13 @@
                     @else
                         <div class="flex items-center gap-2">
                             {{-- Logo Icon --}}
-                            <div :class="scrolled ? 'bg-green-600' : 'bg-white/20'" class="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105">
-                                <svg :class="scrolled ? 'text-white' : 'text-white'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div :class="scrollProgress > 0.5 ? 'bg-green-600' : 'bg-white/30'" class="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+                                <svg :class="scrollProgress > 0.5 ? 'text-white' : 'text-white'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
                             {{-- Logo Text --}}
-                            <span :class="scrolled ? 'text-gray-900 dark:text-white' : 'text-white'" class="text-lg lg:text-xl font-bold tracking-tight transition-colors duration-300">
+                            <span :class="scrollProgress > 0.5 ? 'text-gray-900 dark:text-white' : 'text-white drop-shadow-md'" class="text-lg lg:text-xl font-bold tracking-tight transition-colors duration-300">
                                 {{ $siteName }}
                             </span>
                         </div>
@@ -70,11 +79,11 @@
 
             {{-- Desktop Navigation - Centered --}}
             <nav class="hidden lg:flex items-center" role="navigation" aria-label="{{ __('navigation.main_navigation') }}">
-                <div :class="scrolled ? 'bg-gray-100/80 dark:bg-gray-800/80' : 'bg-white/15'" class="flex items-center gap-1 px-2 py-2 rounded-full backdrop-blur-sm transition-all duration-300">
+                <div class="flex items-center gap-1 px-2 py-2 rounded-full transition-all duration-300">
                     @foreach($navItems as $item)
                         <a
                             href="{{ url($item['route']) }}"
-                            :class="scrolled
+                            :class="scrollProgress > 0.5
                                 ? '{{ $item['active']
                                     ? 'bg-white dark:bg-gray-700 text-green-600 dark:text-green-400 shadow-sm'
                                     : 'text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-gray-700/60' }}'
@@ -93,14 +102,14 @@
             {{-- Header Actions --}}
             <div class="flex items-center gap-1 sm:gap-2">
                 {{-- Language Switcher --}}
-                <div :class="scrolled
+                <div :class="scrollProgress > 0.5
                     ? '[&_button]:text-gray-700 [&_button]:dark:text-gray-200 [&_button]:font-semibold [&_button]:bg-gray-100/80 [&_button]:dark:bg-gray-800/80 [&_button:hover]:bg-gray-200 [&_button]:dark:hover:bg-gray-700 [&_button]:rounded-full'
                     : '[&_button]:text-white [&_button]:font-semibold [&_button]:bg-white/15 [&_button:hover]:bg-white/30 [&_button]:rounded-full [&_button]:drop-shadow-md'">
                     <x-language-switcher />
                 </div>
 
                 {{-- Theme Toggle --}}
-                <div :class="scrolled
+                <div :class="scrollProgress > 0.5
                     ? '[&_button]:text-gray-700 [&_button]:dark:text-gray-200 [&_button]:bg-gray-100/80 [&_button]:dark:bg-gray-800/80 [&_button:hover]:bg-gray-200 [&_button]:dark:hover:bg-gray-700 [&_button]:rounded-full'
                     : '[&_button]:text-white [&_button]:bg-white/15 [&_button:hover]:bg-white/30 [&_button]:rounded-full [&_button]:drop-shadow-md'">
                     <x-theme-toggle />
@@ -110,7 +119,7 @@
                 <button
                     type="button"
                     @click="mobileMenuOpen = !mobileMenuOpen"
-                    :class="scrolled
+                    :class="scrollProgress > 0.5
                         ? 'text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
                         : 'text-white hover:text-white hover:bg-white/20 drop-shadow-sm'"
                     class="lg:hidden relative inline-flex items-center justify-center w-10 h-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-all duration-200"

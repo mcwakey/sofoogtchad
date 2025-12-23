@@ -89,6 +89,15 @@ class SettingSeeder extends Seeder
                 'description' => 'Description text for the about section.',
                 'sort_order' => 3,
             ],
+            [
+                'key' => 'homepage_process_bg_image',
+                'value' => '',
+                'type' => 'image',
+                'group' => 'homepage',
+                'label' => 'Process Section Background',
+                'description' => 'Upload a background image for the process/quality section on homepage.',
+                'sort_order' => 4,
+            ],
 
             // Contact settings
             [

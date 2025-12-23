@@ -40,8 +40,11 @@
                 <div class="w-16 h-16 rounded-xl {{ $bgClass }} flex items-center justify-center">
                     @if(Str::startsWith($iconOrImage, '<svg') || Str::startsWith($iconOrImage, '<img'))
                         {!! $iconOrImage !!}
-                    @else
+                    @elseif(Str::startsWith($iconOrImage, 'http') || Str::startsWith($iconOrImage, '/storage') || Str::startsWith($iconOrImage, '/images'))
                         <img src="{{ $iconOrImage }}" alt="{{ $title }}" class="w-10 h-10 object-contain">
+                    @else
+                        {{-- Emoji or text icon --}}
+                        <span class="text-3xl">{{ $iconOrImage }}</span>
                     @endif
                 </div>
             @endif
@@ -78,8 +81,11 @@
             <div class="w-20 h-20 mx-auto rounded-2xl {{ $bgClass }} flex items-center justify-center mb-4">
                 @if(Str::startsWith($iconOrImage, '<svg') || Str::startsWith($iconOrImage, '<img'))
                     {!! $iconOrImage !!}
-                @else
+                @elseif(Str::startsWith($iconOrImage, 'http') || Str::startsWith($iconOrImage, '/storage') || Str::startsWith($iconOrImage, '/images'))
                     <img src="{{ $iconOrImage }}" alt="{{ $title }}" class="w-12 h-12 object-contain">
+                @else
+                    {{-- Emoji or text icon --}}
+                    <span class="text-4xl">{{ $iconOrImage }}</span>
                 @endif
             </div>
         @endif

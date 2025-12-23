@@ -48,7 +48,7 @@
         :slides="$heroSlides"
         :autoplay="true"
         :interval="6000"
-        height="lg"
+        height="full"
         :showDots="true"
         :showArrows="true"
     />
@@ -142,8 +142,21 @@
 
     {{-- ==================== QUALITY & PROCESS SECTION ==================== --}}
     @if(isset($processSteps) && count($processSteps) > 0)
-        <section class="py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
-            <div class="container mx-auto px-4">
+        @php
+            $processBgImage = setting('homepage_process_bg_image');
+        @endphp
+        <section class="py-16 relative overflow-hidden transition-colors duration-200">
+            {{-- Background Image --}}
+            @if($processBgImage)
+                <div class="absolute inset-0 z-0">
+                    <img src="{{ $processBgImage }}" alt="" class="w-full h-full object-cover blur-lg scale-105 opacity-30">
+                </div>
+                <div class="absolute inset-0 z-0 bg-white/95 dark:bg-gray-900/05"></div>
+            @else
+                <div class="absolute inset-0 bg-white dark:bg-gray-900"></div>
+            @endif
+
+            <div class="container mx-auto px-4 relative z-10">
                 {{-- Section Header --}}
                 <div class="text-center mb-12">
                     @if(isset($processSection['subtitle']))

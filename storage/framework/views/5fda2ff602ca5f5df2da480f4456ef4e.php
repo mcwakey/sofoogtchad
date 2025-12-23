@@ -79,8 +79,11 @@ unset($__defined_vars); ?>
                     <?php if(Str::startsWith($iconOrImage, '<svg') || Str::startsWith($iconOrImage, '<img')): ?>
                         <?php echo $iconOrImage; ?>
 
-                    <?php else: ?>
+                    <?php elseif(Str::startsWith($iconOrImage, 'http') || Str::startsWith($iconOrImage, '/storage') || Str::startsWith($iconOrImage, '/images')): ?>
                         <img src="<?php echo e($iconOrImage); ?>" alt="<?php echo e($title); ?>" class="w-10 h-10 object-contain">
+                    <?php else: ?>
+                        
+                        <span class="text-3xl"><?php echo e($iconOrImage); ?></span>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -120,8 +123,11 @@ unset($__defined_vars); ?>
                 <?php if(Str::startsWith($iconOrImage, '<svg') || Str::startsWith($iconOrImage, '<img')): ?>
                     <?php echo $iconOrImage; ?>
 
-                <?php else: ?>
+                <?php elseif(Str::startsWith($iconOrImage, 'http') || Str::startsWith($iconOrImage, '/storage') || Str::startsWith($iconOrImage, '/images')): ?>
                     <img src="<?php echo e($iconOrImage); ?>" alt="<?php echo e($title); ?>" class="w-12 h-12 object-contain">
+                <?php else: ?>
+                    
+                    <span class="text-4xl"><?php echo e($iconOrImage); ?></span>
                 <?php endif; ?>
             </div>
         <?php endif; ?>

@@ -239,77 +239,79 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </form>
 
-                {{-- Danger Zone --}}
-                <div class="bg-white rounded-xl shadow-sm border border-red-200 p-6" x-data="{ showDeleteModal: false }">
-                    <h2 class="text-lg font-semibold text-red-600 mb-4">Danger Zone</h2>
-                    <p class="text-sm text-gray-600 mb-4">Once you delete a post, there is no going back.</p>
-                    <button
-                        type="button"
-                        @click="showDeleteModal = true"
-                        class="w-full inline-flex justify-center items-center gap-2 rounded-lg bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-100 transition-colors"
-                    >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                        Delete Post
-                    </button>
+    {{-- Danger Zone - OUTSIDE the main form to avoid nested forms --}}
+    <div class="mt-6 max-w-sm ml-auto lg:mr-0" x-data="{ showDeleteModal: false }">
+        <div class="bg-white rounded-xl shadow-sm border border-red-200 p-6">
+            <h2 class="text-lg font-semibold text-red-600 mb-4">Danger Zone</h2>
+            <p class="text-sm text-gray-600 mb-4">Once you delete a post, there is no going back.</p>
+            <button
+                type="button"
+                @click="showDeleteModal = true"
+                class="w-full inline-flex justify-center items-center gap-2 rounded-lg bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-100 transition-colors"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Delete Post
+            </button>
 
-                    {{-- Delete Modal --}}
+            {{-- Delete Modal --}}
+            <div
+                x-show="showDeleteModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 z-50 overflow-y-auto"
+                x-cloak
+            >
+                <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm" @click="showDeleteModal = false"></div>
+                <div class="flex min-h-full items-center justify-center p-4">
                     <div
                         x-show="showDeleteModal"
                         x-transition:enter="ease-out duration-300"
-                        x-transition:enter-start="opacity-0"
-                        x-transition:enter-end="opacity-100"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
                         x-transition:leave="ease-in duration-200"
-                        x-transition:leave-start="opacity-100"
-                        x-transition:leave-end="opacity-0"
-                        class="fixed inset-0 z-50 overflow-y-auto"
-                        x-cloak
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95"
+                        class="relative w-full max-w-md bg-white rounded-2xl shadow-xl"
+                        @click.away="showDeleteModal = false"
                     >
-                        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm" @click="showDeleteModal = false"></div>
-                        <div class="flex min-h-full items-center justify-center p-4">
-                            <div
-                                x-show="showDeleteModal"
-                                x-transition:enter="ease-out duration-300"
-                                x-transition:enter-start="opacity-0 scale-95"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                x-transition:leave="ease-in duration-200"
-                                x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-95"
-                                class="relative w-full max-w-md bg-white rounded-2xl shadow-xl"
-                                @click.away="showDeleteModal = false"
-                            >
-                                <div class="p-6 pb-0">
-                                    <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
-                                        <svg class="h-7 w-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="p-6 text-center">
-                                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Delete Post</h3>
-                                    <p class="text-gray-600 mb-2">Are you sure you want to delete</p>
-                                    <p class="text-lg font-medium text-gray-900 mb-4">"{{ $post->title }}"?</p>
-                                    <p class="text-sm text-gray-500">This action cannot be undone.</p>
-                                </div>
-                                <div class="p-6 pt-0 flex gap-3">
-                                    <button type="button" @click="showDeleteModal = false" class="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                                        Cancel
-                                    </button>
-                                    <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" class="flex-1">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="w-full px-4 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
-                                            Yes, Delete
-                                        </button>
-                                    </form>
-                                </div>
+                        <div class="p-6 pb-0">
+                            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
+                                <svg class="h-7 w-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
                             </div>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Delete Post</h3>
+                            <p class="text-gray-600 mb-2">Are you sure you want to delete</p>
+                            <p class="text-lg font-medium text-gray-900 mb-4">"{{ $post->title }}"?</p>
+                            <p class="text-sm text-gray-500">This action cannot be undone.</p>
+                        </div>
+                        <div class="p-6 pt-0 flex gap-3">
+                            <button type="button" @click="showDeleteModal = false" class="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                                Cancel
+                            </button>
+                            <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" class="flex-1">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="w-full px-4 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                                    Yes, Delete
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 @endsection

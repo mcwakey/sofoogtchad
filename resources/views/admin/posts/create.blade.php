@@ -143,7 +143,21 @@
                                 placeholder="SEO description for search engines"
                             />
                         </div>
-                    </x-admin.language-tabs       Status
+                    </x-admin.language-tabs>
+                </div>
+            </div>
+
+            {{-- Sidebar --}}
+            <div class="space-y-6">
+                {{-- Publish Settings --}}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Publish Settings</h2>
+
+                    <div class="space-y-4">
+                        {{-- Status --}}
+                        <div>
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">
+                                Status
                             </label>
                             <select id="status" name="status" class="block w-full">
                                 <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>Draft</option>

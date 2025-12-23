@@ -110,15 +110,17 @@ class PostController extends Controller
         }
 
         // Handle featured image
+        $featuredImage = $post->featured_image;
         if ($request->hasFile('featured_image')) {
             if ($post->featured_image) {
                 Storage::disk('public')->delete($post->featured_image);
             }
-            $post->featured_image = $request->file('featured_image')->store('posts', 'public');
+            $featuredImage = $request->file('featured_image')->store('posts', 'public');
         }
 
         $post->update([
             'slug' => $validated['slug'],
+            'featured_image' => $featuredImage,
             'type' => $validated['type'],
             'status' => $validated['status'],
             'published_at' => $publishedAt,
@@ -126,11 +128,11 @@ class PostController extends Controller
 
         // Set translations
         foreach (['fr', 'en', 'ar'] as $locale) {
-            $post->setTranslation('title', $locale, $validated['title'][$locale] ?? null);
-            $post->setTranslation('excerpt', $locale, $validated['excerpt'][$locale] ?? null);
-            $post->setTranslation('content', $locale, $validated['content'][$locale] ?? null);
-            $post->setTranslation('meta_title', $locale, $validated['meta_title'][$locale] ?? null);
-            $post->setTranslation('meta_description', $locale, $validated['meta_description'][$locale] ?? null);
+            $post->setTranslation('title', $locale, $validated['title'][$locale] ?? '');
+            $post->setTranslation('excerpt', $locale, $validated['excerpt'][$locale] ?? '');
+            $post->setTranslation('content', $locale, $validated['content'][$locale] ?? '');
+            $post->setTranslation('meta_title', $locale, $validated['meta_title'][$locale] ?? '');
+            $post->setTranslation('meta_description', $locale, $validated['meta_description'][$locale] ?? '');
         }
         $post->save();
 

@@ -44,14 +44,14 @@
 
     <?php if (isset($component)) { $__componentOriginale74ef38c4f718abe5610e24f5e2f3fa8 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale74ef38c4f718abe5610e24f5e2f3fa8 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.hero-slider','data' => ['slides' => $heroSlides,'autoplay' => true,'interval' => 6000,'height' => 'lg','showDots' => true,'showArrows' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.hero-slider','data' => ['slides' => $heroSlides,'autoplay' => true,'interval' => 6000,'height' => 'full','showDots' => true,'showArrows' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('hero-slider'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['slides' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($heroSlides),'autoplay' => true,'interval' => 6000,'height' => 'lg','showDots' => true,'showArrows' => true]); ?>
+<?php $component->withAttributes(['slides' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($heroSlides),'autoplay' => true,'interval' => 6000,'height' => 'full','showDots' => true,'showArrows' => true]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginale74ef38c4f718abe5610e24f5e2f3fa8)): ?>
@@ -167,8 +167,21 @@
 
     
     <?php if(isset($processSteps) && count($processSteps) > 0): ?>
-        <section class="py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
-            <div class="container mx-auto px-4">
+        <?php
+            $processBgImage = setting('homepage_process_bg_image');
+        ?>
+        <section class="py-16 relative overflow-hidden transition-colors duration-200">
+            
+            <?php if($processBgImage): ?>
+                <div class="absolute inset-0 z-0">
+                    <img src="<?php echo e($processBgImage); ?>" alt="" class="w-full h-full object-cover blur-lg scale-105 opacity-30">
+                </div>
+                <div class="absolute inset-0 z-0 bg-white/95 dark:bg-gray-900/05"></div>
+            <?php else: ?>
+                <div class="absolute inset-0 bg-white dark:bg-gray-900"></div>
+            <?php endif; ?>
+
+            <div class="container mx-auto px-4 relative z-10">
                 
                 <div class="text-center mb-12">
                     <?php if(isset($processSection['subtitle'])): ?>
