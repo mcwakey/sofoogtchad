@@ -38,8 +38,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('twitter_title', trans_setting('site_name', 'Sofoodtchad'))">
     <meta name="twitter:description" content="@yield('twitter_description', trans_setting('site_description', ''))">
-    <meta name="twitter:image" content="@yield('twitter_image', setting('site_logo', ''))">>
-
+    <meta name="twitter:image" content="@yield('twitter_image', setting('site_logo', ''))">
     {{-- Canonical URL --}}
     <link rel="canonical" href="@yield('canonical', url()->current())">
 

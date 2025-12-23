@@ -160,17 +160,17 @@
     <section class="py-16 bg-gradient-to-r from-green-700 to-green-600">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">
-                {{ trans_setting('blog_newsletter_title', 'Stay in the Loop') }}
+                {{ trans_setting('blog_newsletter_title', __('blog.stay_in_the_loop')) }}
             </h2>
             <p class="text-green-100 mb-8 max-w-xl mx-auto">
-                {{ trans_setting('blog_newsletter_description', 'Subscribe to our newsletter for the latest recipes, tips, and news from Sofoodtchad.') }}
+                {{ trans_setting('blog_newsletter_description', __('blog.newsletter_description')) }}
             </p>
             <form action="{{ route('home') }}" method="GET" class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
                 <input type="email" name="email" placeholder="{{ __('contact.your_email') }}"
                        class="flex-1 px-5 py-3 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
                 <button type="submit"
                         class="px-8 py-3 bg-white text-green-700 font-semibold rounded-full hover:bg-green-50 transition-colors duration-200 shadow-lg">
-                    {{ __('general.submit') }}
+                    {{ __('blog.subscribe') }}
                 </button>
             </form>
         </div>

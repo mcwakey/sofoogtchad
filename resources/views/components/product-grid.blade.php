@@ -4,12 +4,15 @@
     'title' => null,
     'subtitle' => null,
     'viewAllUrl' => null,
-    'viewAllText' => 'View All Products',
-    'emptyMessage' => 'No products found.',
+    'viewAllText' => null,
+    'emptyMessage' => null,
     'showBadge' => true,
 ])
 
 @php
+    $viewAllText = $viewAllText ?? __('products.view_all_products');
+    $emptyMessage = $emptyMessage ?? __('products.no_products_found');
+
     $gridCols = match($columns) {
         2 => 'grid-cols-1 sm:grid-cols-2',
         3 => 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',

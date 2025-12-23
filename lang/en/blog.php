@@ -20,4 +20,7 @@ return [
     'back_to_blog' => 'Back to Blog',
     'gallery' => 'Gallery',
     'news' => 'News',
+    'stay_in_the_loop' => 'Stay in the Loop',
+    'newsletter_description' => 'Subscribe to our newsletter for the latest recipes, tips, and news from Sofoodtchad.',
+    'subscribe' => 'Subscribe',
 ];

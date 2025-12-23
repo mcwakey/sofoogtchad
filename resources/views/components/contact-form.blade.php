@@ -1,7 +1,7 @@
 @props([
     'formAction' => null,
     'form_action' => null,
-    'submitText' => 'Send Message',
+    'submitText' => null,
     'submit_text' => null,
     'method' => 'POST',
     'showSubject' => true,
@@ -9,13 +9,14 @@
     'showCompany' => false,
     'title' => null,
     'subtitle' => null,
-    'successMessage' => 'Thank you! Your message has been sent successfully.',
+    'successMessage' => null,
     'extraFields' => [],
 ])
 
 @php
     $action = $formAction ?? $form_action;
-    $buttonText = $submit_text ?? $submitText;
+    $buttonText = $submit_text ?? $submitText ?? __('contact.send_button');
+    $successMessage = $successMessage ?? __('contact.success_message');
 @endphp
 
 <div {{ $attributes->merge(['class' => 'contact-form']) }}>

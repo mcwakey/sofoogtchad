@@ -11,4 +11,7 @@ return [
     'history' => 'تاريخنا',
     'quality_commitment' => 'التزامنا بالجودة',
     'why_choose_us' => 'لماذا تختارنا',
+    'what_drives_us' => 'ما يحفزنا',
+    'mission_vision_title' => 'مهمتنا ورؤيتنا',
+    'want_to_learn_more' => 'هل تريد معرفة المزيد؟',
 ];

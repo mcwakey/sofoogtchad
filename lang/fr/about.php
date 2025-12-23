@@ -11,4 +11,7 @@ return [
     'history' => 'Notre histoire',
     'quality_commitment' => 'Engagement qualité',
     'why_choose_us' => 'Pourquoi nous choisir',
+    'what_drives_us' => 'Ce qui nous motive',
+    'mission_vision_title' => 'Notre Mission et Vision',
+    'want_to_learn_more' => 'Vous voulez en savoir plus ?',
 ];

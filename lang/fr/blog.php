@@ -20,4 +20,7 @@ return [
     'back_to_blog' => 'Retour au blog',
     'gallery' => 'Galerie',
     'news' => 'Actualités',
+    'stay_in_the_loop' => 'Restez informé',
+    'newsletter_description' => 'Abonnez-vous à notre newsletter pour recevoir les dernières recettes, conseils et actualités de Sofoodtchad.',
+    'subscribe' => 'S\'abonner',
 ];

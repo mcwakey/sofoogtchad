@@ -4,7 +4,7 @@
     'title' => '',
     'description' => '',
     'link' => null,
-    'linkText' => 'Learn More',
+    'linkText' => null,
     'badge' => null,
     'badgeColor' => 'green',
     'variant' => 'default',
@@ -12,6 +12,8 @@
 ])
 
 @php
+    $linkText = $linkText ?? __('general.learn_more');
+
     $badgeColors = [
         'green' => 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300',
         'blue' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300',

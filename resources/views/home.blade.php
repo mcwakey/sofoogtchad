@@ -130,10 +130,10 @@
             <div class="container mx-auto px-4">
                 <x-product-grid
                     :products="$products"
-                    :title="$productsSection['title'] ?? 'Our Products'"
-                    :subtitle="$productsSection['subtitle'] ?? 'Discover our range of premium quality products'"
+                    :title="$productsSection['title'] ?? __('home.products_title')"
+                    :subtitle="$productsSection['subtitle'] ?? __('home.products_subtitle')"
                     :viewAllUrl="$productsSection['view_all_url'] ?? '/products'"
-                    :viewAllText="$productsSection['view_all_text'] ?? 'View All Products'"
+                    :viewAllText="$productsSection['view_all_text'] ?? __('home.view_all_products')"
                     :columns="$productsSection['columns'] ?? 4"
                 />
             </div>
@@ -152,7 +152,7 @@
                         </span>
                     @endif
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
-                        {{ $processSection['title'] ?? 'Our Process' }}
+                        {{ $processSection['title'] ?? __('home.process_title') }}
                     </h2>
                     @if(isset($processSection['description']))
                         <p class="text-gray-600 dark:text-gray-300 mt-2 max-w-2xl mx-auto">
@@ -179,7 +179,7 @@
                     <div class="text-center mt-10">
                         <x-button
                             type="outline"
-                            :text="$processSection['cta_text'] ?? 'Learn More About Our Process'"
+                            :text="$processSection['cta_text'] ?? __('home.learn_more_process')"
                             :url="$processSection['cta_url']"
                         />
                     </div>
@@ -200,7 +200,7 @@
                         </span>
                     @endif
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
-                        {{ $partnersSection['title'] ?? 'Our Partners' }}
+                        {{ $partnersSection['title'] ?? __('home.partners_title') }}
                     </h2>
                     @if(isset($partnersSection['description']))
                         <p class="text-gray-600 dark:text-gray-300 mt-2">
@@ -225,7 +225,7 @@
                     <div class="text-center mt-10">
                         <x-button
                             type="outline"
-                            :text="$partnersSection['cta_text'] ?? 'Become a Partner'"
+                            :text="$partnersSection['cta_text'] ?? __('home.become_partner')"
                             :url="$partnersSection['cta_url']"
                         />
                     </div>
@@ -247,12 +247,12 @@
                             </span>
                         @endif
                         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
-                            {{ $blogSection['title'] ?? 'Latest News' }}
+                            {{ $blogSection['title'] ?? __('home.blog_title') }}
                         </h2>
                     </div>
                     @if(isset($blogSection['view_all_url']))
                         <a href="{{ $blogSection['view_all_url'] }}" class="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300 mt-4 sm:mt-0">
-                            {{ $blogSection['view_all_text'] ?? 'View All Posts' }}
+                            {{ $blogSection['view_all_text'] ?? __('home.view_all_posts') }}
                             <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
@@ -282,7 +282,7 @@
         <section class="py-20 bg-green-600">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-                    {{ $cta['title'] ?? 'Ready to Get Started?' }}
+                    {{ $cta['title'] ?? __('home.cta_title') }}
                 </h2>
                 @if(isset($cta['description']))
                     <p class="text-green-100 text-lg mb-8 max-w-2xl mx-auto">

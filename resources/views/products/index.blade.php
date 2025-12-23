@@ -174,10 +174,10 @@
             <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
                 <div class="text-center md:text-left">
                     <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                        {{ trans_setting('products_cta_title', 'Need Help Choosing?') }}
+                        {{ trans_setting('products_cta_title', __('products.need_help')) }}
                     </h2>
                     <p class="text-green-100">
-                        {{ trans_setting('products_cta_description', 'Our team is here to help you find the perfect products for your needs.') }}
+                        {{ trans_setting('products_cta_description', __('products.contact_support')) }}
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-4">
