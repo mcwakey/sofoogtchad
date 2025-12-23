@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', setting('partners_page_title', 'Our Partners') . ' - ' . setting('site_name', 'Sofoodtchad'))
-@section('description', setting('partners_page_description', 'Discover our network of trusted partners and distributors across Africa.'))
+@section('title', trans_setting('partners_page_title', 'Our Partners') . ' - ' . trans_setting('site_name', 'Sofoodtchad'))
+@section('description', trans_setting('partners_page_description', 'Discover our network of trusted partners and distributors across Africa.'))
 
 @section('content')
     {{-- Page Header --}}
@@ -14,10 +14,10 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div class="text-center">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                    {{ setting('partners_page_title', 'Our Partners') }}
+                    {{ trans_setting('partners_page_title', __('partners.title')) }}
                 </h1>
                 <p class="text-lg md:text-xl text-green-100 max-w-2xl mx-auto">
-                    {{ setting('partners_page_subtitle', 'Building strong relationships for quality and growth') }}
+                    {{ trans_setting('partners_page_subtitle', __('partners.subtitle')) }}
                 </p>
             </div>
         </div>
@@ -36,10 +36,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-10">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                        {{ setting('partners_featured_title', 'Featured Partners') }}
+                        {{ trans_setting('partners_featured_title', __('partners.featured_partners')) }}
                     </h2>
                     <p class="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
-                        {{ setting('partners_featured_subtitle', 'Our key partners who help us deliver quality products across the region') }}
+                        {{ trans_setting('partners_featured_subtitle', __('partners.featured_partners_subtitle')) }}
                     </p>
                 </div>
 
@@ -72,7 +72,7 @@
                                        target="_blank"
                                        rel="noopener noreferrer"
                                        class="inline-flex items-center text-green-600 dark:text-green-400 font-medium text-sm hover:text-green-700 dark:hover:text-green-300 transition-colors">
-                                        Visit Website
+                                        {{ __('partners.visit_website') }}
                                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                                         </svg>
@@ -91,10 +91,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
                 <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                    {{ setting('partners_all_title', 'All Partners') }}
+                    {{ trans_setting('partners_all_title', __('partners.all_partners')) }}
                 </h2>
                 <p class="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
-                    {{ setting('partners_all_subtitle', 'Trusted partners in our mission to deliver quality food products') }}
+                    {{ trans_setting('partners_all_subtitle', __('partners.all_partners_subtitle')) }}
                 </p>
             </div>
 
@@ -106,9 +106,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Partner Information Coming Soon</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.partner_info_coming') }}</h3>
                     <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-                        We're updating our partner directory. Check back soon!
+                        {{ __('partners.updating_directory') }}
                     </p>
                 </div>
             @else
@@ -132,10 +132,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
                 <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                    {{ setting('partners_why_title', 'Why Partner With Us?') }}
+                    {{ trans_setting('partners_why_title', __('partners.why_partner')) }}
                 </h2>
                 <p class="text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
-                    {{ setting('partners_why_subtitle', 'Join our network and grow together') }}
+                    {{ trans_setting('partners_why_subtitle', __('partners.join_network')) }}
                 </p>
             </div>
 
@@ -147,8 +147,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Quality Products</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Premium food products that meet international standards</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.quality_products') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">{{ __('partners.quality_products_desc') }}</p>
                 </div>
 
                 {{-- Benefit 2 --}}
@@ -158,8 +158,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Growth Support</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Marketing materials and sales support to grow your business</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.growth_support') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">{{ __('partners.growth_support_desc') }}</p>
                 </div>
 
                 {{-- Benefit 3 --}}
@@ -170,8 +170,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Wide Coverage</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Expanding distribution network across Africa</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.wide_coverage') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">{{ __('partners.wide_coverage_desc') }}</p>
                 </div>
 
                 {{-- Benefit 4 --}}
@@ -181,8 +181,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Dedicated Support</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">24/7 partner support and logistics assistance</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.dedicated_support') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">{{ __('partners.dedicated_support_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -202,10 +202,10 @@
                     {{-- Left Side - Info --}}
                     <div class="md:w-1/2 p-8 md:p-10 bg-gradient-to-br from-green-800 to-green-700 text-white">
                         <h2 class="text-2xl md:text-3xl font-bold mb-4">
-                            {{ setting('distributor_cta_title', 'Become a Distributor') }}
+                            {{ trans_setting('distributor_cta_title', __('partners.become_distributor')) }}
                         </h2>
                         <p class="text-green-100 mb-6">
-                            {{ setting('distributor_cta_description', 'Join our growing network and bring quality food products to your region. We offer competitive margins and full support.') }}
+                            {{ trans_setting('distributor_cta_description', __('partners.distributor_description')) }}
                         </p>
 
                         <ul class="space-y-3">
@@ -213,46 +213,46 @@
                                 <svg class="w-5 h-5 mr-3 text-green-300" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                Exclusive territory rights
+                                {{ __('partners.exclusive_territory') }}
                             </li>
                             <li class="flex items-center text-green-100">
                                 <svg class="w-5 h-5 mr-3 text-green-300" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                Competitive profit margins
+                                {{ __('partners.competitive_margins') }}
                             </li>
                             <li class="flex items-center text-green-100">
                                 <svg class="w-5 h-5 mr-3 text-green-300" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                Marketing & promotional support
+                                {{ __('partners.marketing_support') }}
                             </li>
                             <li class="flex items-center text-green-100">
                                 <svg class="w-5 h-5 mr-3 text-green-300" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                Training & product knowledge
+                                {{ __('partners.training_support') }}
                             </li>
                         </ul>
                     </div>
 
                     {{-- Right Side - Form CTA --}}
                     <div class="md:w-1/2 p-8 md:p-10 flex flex-col justify-center bg-white dark:bg-gray-800">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Ready to Get Started?</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">{{ __('partners.ready_to_start') }}</h3>
                         <p class="text-gray-600 dark:text-gray-300 mb-6">
-                            Fill out our distributor application form and our team will contact you within 48 hours.
+                            {{ __('partners.form_description') }}
                         </p>
                         <a href="{{ route('partners.become-distributor') }}"
                            class="inline-flex items-center justify-center px-8 py-4 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
-                            Apply Now
+                            {{ __('partners.apply_now') }}
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                             </svg>
                         </a>
 
                         <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
-                            Have questions?
-                            <a href="{{ route('contact.index') ?? '#' }}" class="text-green-600 dark:text-green-400 hover:underline">Contact us</a>
+                            {{ __('partners.have_questions') }}
+                            <a href="{{ route('contact.index') ?? '#' }}" class="text-green-600 dark:text-green-400 hover:underline">{{ __('general.contact_us') }}</a>
                         </p>
                     </div>
                 </div>

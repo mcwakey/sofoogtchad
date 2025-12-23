@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($post->meta_title ?? $post->title) . ' - ' . setting('site_name', 'Sofoodtchad'))
+@section('title', ($post->meta_title ?? $post->title) . ' - ' . trans_setting('site_name', 'Sofoodtchad'))
 @section('meta_description', $post->meta_description ?? $post->excerpt ?? Str::limit(strip_tags($post->content), 160))
 @section('og_title', $post->meta_title ?? $post->title)
 @section('og_description', $post->meta_description ?? $post->excerpt)

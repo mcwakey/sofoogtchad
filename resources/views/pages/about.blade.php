@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $pageTitle ?? setting('site_name', 'Sofoodtchad') . ' - About Us')
+@section('title', $pageTitle ?? trans_setting('site_name', 'Sofoodtchad') . ' - About Us')
 
 @section('meta_description', $metaDescription ?? 'Learn about Sofoodtchad, our mission, vision, and the story behind Chad\'s premier food company.')
 
@@ -59,7 +59,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                     </svg>
                                 </div>
-                                <span class="text-gray-700 dark:text-gray-300">{{ $feature }}</span>
+                                <span class="text-gray-700 dark:text-gray-300">{{ is_array($feature) ? ($feature['title'] ?? $feature['text'] ?? json_encode($feature)) : $feature }}</span>
                             </li>
                         @endforeach
                     </ul>

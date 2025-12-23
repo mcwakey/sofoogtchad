@@ -20,25 +20,25 @@
     </script>
 
     {{-- SEO Meta Tags --}}
-    <title>@yield('title', setting('site_name', 'Sofoodtchad'))</title>
-    <meta name="description" content="@yield('meta_description', setting('site_description', ''))">
+    <title>@yield('title', trans_setting('site_name', 'Sofoodtchad'))</title>
+    <meta name="description" content="@yield('meta_description', trans_setting('site_description', ''))">
     <meta name="keywords" content="@yield('meta_keywords', setting('seo_meta_keywords', ''))">
-    <meta name="author" content="{{ setting('site_name', 'Sofoodtchad') }}">
+    <meta name="author" content="{{ trans_setting('site_name', 'Sofoodtchad') }}">
 
     {{-- Open Graph / Social Media Meta Tags --}}
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('og_title', setting('site_name', 'Sofoodtchad'))">
-    <meta property="og:description" content="@yield('og_description', setting('site_description', ''))">
+    <meta property="og:title" content="@yield('og_title', trans_setting('site_name', 'Sofoodtchad'))">
+    <meta property="og:description" content="@yield('og_description', trans_setting('site_description', ''))">
     <meta property="og:image" content="@yield('og_image', setting('site_logo', ''))">
     <meta property="og:locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <meta property="og:site_name" content="{{ setting('site_name', 'Sofoodtchad') }}">
+    <meta property="og:site_name" content="{{ trans_setting('site_name', 'Sofoodtchad') }}">
 
     {{-- Twitter Card Meta Tags --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('twitter_title', setting('site_name', 'Sofoodtchad'))">
-    <meta name="twitter:description" content="@yield('twitter_description', setting('site_description', ''))">
-    <meta name="twitter:image" content="@yield('twitter_image', setting('site_logo', ''))">
+    <meta name="twitter:title" content="@yield('twitter_title', trans_setting('site_name', 'Sofoodtchad'))">
+    <meta name="twitter:description" content="@yield('twitter_description', trans_setting('site_description', ''))">
+    <meta name="twitter:image" content="@yield('twitter_image', setting('site_logo', ''))">>
 
     {{-- Canonical URL --}}
     <link rel="canonical" href="@yield('canonical', url()->current())">
@@ -159,7 +159,7 @@
         {
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "{{ setting('site_name', 'Sofoodtchad') }}",
+            "name": "{{ trans_setting('site_name', 'Sofoodtchad') }}",
             "url": "{{ url('/') }}",
             @if(setting('site_logo'))
             "logo": "{{ setting('site_logo') }}",

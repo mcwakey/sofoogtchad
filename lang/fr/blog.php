@@ -3,6 +3,8 @@
 return [
     'title' => 'Blog',
     'subtitle' => 'Dernières nouvelles et mises à jour',
+    'page_title' => 'Blog & Actualités',
+    'page_subtitle' => 'Restez informé de nos dernières actualités et annonces',
     'latest_posts' => 'Derniers articles',
     'all_posts' => 'Tous les articles',
     'read_more' => 'Lire la suite',
@@ -17,4 +19,5 @@ return [
     'search_posts' => 'Rechercher des articles...',
     'back_to_blog' => 'Retour au blog',
     'gallery' => 'Galerie',
+    'news' => 'Actualités',
 ];

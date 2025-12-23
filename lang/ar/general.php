@@ -64,6 +64,7 @@ return [
     'confirm' => 'تأكيد',
     'yes' => 'نعم',
     'no' => 'لا',
+    'please_correct_errors' => 'يرجى تصحيح الأخطاء التالية:',
 
     // Languages
     'language' => 'اللغة',

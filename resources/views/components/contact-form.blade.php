@@ -51,7 +51,7 @@
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                 </svg>
                 <div>
-                    <p class="text-red-800 dark:text-red-300 font-medium">Please correct the following errors:</p>
+                    <p class="text-red-800 dark:text-red-300 font-medium">{{ __('general.please_correct_errors') }}</p>
                     <ul class="mt-1 text-sm text-red-700 dark:text-red-400 list-disc list-inside">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -73,8 +73,8 @@
             <x-form-field
                 type="text"
                 name="name"
-                label="Full Name"
-                placeholder="Your name"
+                :label="__('contact.full_name')"
+                :placeholder="__('contact.your_name')"
                 required
                 autocomplete="name"
             />
@@ -82,7 +82,7 @@
             <x-form-field
                 type="email"
                 name="email"
-                label="Email Address"
+                :label="__('contact.email_address')"
                 placeholder="you@example.com"
                 required
                 autocomplete="email"
@@ -96,8 +96,8 @@
                     <x-form-field
                         type="tel"
                         name="phone"
-                        label="Phone Number"
-                        placeholder="+235 00 00 00 00"
+                        :label="__('contact.phone_number')"
+                        :placeholder="__('contact.your_phone')"
                         autocomplete="tel"
                     />
                 @endif
@@ -106,8 +106,8 @@
                     <x-form-field
                         type="text"
                         name="company"
-                        label="Company"
-                        placeholder="Your company name"
+                        :label="__('contact.company_name')"
+                        :placeholder="__('contact.your_company')"
                         autocomplete="organization"
                     />
                 @endif
@@ -119,8 +119,8 @@
             <x-form-field
                 type="text"
                 name="subject"
-                label="Subject"
-                placeholder="How can we help you?"
+                :label="__('contact.subject')"
+                :placeholder="__('contact.message_subject')"
                 required
             />
         @endif
@@ -134,8 +134,8 @@
         <x-form-field
             type="textarea"
             name="message"
-            label="Message"
-            placeholder="Write your message here..."
+            :label="__('contact.message')"
+            :placeholder="__('contact.your_message')"
             required
             :rows="5"
         />
@@ -150,7 +150,7 @@
                 class="mt-1 h-4 w-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-green-600 focus:ring-green-500"
             >
             <label for="privacy_consent" class="ml-2 text-sm text-gray-600 dark:text-gray-300">
-                I agree to the <a href="{{ url('/privacy-policy') }}" class="text-green-600 dark:text-green-400 hover:underline">Privacy Policy</a> and consent to being contacted regarding my inquiry.
+                {{ __('contact.privacy_notice') }} <a href="{{ url('/privacy-policy') }}" class="text-green-600 dark:text-green-400 hover:underline">{{ __('contact.privacy_policy') }}</a>.
                 <span class="text-red-500">*</span>
             </label>
         </div>

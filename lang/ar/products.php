@@ -27,6 +27,7 @@ return [
     'featured' => 'مميز',
     'discover' => 'اكتشف',
     'view_all_products' => 'عرض جميع المنتجات',
+    'view_product' => 'عرض المنتج',
     'inquire_whatsapp' => 'استفسر عبر واتساب',
     'whatsapp_inquiry' => 'مرحباً، أنا مهتم بالمنتج: :product',
 ];

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', isset($category) ? $category->name . ' - Products' : setting('site_name', 'Sofoodtchad') . ' - Our Products')
+@section('title', isset($category) ? $category->name . ' - Products' : trans_setting('site_name', 'Sofoodtchad') . ' - Our Products')
 
 @section('meta_description', isset($category) ? $category->description : 'Explore our range of premium quality food products from Sofoodtchad.')
 
@@ -15,13 +15,13 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-3xl mx-auto text-center">
                 <span class="inline-block text-green-200 font-semibold text-sm uppercase tracking-wider mb-4">
-                    {{ isset($category) ? 'Category' : 'Discover' }}
+                    {{ isset($category) ? __('products.category') : __('products.discover') }}
                 </span>
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-                    {{ isset($category) ? $category->name : 'Our Products' }}
+                    {{ isset($category) ? $category->name : __('products.title') }}
                 </h1>
                 <p class="text-lg text-green-100">
-                    {{ isset($category) ? $category->description : setting('homepage_products_subtitle', 'Discover our range of premium quality food products') }}
+                    {{ isset($category) ? $category->description : trans_setting('homepage_products_subtitle', 'Discover our range of premium quality food products') }}
                 </p>
             </div>
         </div>
@@ -46,7 +46,7 @@
                         class="md:hidden w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-700 rounded-lg shadow mb-4"
                         onclick="document.getElementById('filter-panel').classList.toggle('hidden')"
                     >
-                        <span class="font-medium text-gray-900 dark:text-white">Filters</span>
+                        <span class="font-medium text-gray-900 dark:text-white">{{ __('products.filters') }}</span>
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
                         </svg>
@@ -58,13 +58,13 @@
                             {{-- Categories --}}
                             @if(isset($categories) && $categories->count() > 0)
                                 <div class="flex-1">
-                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Categories</h3>
+                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">{{ __('products.categories') }}</h3>
                                     <div class="flex flex-wrap gap-2">
                                         <a
                                             href="{{ route('products.index') }}"
                                             class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !isset($category) && !request('category') ? 'bg-green-600 text-white' : 'bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500' }}"
                                         >
-                                            All Products
+                                            {{ __('products.all_products') }}
                                         </a>
                                         @foreach($categories as $cat)
                                             <a
@@ -84,13 +84,13 @@
                             {{-- Product Types --}}
                             @if(isset($types) && count($types) > 0)
                                 <div class="md:border-l md:border-gray-200 dark:md:border-gray-600 md:pl-6 md:ml-6">
-                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Type</h3>
+                                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">{{ __('products.type') }}</h3>
                                     <div class="flex flex-wrap gap-2">
                                         <a
                                             href="{{ request()->fullUrlWithQuery(['type' => null]) }}"
                                             class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !request('type') ? 'bg-green-600 text-white' : 'bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-500' }}"
                                         >
-                                            All Types
+                                            {{ __('products.all_types') }}
                                         </a>
                                         @foreach($types as $typeKey => $typeLabel)
                                             <a
@@ -111,7 +111,7 @@
             {{-- Active Filters Display --}}
             @if(request('type') || isset($category))
                 <div class="flex flex-wrap items-center gap-2 mb-6">
-                    <span class="text-sm text-gray-500 dark:text-gray-400">Active filters:</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('products.active_filters') }}</span>
                     @if(isset($category))
                         <span class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 text-sm rounded-full">
                             {{ $category->name }}
@@ -133,7 +133,7 @@
                         </span>
                     @endif
                     <a href="{{ route('products.index') }}" class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 ml-2">
-                        Clear all
+                        {{ __('products.clear_all') }}
                     </a>
                 </div>
             @endif
@@ -142,7 +142,7 @@
             <x-product-grid
                 :products="$products"
                 :columns="4"
-                emptyMessage="No products found matching your criteria."
+                emptyMessage="{{ __('products.no_products_found') }}"
             />
 
             {{-- Pagination --}}
@@ -174,18 +174,18 @@
             <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
                 <div class="text-center md:text-left">
                     <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                        {{ setting('products_cta_title', 'Need Help Choosing?') }}
+                        {{ trans_setting('products_cta_title', 'Need Help Choosing?') }}
                     </h2>
                     <p class="text-green-100">
-                        {{ setting('products_cta_description', 'Our team is here to help you find the perfect products for your needs.') }}
+                        {{ trans_setting('products_cta_description', 'Our team is here to help you find the perfect products for your needs.') }}
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-4">
                     <a href="{{ route('distributor.request') }}" class="px-6 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-                        Become a Distributor
+                        {{ __('home.become_distributor') }}
                     </a>
                     <a href="/contact" class="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-green-600 transition-colors">
-                        Contact Us
+                        {{ __('general.contact_us') }}
                     </a>
                 </div>
             </div>

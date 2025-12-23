@@ -5,6 +5,8 @@ return [
     'subtitle' => 'Prenez contact avec notre équipe',
     'send_message' => 'Envoyez-nous un message',
     'get_in_touch' => 'Prenez contact',
+    'form_subtitle' => 'Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.',
+    'info_description' => 'Des questions sur nos produits ? Vous souhaitez devenir distributeur ? Notre équipe est là pour vous aider.',
 
     // Form fields
     'full_name' => 'Nom complet',
@@ -17,8 +19,8 @@ return [
     'your_email' => 'votre@email.com',
     'your_phone' => 'Votre numéro de téléphone',
     'your_company' => 'Votre entreprise (optionnel)',
-    'message_subject' => 'De quoi s\'agit-il ?',
-    'your_message' => 'Votre message...',
+    'message_subject' => 'Comment pouvons-nous vous aider ?',
+    'your_message' => 'Écrivez votre message ici...',
 
     // Form submission
     'send_button' => 'Envoyer le message',
@@ -36,6 +38,6 @@ return [
     'chat_with_us' => 'Discutez avec nous',
 
     // Privacy
-    'privacy_notice' => 'En soumettant ce formulaire, vous acceptez notre',
+    'privacy_notice' => 'J\'accepte la',
     'privacy_policy' => 'Politique de confidentialité',
 ];

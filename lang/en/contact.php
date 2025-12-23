@@ -5,6 +5,8 @@ return [
     'subtitle' => 'Get in touch with our team',
     'send_message' => 'Send us a Message',
     'get_in_touch' => 'Get in Touch',
+    'form_subtitle' => 'Fill out the form below and we\'ll get back to you as soon as possible.',
+    'info_description' => 'Have questions about our products? Want to become a distributor? Our team is here to help.',
 
     // Form fields
     'full_name' => 'Full Name',
@@ -17,8 +19,8 @@ return [
     'your_email' => 'your@email.com',
     'your_phone' => 'Your phone number',
     'your_company' => 'Your company (optional)',
-    'message_subject' => 'What is this about?',
-    'your_message' => 'Your message...',
+    'message_subject' => 'How can we help you?',
+    'your_message' => 'Write your message here...',
 
     // Form submission
     'send_button' => 'Send Message',
@@ -36,6 +38,6 @@ return [
     'chat_with_us' => 'Chat with us',
 
     // Privacy
-    'privacy_notice' => 'By submitting this form, you agree to our',
+    'privacy_notice' => 'I agree to the',
     'privacy_policy' => 'Privacy Policy',
 ];

@@ -30,9 +30,9 @@
     if (empty($slides)) {
         $slides = [[
             'background_image' => null,
-            'title' => setting('site_name', 'Welcome to Sofoodtchad'),
-            'subtitle' => setting('site_tagline', 'Premium Quality Food Products'),
-            'cta_text' => 'View Our Products',
+            'title' => trans_setting('site_name', 'Welcome to Sofoodtchad'),
+            'subtitle' => trans_setting('site_tagline', 'Premium Quality Food Products'),
+            'cta_text' => __('home.view_all_products'),
             'cta_url' => '/products',
         ]];
     }

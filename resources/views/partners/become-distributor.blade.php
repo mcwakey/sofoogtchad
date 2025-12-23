@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Become a Distributor - ' . setting('site_name', 'Sofoodtchad'))
+@section('title', 'Become a Distributor - ' . trans_setting('site_name', 'Sofoodtchad'))
 @section('description', 'Partner with Sofoodtchad as a distributor. Expand your business with quality products.')
 
 @section('content')
@@ -14,10 +14,10 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div class="text-center">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                    Become a Distributor
+                    {{ __('partners.become_distributor') }}
                 </h1>
                 <p class="text-lg md:text-xl text-green-100 max-w-2xl mx-auto">
-                    Partner with us and expand your business with quality products
+                    {{ __('partners.distributor_subtitle') }}
                 </p>
             </div>
         </div>
@@ -38,15 +38,15 @@
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                Back to Partners
+                {{ __('partners.back_to_partners') }}
             </a>
 
             {{-- Form Card --}}
             <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/30 p-6 md:p-10">
                 {{-- Form Intro --}}
                 <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Distribution Application</h2>
-                    <p class="text-gray-600 dark:text-gray-300">Fill out the form below and our team will contact you within 48 hours.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ __('partners.distribution_application') }}</h2>
+                    <p class="text-gray-600 dark:text-gray-300">{{ __('partners.form_description') }}</p>
                 </div>
 
                 {{-- Success Message --}}
@@ -69,7 +69,7 @@
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                             </svg>
                             <div>
-                                <p class="text-red-800 dark:text-red-300 font-medium">Please correct the following errors:</p>
+                                <p class="text-red-800 dark:text-red-300 font-medium">{{ __('general.please_correct_errors') }}</p>
                                 <ul class="mt-1 text-sm text-red-700 dark:text-red-400 list-disc list-inside">
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -88,8 +88,8 @@
                         <x-form-field
                             type="text"
                             name="company_name"
-                            label="Company Name"
-                            placeholder="Your company name"
+                            :label="__('partners.company_name')"
+                            :placeholder="__('partners.your_company_name')"
                             required
                             autocomplete="organization"
                         />
@@ -97,8 +97,8 @@
                         <x-form-field
                             type="text"
                             name="contact_name"
-                            label="Contact Name"
-                            placeholder="Your full name"
+                            :label="__('partners.contact_name')"
+                            :placeholder="__('partners.your_full_name')"
                             required
                             autocomplete="name"
                         />
@@ -109,7 +109,7 @@
                         <x-form-field
                             type="email"
                             name="email"
-                            label="Email Address"
+                            :label="__('contact.email_address')"
                             placeholder="you@example.com"
                             required
                             autocomplete="email"
@@ -118,7 +118,7 @@
                         <x-form-field
                             type="tel"
                             name="phone"
-                            label="Phone Number"
+                            :label="__('contact.phone_number')"
                             placeholder="+235 00 00 00 00"
                             autocomplete="tel"
                         />
@@ -129,15 +129,15 @@
                         <x-form-field
                             type="text"
                             name="city"
-                            label="City"
-                            placeholder="Your city"
+                            :label="__('partners.city')"
+                            :placeholder="__('partners.your_city')"
                         />
 
                         <x-form-field
                             type="text"
                             name="country"
-                            label="Country"
-                            placeholder="Your country"
+                            :label="__('partners.country')"
+                            :placeholder="__('partners.your_country')"
                         />
                     </div>
 
@@ -145,15 +145,15 @@
                     <x-form-field
                         type="textarea"
                         name="message"
-                        label="Tell us about your business"
-                        placeholder="Describe your business, experience in distribution, target market, etc."
+                        :label="__('partners.about_your_business')"
+                        :placeholder="__('partners.describe_your_business')"
                         :rows="5"
                     />
 
                     {{-- Submit Button --}}
                     <div class="pt-4">
                         <button type="submit" class="w-full md:w-auto px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200">
-                            Submit Application
+                            {{ __('partners.submit_application') }}
                         </button>
                     </div>
                 </form>
@@ -167,8 +167,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Quality Products</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Premium products that meet international standards</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.quality_products') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">{{ __('partners.quality_products_desc') }}</p>
                 </div>
 
                 <div class="text-center p-6">
@@ -177,8 +177,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Competitive Margins</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Attractive profit margins for your business growth</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.competitive_margins') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">{{ __('partners.competitive_margins_desc') }}</p>
                 </div>
 
                 <div class="text-center p-6">
@@ -187,8 +187,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Dedicated Support</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">24/7 partner support and logistics assistance</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('partners.dedicated_support') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">{{ __('partners.dedicated_support_desc') }}</p>
                 </div>
             </div>
         </div>

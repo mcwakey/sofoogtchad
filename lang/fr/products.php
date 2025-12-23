@@ -27,6 +27,7 @@ return [
     'featured' => 'En vedette',
     'discover' => 'Découvrir',
     'view_all_products' => 'Voir tous les produits',
+    'view_product' => 'Voir le produit',
     'inquire_whatsapp' => 'Demander sur WhatsApp',
     'whatsapp_inquiry' => 'Bonjour, je suis intéressé par le produit : :product',
 ];

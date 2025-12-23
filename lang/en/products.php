@@ -27,6 +27,7 @@ return [
     'featured' => 'Featured',
     'discover' => 'Discover',
     'view_all_products' => 'View All Products',
+    'view_product' => 'View Product',
     'inquire_whatsapp' => 'Inquire on WhatsApp',
     'whatsapp_inquiry' => 'Hi, I\'m interested in the product: :product',
 ];

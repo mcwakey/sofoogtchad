@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', setting('contact_page_title', 'Contact Us') . ' - ' . setting('site_name', 'Sofoodtchad'))
-@section('description', setting('contact_page_description', 'Get in touch with Sofoodtchad. We\'re here to answer your questions and hear your feedback.'))
+@section('title', trans_setting('contact_page_title', 'Contact Us') . ' - ' . trans_setting('site_name', 'Sofoodtchad'))
+@section('description', trans_setting('contact_page_description', 'Get in touch with Sofoodtchad. We\'re here to answer your questions and hear your feedback.'))
 
 @section('content')
     {{-- Page Header --}}
@@ -14,10 +14,10 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div class="text-center">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                    {{ setting('contact_page_title', 'Contact Us') }}
+                    {{ trans_setting('contact_page_title', __('contact.title')) }}
                 </h1>
                 <p class="text-lg md:text-xl text-green-100 max-w-2xl mx-auto">
-                    {{ setting('contact_page_subtitle', 'We\'d love to hear from you. Get in touch with our team.') }}
+                    {{ trans_setting('contact_page_subtitle', __('contact.subtitle')) }}
                 </p>
             </div>
         </div>
@@ -40,9 +40,9 @@
                     <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 md:p-8 lg:p-10">
                         <x-contact-form
                             :form-action="$formAction ?? route('contact.submit')"
-                            :submit-text="$submitText ?? 'Send Message'"
-                            :title="setting('contact_form_title', 'Send us a Message')"
-                            :subtitle="setting('contact_form_subtitle', 'Fill out the form below and we\'ll get back to you as soon as possible.')"
+                            :submit-text="$submitText ?? __('contact.send_button')"
+                            :title="trans_setting('contact_form_title', __('contact.send_message'))"
+                            :subtitle="trans_setting('contact_form_subtitle', __('contact.form_subtitle'))"
                             :show-phone="true"
                             :show-subject="true"
                         />
@@ -52,10 +52,10 @@
                 {{-- Contact Info --}}
                 <div class="order-1 lg:order-2">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                        {{ setting('contact_info_title', 'Get in Touch') }}
+                        {{ trans_setting('contact_info_title', __('contact.get_in_touch')) }}
                     </h2>
                     <p class="text-gray-600 dark:text-gray-300 mb-8">
-                        {{ setting('contact_info_description', 'Have questions about our products? Want to become a distributor? Our team is here to help.') }}
+                        {{ trans_setting('contact_info_description', __('contact.info_description')) }}
                     </p>
 
                     {{-- Contact Details --}}
@@ -70,8 +70,8 @@
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Address</h3>
-                                    <p class="text-gray-600 dark:text-gray-300 mt-1">{{ setting('contact_address') }}</p>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('contact.address') }}</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mt-1">{{ trans_setting('contact_address') }}</p>
                                 </div>
                             </div>
                         @endif
@@ -85,7 +85,7 @@
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Phone</h3>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('contact.phone') }}</h3>
                                     <a href="tel:{{ setting('contact_phone') }}" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors mt-1 block">
                                         {{ setting('contact_phone') }}
                                     </a>
@@ -107,7 +107,7 @@
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Email</h3>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('contact.email') }}</h3>
                                     <a href="mailto:{{ setting('contact_email') }}" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors mt-1 block">
                                         {{ setting('contact_email') }}
                                     </a>
@@ -124,8 +124,8 @@
                                     </svg>
                                 </div>
                                 <div class="ml-4">
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Business Hours</h3>
-                                    <p class="text-gray-600 dark:text-gray-300 mt-1 whitespace-pre-line">{{ setting('contact_hours') }}</p>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('contact.business_hours') }}</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mt-1 whitespace-pre-line">{{ trans_setting('contact_hours') }}</p>
                                 </div>
                             </div>
                         @endif
@@ -134,7 +134,7 @@
                     {{-- Social Links --}}
                     @if(setting('social_facebook') || setting('social_instagram') || setting('social_twitter') || setting('social_linkedin'))
                         <div class="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Follow Us</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('general.follow_us') }}</h3>
                             <div class="flex gap-4">
                                 @if(setting('social_facebook'))
                                     <a href="{{ setting('social_facebook') }}" target="_blank" rel="noopener noreferrer"
@@ -182,10 +182,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                        {{ setting('contact_map_title', 'Find Us') }}
+                        {{ trans_setting('contact_map_title', 'Find Us') }}
                     </h2>
                     <p class="text-gray-600 dark:text-gray-300">
-                        {{ setting('contact_map_subtitle', 'Visit our location or use the map for directions') }}
+                        {{ trans_setting('contact_map_subtitle', 'Visit our location or use the map for directions') }}
                     </p>
                 </div>
 
@@ -201,7 +201,7 @@
                             :latitude="setting('contact_latitude')"
                             :longitude="setting('contact_longitude')"
                             :zoom="setting('contact_map_zoom', 15)"
-                            :marker-title="setting('site_name', 'Sofoodtchad')"
+                            :marker-title="trans_setting('site_name', 'Sofoodtchad')"
                         />
                     @endif
                 </div>
@@ -215,10 +215,10 @@
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-10">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                        {{ setting('contact_faq_title', 'Frequently Asked Questions') }}
+                        {{ trans_setting('contact_faq_title', 'Frequently Asked Questions') }}
                     </h2>
                     <p class="text-gray-600 dark:text-gray-300">
-                        {{ setting('contact_faq_subtitle', 'Find quick answers to common questions') }}
+                        {{ trans_setting('contact_faq_subtitle', 'Find quick answers to common questions') }}
                     </p>
                 </div>
 
@@ -258,7 +258,7 @@
 
             {{-- Tooltip --}}
             <span class="absolute right-16 px-3 py-1.5 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                Chat with us
+                {{ __('contact.chat_with_us') }}
             </span>
         </a>
     @endif

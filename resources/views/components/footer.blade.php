@@ -3,14 +3,14 @@
 ])
 
 @php
-    $siteName = setting('site_name', 'Sofoodtchad');
+    $siteName = trans_setting('site_name', 'Sofoodtchad');
     $siteLogo = setting('site_logo');
-    $siteTagline = setting('site_tagline', '');
+    $siteTagline = trans_setting('site_tagline', '');
     $contactEmail = setting('contact_email');
     $contactPhone = setting('contact_phone');
     $contactWhatsapp = setting('contact_whatsapp');
-    $contactAddress = setting('contact_address');
-    $workingHours = setting('contact_working_hours');
+    $contactAddress = trans_setting('contact_address');
+    $workingHours = trans_setting('contact_working_hours');
 
     // Social links
     $socialLinks = [

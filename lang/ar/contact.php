@@ -5,6 +5,8 @@ return [
     'subtitle' => 'تواصل مع فريقنا',
     'send_message' => 'أرسل لنا رسالة',
     'get_in_touch' => 'تواصل معنا',
+    'form_subtitle' => 'املأ النموذج أدناه وسنتواصل معك في أقرب وقت ممكن.',
+    'info_description' => 'هل لديك أسئلة حول منتجاتنا؟ هل تريد أن تصبح موزعاً؟ فريقنا هنا للمساعدة.',
 
     // Form fields
     'full_name' => 'الاسم الكامل',
@@ -17,8 +19,8 @@ return [
     'your_email' => 'بريدك@الإلكتروني.com',
     'your_phone' => 'رقم هاتفك',
     'your_company' => 'شركتك (اختياري)',
-    'message_subject' => 'ما هو موضوع رسالتك؟',
-    'your_message' => 'رسالتك...',
+    'message_subject' => 'كيف يمكننا مساعدتك؟',
+    'your_message' => 'اكتب رسالتك هنا...',
 
     // Form submission
     'send_button' => 'إرسال الرسالة',
@@ -36,6 +38,6 @@ return [
     'chat_with_us' => 'تحدث معنا',
 
     // Privacy
-    'privacy_notice' => 'بإرسال هذا النموذج، فإنك توافق على',
+    'privacy_notice' => 'أوافق على',
     'privacy_policy' => 'سياسة الخصوصية',
 ];

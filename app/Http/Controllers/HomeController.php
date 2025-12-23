@@ -43,8 +43,8 @@ class HomeController extends Controller
             })->toArray();
 
         $productsSection = [
-            'title' => setting('homepage_products_title', 'Our Products'),
-            'subtitle' => setting('homepage_products_subtitle', 'Discover our range of premium quality products'),
+            'title' => trans_setting('homepage_products_title', 'Our Products'),
+            'subtitle' => trans_setting('homepage_products_subtitle', 'Discover our range of premium quality products'),
             'view_all_url' => route('products.index'),
             'view_all_text' => 'View All Products',
             'columns' => 4,
@@ -57,9 +57,9 @@ class HomeController extends Controller
             ->get();
 
         $processSection = [
-            'title' => setting('homepage_process_title', 'Our Process'),
-            'subtitle' => setting('homepage_process_subtitle', 'Quality & Excellence'),
-            'description' => setting('homepage_process_description', 'How we ensure the highest quality in every product'),
+            'title' => trans_setting('homepage_process_title', 'Our Process'),
+            'subtitle' => trans_setting('homepage_process_subtitle', 'Quality & Excellence'),
+            'description' => trans_setting('homepage_process_description', 'How we ensure the highest quality in every product'),
             'cta_text' => 'Learn More',
             'cta_url' => route('pages.show', 'about'),
         ];
@@ -71,9 +71,9 @@ class HomeController extends Controller
             ->get();
 
         $partnersSection = [
-            'title' => setting('homepage_partners_title', 'Our Partners'),
-            'subtitle' => setting('homepage_partners_subtitle', 'Trusted By'),
-            'description' => setting('homepage_partners_description', 'We work with the best in the industry'),
+            'title' => trans_setting('homepage_partners_title', 'Our Partners'),
+            'subtitle' => trans_setting('homepage_partners_subtitle', 'Trusted By'),
+            'description' => trans_setting('homepage_partners_description', 'We work with the best in the industry'),
             'cta_text' => 'Become a Partner',
             'cta_url' => route('distributor.request'),
         ];
@@ -85,8 +85,8 @@ class HomeController extends Controller
             ->get();
 
         $blogSection = [
-            'title' => setting('homepage_blog_title', 'Latest News'),
-            'subtitle' => setting('homepage_blog_subtitle', 'From Our Blog'),
+            'title' => trans_setting('homepage_blog_title', 'Latest News'),
+            'subtitle' => trans_setting('homepage_blog_subtitle', 'From Our Blog'),
             'view_all_url' => route('blog.index'),
             'view_all_text' => 'View All Posts',
         ];
@@ -118,11 +118,11 @@ class HomeController extends Controller
 
         return [
             'background_image' => $heroSection?->image ?? setting('hero_background_image', '/images/hero-bg.jpg'),
-            'title' => $heroSection?->title ?? setting('hero_title', setting('site_name', 'Sofoodtchad')),
-            'subtitle' => $heroSection?->content ?? setting('hero_subtitle', setting('site_tagline', 'Premium Quality Food Products')),
-            'cta_text' => $heroSection?->cta_text ?? setting('hero_cta_text', 'View Our Products'),
+            'title' => $heroSection?->title ?? trans_setting('hero_title', trans_setting('site_name', 'Sofoodtchad')),
+            'subtitle' => $heroSection?->content ?? trans_setting('hero_subtitle', trans_setting('site_tagline', 'Premium Quality Food Products')),
+            'cta_text' => $heroSection?->cta_text ?? trans_setting('hero_cta_text', 'View Our Products'),
             'cta_url' => $heroSection?->cta_url ?? setting('hero_cta_url', '/products'),
-            'secondary_cta_text' => setting('hero_secondary_cta_text'),
+            'secondary_cta_text' => trans_setting('hero_secondary_cta_text'),
             'secondary_cta_url' => setting('hero_secondary_cta_url'),
         ];
     }
@@ -136,9 +136,9 @@ class HomeController extends Controller
         $aboutSection = $page?->sections->where('identifier', 'about')->first();
 
         // Check if we have any about data in the database
-        $title = $aboutSection?->title ?? setting('homepage_about_title');
-        $subtitle = setting('homepage_about_subtitle');
-        $description = $aboutSection?->content ?? setting('homepage_about_description');
+        $title = $aboutSection?->title ?? trans_setting('homepage_about_title');
+        $subtitle = trans_setting('homepage_about_subtitle');
+        $description = $aboutSection?->content ?? trans_setting('homepage_about_description');
         $image = $aboutSection?->image ?? setting('homepage_about_image');
 
         // If no essential data exists in database, return null to hide the section
@@ -146,14 +146,17 @@ class HomeController extends Controller
             return null;
         }
 
-        // Get features from settings (stored as JSON)
+        // Get features from settings (stored as JSON with translations)
         $featuresValue = setting('homepage_about_features');
         $features = [];
 
         if (is_array($featuresValue)) {
-            $features = $featuresValue;
+            // Resolve translations for each feature
+            $features = resolve_locale($featuresValue);
         } elseif (is_string($featuresValue) && !empty($featuresValue)) {
-            $features = json_decode($featuresValue, true) ?? [];
+            $decoded = json_decode($featuresValue, true) ?? [];
+            // Resolve translations for each feature
+            $features = resolve_locale($decoded);
         }
 
         return [
@@ -162,7 +165,7 @@ class HomeController extends Controller
             'description' => $description,
             'image' => $image,
             'image_position' => setting('homepage_about_image_position', 'left'),
-            'cta_text' => setting('homepage_about_cta_text'),
+            'cta_text' => trans_setting('homepage_about_cta_text'),
             'cta_url' => setting('homepage_about_cta_url'),
             'features' => $features,
         ];
@@ -178,11 +181,11 @@ class HomeController extends Controller
         }
 
         return [
-            'title' => setting('homepage_cta_title', 'Ready to Experience Quality?'),
-            'description' => setting('homepage_cta_description', 'Contact us today to learn more about our products and services.'),
-            'primary_text' => setting('homepage_cta_primary_text', 'Contact Us'),
+            'title' => trans_setting('homepage_cta_title', 'Ready to Experience Quality?'),
+            'description' => trans_setting('homepage_cta_description', 'Contact us today to learn more about our products and services.'),
+            'primary_text' => trans_setting('homepage_cta_primary_text', 'Contact Us'),
             'primary_url' => setting('homepage_cta_primary_url', '/contact'),
-            'secondary_text' => setting('homepage_cta_secondary_text', 'View Products'),
+            'secondary_text' => trans_setting('homepage_cta_secondary_text', 'View Products'),
             'secondary_url' => setting('homepage_cta_secondary_url', '/products'),
         ];
     }

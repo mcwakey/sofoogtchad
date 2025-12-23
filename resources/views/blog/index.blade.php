@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', setting('blog_page_title', 'Blog & News') . ' - ' . setting('site_name', 'Sofoodtchad'))
-@section('description', setting('blog_page_description', 'Stay updated with our latest stories, recipes, and announcements from Sofoodtchad.'))
+@section('title', trans_setting('blog_page_title', 'Blog & News') . ' - ' . trans_setting('site_name', 'Sofoodtchad'))
+@section('description', trans_setting('blog_page_description', 'Stay updated with our latest stories, recipes, and announcements from Sofoodtchad.'))
 
 @section('content')
     {{-- Page Header --}}
@@ -14,10 +14,10 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
             <div class="text-center">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                    {{ setting('blog_page_title', 'Blog & News') }}
+                    {{ trans_setting('blog_page_title', __('blog.page_title')) }}
                 </h1>
                 <p class="text-lg md:text-xl text-green-100 max-w-2xl mx-auto">
-                    {{ setting('blog_page_subtitle', 'Stay updated with our latest stories and announcements') }}
+                    {{ trans_setting('blog_page_subtitle', __('blog.page_subtitle')) }}
                 </p>
             </div>
         </div>
@@ -34,24 +34,24 @@
     <section class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex flex-wrap items-center gap-3">
-                <span class="text-sm font-medium text-gray-600 dark:text-gray-400 mr-2">Filter:</span>
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400 mr-2">{{ __('products.filters') }}:</span>
                 <a href="{{ route('blog.index') }}"
                    class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ !request('type') ? 'bg-green-600 text-white shadow-md' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-gray-600 hover:text-green-700 dark:hover:text-green-400 border border-gray-200 dark:border-gray-600' }}">
-                    All Posts
+                    {{ __('blog.all_posts') }}
                 </a>
                 <a href="{{ route('blog.index', ['type' => 'blog']) }}"
                    class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('type') === 'blog' ? 'bg-green-600 text-white shadow-md' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-gray-600 hover:text-green-700 dark:hover:text-green-400 border border-gray-200 dark:border-gray-600' }}">
                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                     </svg>
-                    Blog
+                    {{ __('blog.title') }}
                 </a>
                 <a href="{{ route('blog.index', ['type' => 'news']) }}"
                    class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 {{ request('type') === 'news' ? 'bg-green-600 text-white shadow-md' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-gray-600 hover:text-green-700 dark:hover:text-green-400 border border-gray-200 dark:border-gray-600' }}">
                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                     </svg>
-                    News
+                    {{ __('blog.news') }}
                 </a>
             </div>
         </div>
@@ -68,9 +68,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Posts Yet</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ __('blog.no_posts') }}</h3>
                     <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-                        We're working on exciting content for you. Check back soon for updates!
+                        {{ __('blog.subtitle') }}
                     </p>
                 </div>
             @else
@@ -160,17 +160,17 @@
     <section class="py-16 bg-gradient-to-r from-green-700 to-green-600">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">
-                {{ setting('blog_newsletter_title', 'Stay in the Loop') }}
+                {{ trans_setting('blog_newsletter_title', 'Stay in the Loop') }}
             </h2>
             <p class="text-green-100 mb-8 max-w-xl mx-auto">
-                {{ setting('blog_newsletter_description', 'Subscribe to our newsletter for the latest recipes, tips, and news from Sofoodtchad.') }}
+                {{ trans_setting('blog_newsletter_description', 'Subscribe to our newsletter for the latest recipes, tips, and news from Sofoodtchad.') }}
             </p>
             <form action="{{ route('home') }}" method="GET" class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-                <input type="email" name="email" placeholder="Enter your email"
+                <input type="email" name="email" placeholder="{{ __('contact.your_email') }}"
                        class="flex-1 px-5 py-3 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
                 <button type="submit"
                         class="px-8 py-3 bg-white text-green-700 font-semibold rounded-full hover:bg-green-50 transition-colors duration-200 shadow-lg">
-                    Subscribe
+                    {{ __('general.submit') }}
                 </button>
             </form>
         </div>

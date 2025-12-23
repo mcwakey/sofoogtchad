@@ -19,9 +19,9 @@ class AboutController extends Controller
             ->first();
 
         // Page header data
-        $pageTitle = $page?->title ?? setting('about_page_title', 'About Us');
-        $pageSubtitle = setting('about_page_subtitle', 'Who We Are');
-        $pageDescription = $page?->meta_description ?? setting('about_page_description', 'Learn about our journey, mission, and commitment to quality.');
+        $pageTitle = $page?->title ?? trans_setting('about_page_title', __('about.title'));
+        $pageSubtitle = trans_setting('about_page_subtitle', __('about.subtitle'));
+        $pageDescription = $page?->meta_description ?? trans_setting('about_page_description', __('about.our_story'));
 
         // About sections from database or settings
         $aboutSections = $this->getAboutSections($page);
@@ -81,13 +81,13 @@ class AboutController extends Controller
         // If no sections from database, check settings
         if (empty($sections)) {
             // Section 1: Our Story
-            $storyTitle = setting('about_story_title');
-            $storyDescription = setting('about_story_description');
+            $storyTitle = trans_setting('about_story_title');
+            $storyDescription = trans_setting('about_story_description');
 
             if ($storyTitle || $storyDescription) {
                 $sections[] = [
-                    'title' => $storyTitle ?? 'Our Story',
-                    'subtitle' => setting('about_story_subtitle', 'How It All Began'),
+                    'title' => $storyTitle ?? __('about.our_story'),
+                    'subtitle' => trans_setting('about_story_subtitle', __('about.history')),
                     'description' => $storyDescription,
                     'image' => setting('about_story_image'),
                     'features' => [],
@@ -95,13 +95,13 @@ class AboutController extends Controller
             }
 
             // Section 2: What We Do
-            $whatWeDoTitle = setting('about_whatwedo_title');
-            $whatWeDoDescription = setting('about_whatwedo_description');
+            $whatWeDoTitle = trans_setting('about_whatwedo_title');
+            $whatWeDoDescription = trans_setting('about_whatwedo_description');
 
             if ($whatWeDoTitle || $whatWeDoDescription) {
                 $sections[] = [
-                    'title' => $whatWeDoTitle ?? 'What We Do',
-                    'subtitle' => setting('about_whatwedo_subtitle', 'Our Business'),
+                    'title' => $whatWeDoTitle ?? __('about.our_mission'),
+                    'subtitle' => trans_setting('about_whatwedo_subtitle', __('about.our_vision')),
                     'description' => $whatWeDoDescription,
                     'image' => setting('about_whatwedo_image'),
                     'features' => $this->parseJsonSetting('about_whatwedo_features', []),
@@ -109,17 +109,17 @@ class AboutController extends Controller
             }
 
             // Section 3: Why Choose Us
-            $whyUsTitle = setting('about_whyus_title');
-            $whyUsDescription = setting('about_whyus_description');
+            $whyUsTitle = trans_setting('about_whyus_title');
+            $whyUsDescription = trans_setting('about_whyus_description');
 
             if ($whyUsTitle || $whyUsDescription) {
                 $sections[] = [
-                    'title' => $whyUsTitle ?? 'Why Choose Us',
-                    'subtitle' => setting('about_whyus_subtitle', 'Our Difference'),
+                    'title' => $whyUsTitle ?? __('about.why_choose_us'),
+                    'subtitle' => trans_setting('about_whyus_subtitle', __('about.quality_commitment')),
                     'description' => $whyUsDescription,
                     'image' => setting('about_whyus_image'),
                     'features' => $this->parseJsonSetting('about_whyus_features', []),
-                    'cta_text' => setting('about_whyus_cta_text', 'View Our Products'),
+                    'cta_text' => trans_setting('about_whyus_cta_text', __('home.view_all_products')),
                     'cta_url' => setting('about_whyus_cta_url', '/products'),
                 ];
             }
@@ -181,19 +181,19 @@ class AboutController extends Controller
      */
     private function getMission(): ?array
     {
-        $title = setting('about_mission_title');
-        $description = setting('about_mission_description');
+        $title = trans_setting('about_mission_title');
+        $description = trans_setting('about_mission_description');
 
         if (!$title && !$description) {
             // Return default mission
             return [
-                'title' => 'Our Mission',
+                'title' => __('about.our_mission'),
                 'description' => 'To provide Chad and the Central African region with the highest quality food products while supporting local farmers, promoting sustainable practices, and ensuring food security for all communities we serve.',
             ];
         }
 
         return [
-            'title' => $title ?? 'Our Mission',
+            'title' => $title ?? __('about.our_mission'),
             'description' => $description,
         ];
     }
@@ -203,19 +203,19 @@ class AboutController extends Controller
      */
     private function getVision(): ?array
     {
-        $title = setting('about_vision_title');
-        $description = setting('about_vision_description');
+        $title = trans_setting('about_vision_title');
+        $description = trans_setting('about_vision_description');
 
         if (!$title && !$description) {
             // Return default vision
             return [
-                'title' => 'Our Vision',
+                'title' => __('about.our_vision'),
                 'description' => 'To become the leading food company in Central Africa, recognized for excellence in quality, innovation, and commitment to sustainable development that benefits our communities and environment.',
             ];
         }
 
         return [
-            'title' => $title ?? 'Our Vision',
+            'title' => $title ?? __('about.our_vision'),
             'description' => $description,
         ];
     }
@@ -261,26 +261,26 @@ class AboutController extends Controller
      */
     private function getCtaData(): ?array
     {
-        $title = setting('about_cta_title');
+        $title = trans_setting('about_cta_title');
 
         if (!$title) {
             // Return default CTA
             return [
-                'title' => 'Ready to Partner With Us?',
-                'description' => 'Whether you\'re looking for quality products or interested in becoming a distributor, we\'d love to hear from you.',
-                'primary_text' => 'Contact Us',
+                'title' => __('home.partner_with_us'),
+                'description' => __('home.cta_subtitle'),
+                'primary_text' => __('general.contact_us'),
                 'primary_url' => '/contact',
-                'secondary_text' => 'View Products',
+                'secondary_text' => __('home.view_all_products'),
                 'secondary_url' => '/products',
             ];
         }
 
         return [
             'title' => $title,
-            'description' => setting('about_cta_description'),
-            'primary_text' => setting('about_cta_primary_text', 'Contact Us'),
+            'description' => trans_setting('about_cta_description'),
+            'primary_text' => trans_setting('about_cta_primary_text', __('general.contact_us')),
             'primary_url' => setting('about_cta_primary_url', '/contact'),
-            'secondary_text' => setting('about_cta_secondary_text', 'View Products'),
+            'secondary_text' => trans_setting('about_cta_secondary_text', __('home.view_all_products')),
             'secondary_url' => setting('about_cta_secondary_url', '/products'),
         ];
     }

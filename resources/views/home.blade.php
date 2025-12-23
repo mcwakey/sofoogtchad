@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', $pageTitle ?? setting('site_name', 'Sofoodtchad') . ' - ' . setting('site_tagline', 'Quality Food Products'))
+@section('title', $pageTitle ?? trans_setting('site_name', 'Sofoodtchad') . ' - ' . trans_setting('site_tagline', 'Quality Food Products'))
 
-@section('meta_description', $metaDescription ?? setting('site_description'))
+@section('meta_description', $metaDescription ?? trans_setting('site_description'))
 
 @section('content')
     {{-- ==================== HERO SLIDER SECTION ==================== --}}
@@ -15,29 +15,29 @@
             $heroSlides = [
                 [
                     'background_image' => $hero['background_image'] ?? null,
-                    'title' => $hero['title'] ?? setting('site_name', 'Welcome to Sofoodtchad'),
-                    'subtitle' => $hero['subtitle'] ?? setting('site_tagline', 'Premium Quality Food Products'),
-                    'cta_text' => $hero['cta_text'] ?? 'View Our Products',
+                    'title' => $hero['title'] ?? trans_setting('site_name', 'Welcome to Sofoodtchad'),
+                    'subtitle' => $hero['subtitle'] ?? trans_setting('site_tagline', 'Premium Quality Food Products'),
+                    'cta_text' => $hero['cta_text'] ?? __('home.view_all_products'),
                     'cta_url' => $hero['cta_url'] ?? '/products',
                     'secondary_cta_text' => $hero['secondary_cta_text'] ?? null,
                     'secondary_cta_url' => $hero['secondary_cta_url'] ?? null,
                 ],
                 [
                     'background_image' => $hero['slide2_image'] ?? $hero['background_image'] ?? null,
-                    'title' => 'Quality You Can Trust',
-                    'subtitle' => 'From farm to table, we ensure the highest standards of quality in every product',
-                    'cta_text' => 'Our Process',
+                    'title' => __('home.quality_trust'),
+                    'subtitle' => __('home.process_subtitle'),
+                    'cta_text' => __('general.our_process'),
                     'cta_url' => '/process',
-                    'secondary_cta_text' => 'Contact Us',
+                    'secondary_cta_text' => __('general.contact_us'),
                     'secondary_cta_url' => '/contact',
                 ],
                 [
                     'background_image' => $hero['slide3_image'] ?? $hero['background_image'] ?? null,
-                    'title' => 'Partner With Us',
-                    'subtitle' => 'Join our network of trusted distributors and retailers across Chad',
-                    'cta_text' => 'Become a Partner',
+                    'title' => __('home.partner_with_us'),
+                    'subtitle' => __('home.partners_subtitle'),
+                    'cta_text' => __('home.become_partner'),
                     'cta_url' => '/partners',
-                    'secondary_cta_text' => 'Learn More',
+                    'secondary_cta_text' => __('general.learn_more'),
                     'secondary_cta_url' => '/about',
                 ],
             ];
@@ -64,7 +64,7 @@
                             <div class="relative">
                                 <img
                                     src="{{ $about['image'] }}"
-                                    alt="About {{ setting('site_name', 'Sofoodtchad') }}"
+                                    alt="About {{ trans_setting('site_name', 'Sofoodtchad') }}"
                                     class="rounded-2xl shadow-xl dark:shadow-gray-900/50 w-full h-auto object-cover"
                                     onerror="this.style.display='none'"
                                 >

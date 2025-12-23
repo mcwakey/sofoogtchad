@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', setting('site_name', 'Sofoodtchad') . ' - Our Quality Process')
+@section('title', trans_setting('site_name', 'Sofoodtchad') . ' - ' . __('process.title'))
 
-@section('meta_description', setting('process_meta_description', 'Discover how Sofoodtchad ensures the highest quality in every product through our rigorous quality process.'))
+@section('meta_description', trans_setting('process_meta_description', __('process.description')))
 
 @section('content')
     {{-- ==================== PAGE HEADER ==================== --}}
@@ -15,13 +15,13 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-3xl mx-auto text-center">
                 <span class="inline-block text-green-200 font-semibold text-sm uppercase tracking-wider mb-4">
-                    {{ setting('process_page_subtitle', 'Quality & Excellence') }}
+                    {{ trans_setting('process_page_subtitle', __('process.subtitle')) }}
                 </span>
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-                    {{ setting('process_page_title', 'Our Quality Process') }}
+                    {{ trans_setting('process_page_title', __('process.title')) }}
                 </h1>
                 <p class="text-lg text-green-100">
-                    {{ setting('process_page_description', 'From farm to table, we ensure the highest quality standards at every step of production.') }}
+                    {{ trans_setting('process_page_description', __('process.description')) }}
                 </p>
             </div>
         </div>
@@ -34,10 +34,10 @@
                 {{-- Section Header --}}
                 <div class="text-center mb-16">
                     <span class="inline-block text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider mb-2">
-                        {{ setting('process_steps_subtitle', 'Step by Step') }}
+                        {{ trans_setting('process_steps_subtitle', __('process.step_by_step')) }}
                     </span>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-                        {{ setting('process_steps_title', 'How We Ensure Quality') }}
+                        {{ trans_setting('process_steps_title', __('process.how_we_ensure_quality')) }}
                     </h2>
                 </div>
 
@@ -136,23 +136,23 @@
                 {{-- Content --}}
                 <div>
                     <span class="inline-block text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider mb-2">
-                        {{ setting('quality_commitment_subtitle', 'Our Promise') }}
+                        {{ trans_setting('quality_commitment_subtitle', __('process.our_promise')) }}
                     </span>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                        {{ setting('quality_commitment_title', 'Quality You Can Trust') }}
+                        {{ trans_setting('quality_commitment_title', __('process.quality_you_can_trust')) }}
                     </h2>
                     <div class="prose prose-lg text-gray-600 dark:text-gray-300 mb-8">
-                        <p>{{ setting('quality_commitment_description', 'At Sofoodtchad, quality is not just a goal – it\'s our foundation. Every product that leaves our facility has been carefully inspected and tested to ensure it meets our exacting standards.') }}</p>
+                        <p>{{ trans_setting('quality_commitment_description', __('process.quality_description')) }}</p>
                     </div>
 
                     {{-- Quality Features --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         @php
                             $qualityFeatures = [
-                                ['icon' => 'shield-check', 'title' => 'Quality Assured', 'description' => 'Rigorous testing at every stage'],
-                                ['icon' => 'leaf', 'title' => '100% Natural', 'description' => 'No artificial additives'],
-                                ['icon' => 'users', 'title' => 'Expert Team', 'description' => 'Trained quality professionals'],
-                                ['icon' => 'badge-check', 'title' => 'Certified', 'description' => 'International standards compliance'],
+                                ['icon' => 'shield-check', 'title' => __('process.quality_assured'), 'description' => __('process.quality_assured_desc')],
+                                ['icon' => 'leaf', 'title' => __('process.natural'), 'description' => __('process.natural_desc')],
+                                ['icon' => 'users', 'title' => __('process.expert_team'), 'description' => __('process.expert_team_desc')],
+                                ['icon' => 'badge-check', 'title' => __('process.certified'), 'description' => __('process.certified_desc')],
                             ];
                         @endphp
                         @foreach($qualityFeatures as $feature)
@@ -200,10 +200,10 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 @php
                     $stats = [
-                        ['value' => setting('stat_years', '10+'), 'label' => 'Years of Excellence'],
-                        ['value' => setting('stat_products', '50+'), 'label' => 'Quality Products'],
-                        ['value' => setting('stat_customers', '10K+'), 'label' => 'Happy Customers'],
-                        ['value' => setting('stat_quality', '100%'), 'label' => 'Quality Tested'],
+                        ['value' => setting('stat_years', '10+'), 'label' => __('process.years_excellence')],
+                        ['value' => setting('stat_products', '50+'), 'label' => __('process.quality_products')],
+                        ['value' => setting('stat_customers', '10K+'), 'label' => __('process.happy_customers')],
+                        ['value' => setting('stat_quality', '100%'), 'label' => __('process.quality_tested')],
                     ];
                 @endphp
                 @foreach($stats as $stat)
@@ -220,17 +220,17 @@
     <section class="py-20 bg-white dark:bg-gray-900 transition-colors duration-200">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                {{ setting('process_cta_title', 'Experience Our Quality') }}
+                {{ trans_setting('process_cta_title', __('process.experience_quality')) }}
             </h2>
             <p class="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                {{ setting('process_cta_description', 'Try our products and taste the difference that quality makes. From farm to table, we ensure excellence at every step.') }}
+                {{ trans_setting('process_cta_description', __('process.experience_quality_desc')) }}
             </p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="{{ route('products.index') }}" class="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-200">
-                    Explore Products
+                    {{ __('process.explore_products') }}
                 </a>
                 <a href="/contact" class="px-8 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:border-green-600 hover:text-green-600 dark:hover:border-green-400 dark:hover:text-green-400 transition-colors duration-200">
-                    Contact Us
+                    {{ __('general.contact_us') }}
                 </a>
             </div>
         </div>

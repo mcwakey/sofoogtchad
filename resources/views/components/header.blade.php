@@ -5,7 +5,7 @@
 ])
 
 @php
-    $siteName = setting('site_name', 'Sofoodtchad');
+    $siteName = trans_setting('site_name', 'Sofoodtchad');
     $siteLogo = $logoUrl ?? setting('site_logo');
     $logoAltText = $logoAlt ?? $siteName;
     $whatsappNumber = setting('contact_whatsapp');

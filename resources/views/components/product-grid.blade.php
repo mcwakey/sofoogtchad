@@ -73,7 +73,7 @@
                     :title="$name"
                     :description="$description"
                     :link="$url"
-                    linkText="View Product"
+                    :linkText="__('products.view_product')"
                     :badge="$badge"
                     badgeColor="green"
                 >
