@@ -37,8 +37,17 @@
     @endif
 
         @if($logo)
+            @php
+                if (Str::startsWith($logo, ['http://', 'https://'])) {
+                    $logoUrl = $logo;
+                } elseif (Str::startsWith($logo, '/storage/')) {
+                    $logoUrl = asset($logo);
+                } else {
+                    $logoUrl = asset('storage/' . ltrim($logo, '/'));
+                }
+            @endphp
             <img
-                src="{{ $logo }}"
+                src="{{ $logoUrl }}"
                 alt="{{ $name }}"
                 class="{{ $imgSizeClasses }} max-w-full object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
                 loading="lazy"

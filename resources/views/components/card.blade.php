@@ -38,13 +38,22 @@
 <article {{ $attributes->merge(['class' => "{$cardClasses} {$variantClasses}"]) }}>
     {{-- Image --}}
     @if($image)
+        @php
+            if (Str::startsWith($image, ['http://', 'https://'])) {
+                $imageUrl = $image;
+            } elseif (Str::startsWith($image, '/storage/')) {
+                $imageUrl = asset($image);
+            } else {
+                $imageUrl = asset('storage/' . ltrim($image, '/'));
+            }
+        @endphp
         <div class="relative {{ $variant === 'horizontal' ? 'md:w-1/3 md:flex-shrink-0' : '' }}">
             @if($link)
                 <a href="{{ $link }}" class="block">
             @endif
 
             <img
-                src="{{ $image }}"
+                src="{{ $imageUrl }}"
                 alt="{{ $imageAlt ?: $title }}"
                 class="w-full h-48 object-cover {{ $variant === 'horizontal' ? 'md:h-full' : '' }}"
                 loading="lazy"

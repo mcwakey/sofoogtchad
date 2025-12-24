@@ -80,7 +80,7 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                 {{-- Product Gallery --}}
-                <div class="space-y-4" x-data="{ activeImage: '{{ $product->image_url }}' }">
+                <div class="space-y-4" x-data="{ activeImage: '{{ $product->image_url ? (Str::startsWith($product->image_url, ['http://', 'https://']) ? $product->image_url : asset($product->image_url)) : '' }}' }">
                     {{-- Main Image --}}
                     <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-lg">
                         @if($product->images->count() > 0 || $product->image_url)
@@ -103,13 +103,16 @@
                     @if($product->images->count() > 1)
                         <div class="grid grid-cols-4 sm:grid-cols-5 gap-3">
                             @foreach($product->images as $image)
+                                @php
+                                    $thumbUrl = Str::startsWith($image->image_path, ['http://', 'https://']) ? $image->image_path : asset($image->image_path);
+                                @endphp
                                 <button
-                                    @click="activeImage = '{{ $image->image_path }}'"
-                                    :class="activeImage === '{{ $image->image_path }}' ? 'ring-2 ring-green-500 ring-offset-2 dark:ring-offset-gray-900' : 'ring-1 ring-gray-200 dark:ring-gray-700'"
+                                    @click="activeImage = '{{ $thumbUrl }}'"
+                                    :class="activeImage === '{{ $thumbUrl }}' ? 'ring-2 ring-green-500 ring-offset-2 dark:ring-offset-gray-900' : 'ring-1 ring-gray-200 dark:ring-gray-700'"
                                     class="aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 transition-all duration-200 hover:opacity-80"
                                 >
                                     <img
-                                        src="{{ $image->image_path }}"
+                                        src="{{ $thumbUrl }}"
                                         alt="{{ $image->alt_text ?? $product->name }}"
                                         class="w-full h-full object-cover"
                                         loading="lazy"
@@ -211,8 +214,11 @@
                             <a href="{{ route('products.show', $related->slug) }}" class="block">
                                 <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
                                     @if($related->image_url)
+                                        @php
+                                            $relatedImageUrl = Str::startsWith($related->image_url, ['http://', 'https://']) ? $related->image_url : asset($related->image_url);
+                                        @endphp
                                         <img
-                                            src="{{ $related->image_url }}"
+                                            src="{{ $relatedImageUrl }}"
                                             alt="{{ $related->name }}"
                                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                             loading="lazy"

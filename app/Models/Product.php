@@ -104,10 +104,16 @@ class Product extends Model
     public function getImageUrlAttribute(): ?string
     {
         $primary = $this->images->where('is_primary', true)->first();
-        if ($primary) {
-            return $primary->image_path;
+        $imagePath = $primary ? $primary->image_path : $this->images->first()?->image_path;
+
+        if ($imagePath) {
+            // Return full URL - handle paths that may or may not start with /storage/
+            if (Str::startsWith($imagePath, ['http://', 'https://'])) {
+                return $imagePath;
+            }
+            return asset($imagePath);
         }
-        return $this->images->first()?->image_path;
+        return null;
     }
 
     /**

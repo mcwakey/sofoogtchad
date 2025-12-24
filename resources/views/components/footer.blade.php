@@ -56,8 +56,11 @@
                 <div class="mb-4">
                     <a href="{{ url('/') }}" class="inline-block" aria-label="{{ $siteName }}">
                         @if($siteLogo)
+                            @php
+                                $logoUrl = Str::startsWith($siteLogo, ['http://', 'https://']) ? $siteLogo : asset($siteLogo);
+                            @endphp
                             <img
-                                src="{{ $siteLogo }}"
+                                src="{{ $logoUrl }}"
                                 alt="{{ $siteName }}"
                                 class="h-10 w-auto brightness-0 invert"
                                 loading="lazy"

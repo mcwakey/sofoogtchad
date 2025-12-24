@@ -93,9 +93,13 @@
         >
             {{-- Background Image --}}
             @if(!empty($slide['background_image']))
+                @php
+                    $bgImage = $slide['background_image'];
+                    $bgImageUrl = Str::startsWith($bgImage, ['http://', 'https://']) ? $bgImage : asset($bgImage);
+                @endphp
                 <div class="absolute inset-0 z-0">
                     <img
-                        src="{{ $slide['background_image'] }}"
+                        src="{{ $bgImageUrl }}"
                         alt="{{ $slide['title'] ?? 'Slide ' . ($index + 1) }}"
                         class="w-full h-full object-cover"
                         loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
