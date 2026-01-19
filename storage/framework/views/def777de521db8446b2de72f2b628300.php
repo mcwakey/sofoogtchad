@@ -6,7 +6,7 @@ $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
     'autoplay' => true,
     'interval' => 5000,
     'height' => 'lg',
-    'overlay' => true,
+    'overlay' => false,
     'overlayOpacity' => '50',
     'showDots' => true,
     'showArrows' => true,
@@ -30,7 +30,7 @@ foreach (array_filter(([
     'autoplay' => true,
     'interval' => 5000,
     'height' => 'lg',
-    'overlay' => true,
+    'overlay' => false,
     'overlayOpacity' => '50',
     'showDots' => true,
     'showArrows' => true,
@@ -152,7 +152,7 @@ unset($__defined_vars); ?>
             <?php endif; ?>
 
             
-            <div class="relative z-10 h-full flex items-center">
+            <!-- <div class="relative z-10 h-full flex items-center">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex flex-col items-center text-center max-w-4xl mx-auto">
                         
@@ -218,7 +218,7 @@ unset($__defined_vars); ?>
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

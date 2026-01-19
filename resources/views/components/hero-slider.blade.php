@@ -3,7 +3,7 @@
     'autoplay' => true,
     'interval' => 5000,
     'height' => 'lg',
-    'overlay' => true,
+    'overlay' => false,
     'overlayOpacity' => '50',
     'showDots' => true,
     'showArrows' => true,
@@ -114,7 +114,7 @@
             @endif
 
             {{-- Content --}}
-            <div class="relative z-10 h-full flex items-center">
+            <!-- <div class="relative z-10 h-full flex items-center">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex flex-col items-center text-center max-w-4xl mx-auto">
                         {{-- Title --}}
@@ -176,7 +176,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     @endforeach
 
