@@ -73,7 +73,7 @@
                         <div class="order-2 lg:order-1">
                             <div class="relative">
                                 <img
-                                    src="<?php echo e($about['image']); ?>"
+                                    src="<?php echo e(Str::startsWith($about['image'], ['http://', 'https://']) ? $about['image'] : asset($about['image'])); ?>"
                                     alt="About <?php echo e(trans_setting('site_name', 'Sofoodtchad')); ?>"
                                     class="rounded-2xl shadow-xl dark:shadow-gray-900/50 w-full h-auto object-cover"
                                     onerror="this.style.display='none'"
@@ -174,7 +174,7 @@
             
             <?php if($processBgImage): ?>
                 <div class="absolute inset-0 z-0">
-                    <img src="<?php echo e($processBgImage); ?>" alt="" class="w-full h-full object-cover blur-lg scale-105 opacity-30">
+                    <img src="<?php echo e(Str::startsWith($processBgImage, ['http://', 'https://']) ? $processBgImage : asset($processBgImage)); ?>" alt="" class="w-full h-full object-cover blur-lg scale-105 opacity-30">
                 </div>
                 <div class="absolute inset-0 z-0 bg-white/95 dark:bg-gray-900/05"></div>
             <?php else: ?>

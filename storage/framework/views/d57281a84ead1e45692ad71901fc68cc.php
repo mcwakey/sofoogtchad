@@ -82,9 +82,12 @@ unset($__defined_vars); ?>
                     aria-label="<?php echo e($siteName); ?> - Home"
                 >
                     <?php if($siteLogo): ?>
+                        <?php
+                            $logoUrl = Str::startsWith($siteLogo, ['http://', 'https://']) ? $siteLogo : asset($siteLogo);
+                        ?>
                         <div class="relative flex items-center">
                             <img
-                                src="<?php echo e($siteLogo); ?>"
+                                src="<?php echo e($logoUrl); ?>"
                                 alt="<?php echo e($logoAltText); ?>"
                                 :class="scrollProgress > 0.5 ? 'brightness-110 saturate-110' : 'brightness-0 invert drop-shadow-lg'"
                                 class="h-12 lg:h-14 max-w-[180px] lg:max-w-[220px] w-auto object-contain transition-all duration-300 group-hover:scale-105"

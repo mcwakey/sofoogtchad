@@ -77,13 +77,22 @@ unset($__defined_vars); ?>
 <article <?php echo e($attributes->merge(['class' => "{$cardClasses} {$variantClasses}"])); ?>>
     
     <?php if($image): ?>
+        <?php
+            if (Str::startsWith($image, ['http://', 'https://'])) {
+                $imageUrl = $image;
+            } elseif (Str::startsWith($image, '/storage/')) {
+                $imageUrl = asset($image);
+            } else {
+                $imageUrl = asset('storage/' . ltrim($image, '/'));
+            }
+        ?>
         <div class="relative <?php echo e($variant === 'horizontal' ? 'md:w-1/3 md:flex-shrink-0' : ''); ?>">
             <?php if($link): ?>
                 <a href="<?php echo e($link); ?>" class="block">
             <?php endif; ?>
 
             <img
-                src="<?php echo e($image); ?>"
+                src="<?php echo e($imageUrl); ?>"
                 alt="<?php echo e($imageAlt ?: $title); ?>"
                 class="w-full h-48 object-cover <?php echo e($variant === 'horizontal' ? 'md:h-full' : ''); ?>"
                 loading="lazy"

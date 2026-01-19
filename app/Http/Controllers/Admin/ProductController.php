@@ -68,9 +68,29 @@ class ProductController extends Controller
             $validated['slug'] = Str::slug($validated['name']['fr']);
         }
 
+        // Build translations for translatable fields
+        $name = [];
+        $description = [];
+        $shortDescription = [];
+
+        foreach (['fr', 'en', 'ar'] as $locale) {
+            if (!empty($validated['name'][$locale])) {
+                $name[$locale] = $validated['name'][$locale];
+            }
+            if (!empty($validated['description'][$locale])) {
+                $description[$locale] = $validated['description'][$locale];
+            }
+            if (!empty($validated['short_description'][$locale])) {
+                $shortDescription[$locale] = $validated['short_description'][$locale];
+            }
+        }
+
         $product = Product::create([
             'category_id' => $validated['category_id'] ?? null,
+            'name' => $name,
             'slug' => $validated['slug'],
+            'description' => $description ?: null,
+            'short_description' => $shortDescription ?: null,
             'type' => $validated['type'],
             'price' => $validated['price'] ?? null,
             'sale_price' => $validated['sale_price'] ?? null,
@@ -80,20 +100,6 @@ class ProductController extends Controller
             'is_featured' => $validated['is_featured'] ?? false,
             'is_active' => $validated['is_active'] ?? true,
         ]);
-
-        // Set translations
-        foreach (['fr', 'en', 'ar'] as $locale) {
-            if (!empty($validated['name'][$locale])) {
-                $product->setTranslation('name', $locale, $validated['name'][$locale]);
-            }
-            if (!empty($validated['description'][$locale])) {
-                $product->setTranslation('description', $locale, $validated['description'][$locale]);
-            }
-            if (!empty($validated['short_description'][$locale])) {
-                $product->setTranslation('short_description', $locale, $validated['short_description'][$locale]);
-            }
-        }
-        $product->save();
 
         return redirect()->route('admin.products.edit', $product)
             ->with('success', 'Product created. Now add images.');

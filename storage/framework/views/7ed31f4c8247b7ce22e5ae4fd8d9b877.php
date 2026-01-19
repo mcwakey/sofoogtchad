@@ -86,8 +86,11 @@ unset($__defined_vars); ?>
                 <div class="mb-4">
                     <a href="<?php echo e(url('/')); ?>" class="inline-block" aria-label="<?php echo e($siteName); ?>">
                         <?php if($siteLogo): ?>
+                            <?php
+                                $logoUrl = Str::startsWith($siteLogo, ['http://', 'https://']) ? $siteLogo : asset($siteLogo);
+                            ?>
                             <img
-                                src="<?php echo e($siteLogo); ?>"
+                                src="<?php echo e($logoUrl); ?>"
                                 alt="<?php echo e($siteName); ?>"
                                 class="h-10 w-auto brightness-0 invert"
                                 loading="lazy"

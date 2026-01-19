@@ -131,9 +131,13 @@ unset($__defined_vars); ?>
         >
             
             <?php if(!empty($slide['background_image'])): ?>
+                <?php
+                    $bgImage = $slide['background_image'];
+                    $bgImageUrl = Str::startsWith($bgImage, ['http://', 'https://']) ? $bgImage : asset($bgImage);
+                ?>
                 <div class="absolute inset-0 z-0">
                     <img
-                        src="<?php echo e($slide['background_image']); ?>"
+                        src="<?php echo e($bgImageUrl); ?>"
                         alt="<?php echo e($slide['title'] ?? 'Slide ' . ($index + 1)); ?>"
                         class="w-full h-full object-cover"
                         loading="<?php echo e($index === 0 ? 'eager' : 'lazy'); ?>"
